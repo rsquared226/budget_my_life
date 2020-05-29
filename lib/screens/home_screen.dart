@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 
 import './add_transaction_screen.dart';
+import '../widgets/app_drawer.dart';
 import './graphs_screen.dart';
 import './history_screen.dart';
 
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Budget My Life'),
       ),
+      drawer: AppDrawer(),
       body: PageTransitionSwitcher(
         transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
           return FadeThroughTransition(
