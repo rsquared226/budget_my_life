@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../custom_colors.dart';
+
 class BalanceSummaryCard extends StatelessWidget {
   final double amount;
 
@@ -19,7 +21,9 @@ class BalanceSummaryCard extends StatelessWidget {
         decoration: BoxDecoration(
           // To match Card's border radius.
           borderRadius: BorderRadius.circular(4),
-          color: amount >= 0 ? Colors.green.shade800 : Colors.red.shade900,
+          color: amount >= 0
+              ? CustomColors.incomeColor
+              : CustomColors.expenseColor,
         ),
         child: Column(
           children: <Widget>[

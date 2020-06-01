@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/transaction.dart';
+import '../custom_colors.dart';
 
 class TransactionCard extends StatelessWidget {
   final String id;
@@ -32,8 +33,8 @@ class TransactionCard extends StatelessWidget {
           width: 25,
           decoration: BoxDecoration(
             color: transactionType == TransactionType.Income
-                ? Colors.green.shade800
-                : Colors.red.shade900,
+                ? CustomColors.incomeColor
+                : CustomColors.expenseColor,
             borderRadius: BorderRadius.circular(6),
           ),
         ),
