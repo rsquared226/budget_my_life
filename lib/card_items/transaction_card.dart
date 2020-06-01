@@ -18,36 +18,40 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
+          horizontal: 22,
+          vertical: 8,
         ),
-        leading: CircleAvatar(
-          radius: 30,
-          backgroundColor: transactionType == TransactionType.Income
-              ? Colors.green.shade700
-              : Colors.red.shade900,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                "\$${amount.toStringAsFixed(2)}",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+        leading: Container(
+          height: 25,
+          width: 25,
+          decoration: BoxDecoration(
+            color: transactionType == TransactionType.Income
+                ? Colors.green
+                : Colors.red,
+            borderRadius: BorderRadius.circular(6),
           ),
         ),
         title: Text(
           title,
+          softWrap: false,
+          overflow: TextOverflow.fade,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
+          ),
+        ),
+        trailing: Text(
+          '\$${amount.toStringAsFixed(2)}',
+          softWrap: false,
+          overflow: TextOverflow.fade,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

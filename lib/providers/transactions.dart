@@ -7,7 +7,7 @@ class Transactions with ChangeNotifier {
     Transaction(
       id: 't1',
       title: 'Payday baby',
-      amount: 2000,
+      amount: 20000000,
       transactionType: TransactionType.Income,
     ),
     Transaction(
@@ -22,6 +22,15 @@ class Transactions with ChangeNotifier {
       amount: 20,
       transactionType: TransactionType.Expense,
       description: 'Oopsie',
+    ),
+    Transaction(
+      id: 't4',
+      title:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a nulla in orci viverra scelerisque. Nullam dignissim sit amet orci.',
+      amount: 20,
+      transactionType: TransactionType.Expense,
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam in est in iaculis. Sed suscipit tristique venenatis. Sed egestas tellus et sem mattis, at imperdiet justo semper. Aenean blandit tincidunt sagittis. Nunc pulvinar leo in sapien varius, sit amet sodales mi tempus. In sit amet porta elit, et faucibus erat. Pellentesque hendrerit sapien in lacus vehicula, vitae semper lorem dignissim. Nullam viverra vestibulum tellus eu interdum. Pellentesque nec pellentesque turpis. Donec porta varius porta. Vestibulum tempor sollicitudin ex, id sollicitudin felis iaculis non. Sed sed efficitur lorem. Nulla aliquet metus vel laoreet semper. Phasellus eget dui ut tortor cursus rutrum. Sed tincidunt diam id congue mattis. Pellentesque vitae erat nec tortor tempus porttitor. Nullam accumsan pretium suscipit. Donec condimentum, est sit amet aliquam eleifend, erat arcu gravida nisl, quis commodo purus ipsum eu turpis. Pellentesque tristique laoreet tortor. Nulla elit orci, cursus nec tincidunt ut, molestie id sem. Cras varius eget ligula nec pellentesque. Quisque et orci nec ante cursus vestibulum a quis arcu. Vivamus ante ligula, porta sit amet iaculis a, ultricies porta nibh. Ut sollicitudin facilisis purus quis tincidunt. Mauris quis gravida leo.',
     ),
   ];
 
