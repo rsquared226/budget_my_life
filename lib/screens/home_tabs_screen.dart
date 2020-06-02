@@ -9,12 +9,12 @@ import './history_screen.dart';
 // Need this because the built-in FloatingActionButton widget isn't being used. A custom one is for the animation.
 const _fabDimension = 56.0;
 
-class HomeScreen extends StatefulWidget {
+class HomeTabsScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeTabsScreenState createState() => _HomeTabsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeTabsScreenState extends State<HomeTabsScreen> {
   int _pageIndex = 0;
 
   final List<Widget> _pageList = <Widget>[

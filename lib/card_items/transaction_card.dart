@@ -28,6 +28,7 @@ class TransactionCard extends StatelessWidget {
           horizontal: 22,
           vertical: 8,
         ),
+        // Small rounded square to easily show if it is an income or expense.
         leading: Container(
           height: 25,
           width: 25,

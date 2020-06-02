@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './providers/transactions.dart';
-import './screens/home_screen.dart';
+import './screens/home_tabs_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
-        home: HomeScreen(),
+        home: HomeTabsScreen(),
       ),
     );
   }
