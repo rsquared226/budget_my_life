@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import './providers/transactions.dart';
+import './screens/home_tabs_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,32 +12,26 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Budget My Life',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        accentColor: Colors.deepPurpleAccent,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Budget My Life'),
-      ),
-      body: Center(
-        child: const Text('Text'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.add),
-        onPressed: () {},
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return ChangeNotifierProvider(
+      create: (_) => Transactions(),
+      child: MaterialApp(
+        title: 'Budget My Life',
+        theme: ThemeData(
+          primarySwatch: Colors.indigo,
+          accentColor: Colors.deepPurpleAccent,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          // This page transition looks better than the default.
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: ZoomPageTransitionsBuilder(),
+            },
+          ),
+        ),
+        home: HomeTabsScreen(),
       ),
     );
   }
