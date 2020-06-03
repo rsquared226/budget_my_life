@@ -8,21 +8,21 @@ class Transactions with ChangeNotifier {
       id: 't1',
       title: 'Payday baby',
       amount: 20000000,
-      date: DateTime.now(),
+      date: DateTime(2019, 5, 7),
       transactionType: TransactionType.Income,
     ),
     Transaction(
       id: 't2',
       title: 'New TV',
       amount: 300,
-      date: DateTime.now(),
+      date: DateTime(2020, 5, 7),
       transactionType: TransactionType.Expense,
     ),
     Transaction(
       id: 't3',
       title: 'Bet',
       amount: 20,
-      date: DateTime.now(),
+      date: DateTime(2019, 8, 29),
       transactionType: TransactionType.Expense,
       description: 'Oopsie',
     ),
@@ -39,6 +39,8 @@ class Transactions with ChangeNotifier {
   ];
 
   List<Transaction> get items {
+    // Sort items in non-chronological order.
+    _items.sort((a, b) => b.date.compareTo(a.date));
     return [..._items];
   }
 
