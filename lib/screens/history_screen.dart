@@ -52,13 +52,7 @@ class HistoryScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (_, index) {
-              final transaction = transactions[index];
-              return TransactionCard(
-                id: transaction.id,
-                title: transaction.title,
-                amount: transaction.amount,
-                transactionType: transaction.transactionType,
-              );
+              return TransactionCard(transaction: transactions[index]);
             },
           ),
         ),
