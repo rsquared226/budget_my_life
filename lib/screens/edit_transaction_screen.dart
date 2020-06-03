@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../custom_colors.dart';
+
 // This is what pops up when the FAB on home_screen is clicked.
 
 class EditTransactionScreen extends StatefulWidget {
@@ -13,7 +15,10 @@ class EditTransactionScreen extends StatefulWidget {
 }
 
 class _EditTransactionScreenState extends State<EditTransactionScreen> {
+  // TODO: instead of having a dropdown for saying it's an expense or not, instead check if the amount field is negative or positive.
   final _formKey = GlobalKey<FormState>();
+
+  String dropdownTransactionType = 'Expense';
 
   // The header containing the close button and the title form field.
   Widget _buildFormHeader(BuildContext context) {
@@ -49,11 +54,14 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           cursorColor: Theme.of(context).accentColor,
         );
 
-    return Container(
+    return AnimatedContainer(
       height: 200,
       width: double.infinity,
+      duration: Duration(milliseconds: 250),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: dropdownTransactionType == 'Expense'
+            ? Colors.pink.shade900
+            : CustomColors.incomeColor,
         // Just so it can have a neat shadow under the header.
         boxShadow: [
           BoxShadow(
@@ -80,6 +88,29 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     );
   }
 
+  Widget _buildTransactionTypeDropdownRow() {
+    return Row(
+      children: <Widget>[
+        const Text('Transaction type:'),
+        SizedBox(width: 30),
+        DropdownButton<String>(
+          value: dropdownTransactionType,
+          onChanged: (newValue) {
+            setState(() {
+              dropdownTransactionType = newValue;
+            });
+          },
+          items: <String>['Income', 'Expense'].map((value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +119,26 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         child: Column(
           children: <Widget>[
             _buildFormHeader(context),
+            SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildTransactionTypeDropdownRow(),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Amount'),
+                      keyboardType:
+                          const TextInputType.numberWithOptions(signed: false),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Description'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
