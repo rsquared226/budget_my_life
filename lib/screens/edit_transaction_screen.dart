@@ -25,6 +25,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   // To set the text inside the date text field.
   final _dateController = TextEditingController();
 
+  final _amountFocusNode = FocusNode();
+
   // The header containing the close button, section title, and the title form field.
   Widget _buildFormHeader(BuildContext context) {
     final onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
@@ -32,8 +34,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     final amount = double.tryParse(_amountController.text);
     // By default we will assume the transaction is an income.
     final containerColor = amount != null && amount < 0
-        ? Colors
-            .pink.shade900 // Different color here because red seemed too harsh.
+        ? CustomColors.expenseColor
         : CustomColors.incomeColor;
     final stringTransactionType =
         amount != null && amount < 0 ? 'Expense' : 'Income';
@@ -71,6 +72,10 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           autofocus: true,
           style: TextStyle(color: onPrimaryColor),
           cursorColor: Theme.of(context).accentColor,
+          textInputAction: TextInputAction.next,
+          onFieldSubmitted: (value) {
+            FocusScope.of(context).requestFocus(_amountFocusNode);
+          },
         );
 
     return AnimatedContainer(
@@ -130,7 +135,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
   @override
   void initState() {
-    // Ensure that the section header is updated when the amount field is updated.
+    // Ensure that the section header color/button is updated when the amount field is updated.
     _amountController.addListener(() {
       setState(() {});
     });
@@ -142,6 +147,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   @override
   void dispose() {
     _amountController.dispose();
+    _amountFocusNode.dispose();
     super.dispose();
   }
 
@@ -166,11 +172,13 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                             'If this is an expense, make the amount negative.',
                       ),
                       controller: _amountController,
+                      focusNode: _amountFocusNode,
                       keyboardType: TextInputType.number,
                     ),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Date',
+                        helperText: 'Click to change the date',
                       ),
                       readOnly: true,
                       onTap: _selectDate,
