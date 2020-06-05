@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import '../custom_colors.dart';
@@ -19,6 +20,10 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
   // Used for determining what color the form header should be based on if it's positive or negative.
   final _amountController = TextEditingController();
+  // Default date should be now.
+  var _selectedDate = DateTime.now();
+  // To set the text inside the date text field.
+  final _dateController = TextEditingController();
 
   // The header containing the close button, section title, and the title form field.
   Widget _buildFormHeader(BuildContext context) {
@@ -63,6 +68,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               borderSide: BorderSide(color: Theme.of(context).accentColor),
             ),
           ),
+          autofocus: true,
           style: TextStyle(color: onPrimaryColor),
           cursorColor: Theme.of(context).accentColor,
         );
@@ -106,12 +112,30 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     );
   }
 
+  Future<void> _selectDate() async {
+    final DateTime pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime.utc(1970),
+      lastDate: DateTime.now().add(Duration(days: 1)),
+      helpText: 'When did your transaction take place?',
+    );
+    if (pickedDate != null) {
+      _dateController.text = DateFormat.yMMMMd().format(pickedDate);
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
+  }
+
   @override
   void initState() {
     // Ensure that the section header is updated when the amount field is updated.
     _amountController.addListener(() {
       setState(() {});
     });
+
+    _dateController.text = DateFormat.yMMMMd().format(_selectedDate);
     super.initState();
   }
 
@@ -146,8 +170,17 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(
+                        labelText: 'Date',
+                      ),
+                      readOnly: true,
+                      onTap: _selectDate,
+                      controller: _dateController,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
                         labelText: 'Description',
                       ),
+                      maxLines: 4,
                     ),
                   ],
                 ),

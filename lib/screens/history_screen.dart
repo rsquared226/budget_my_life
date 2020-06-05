@@ -8,7 +8,7 @@ import '../providers/transactions.dart';
 // This screen is a tab under home_screen.
 
 class HistoryScreen extends StatelessWidget {
-  Widget buildSectionHeader() {
+  Widget buildListHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -46,7 +46,7 @@ class HistoryScreen extends StatelessWidget {
       children: <Widget>[
         BalanceSummaryCard(transactionsData.balance),
         SizedBox(height: 8),
-        buildSectionHeader(),
+        buildListHeader(),
         SizedBox(height: 5),
         Expanded(
           child: ListView.builder(
