@@ -50,12 +50,21 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           onPressed: widget.closeContainer,
         );
 
-    // TODO: Make this a submit button
-    Widget buildSectionTitle() => Text(
-          'Add $stringTransactionType',
-          style: Theme.of(context).textTheme.headline6.copyWith(
-                color: onPrimaryColor,
-              ),
+    // Had to do this hacky ButtonTheme stuff to get it aligned to the close button.
+    // TODO: make this unhacky
+    Widget buildSubmitButton() => ButtonTheme(
+          height: 0,
+          padding: const EdgeInsets.only(bottom: 20, left: 20),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          child: FlatButton(
+            child: Text(
+              'Add $stringTransactionType',
+              style: Theme.of(context).textTheme.headline6.copyWith(
+                    color: onPrimaryColor,
+                  ),
+            ),
+            onPressed: _saveForm,
+          ),
         );
 
     Widget buildTitleFormField() => TextFormField(
@@ -106,7 +115,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   buildCloseButton(),
-                  buildSectionTitle(),
+                  buildSubmitButton(),
                 ],
               ),
               buildTitleFormField(),
@@ -132,6 +141,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       });
     }
   }
+
+  void _saveForm() {}
 
   @override
   void initState() {
