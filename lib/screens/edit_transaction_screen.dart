@@ -1,9 +1,42 @@
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../custom_colors.dart';
+import '../models/transaction.dart';
+import '../providers/transactions.dart';
 
 // This is what pops up when the FAB on home_screen is clicked.
+
+// This is to make the saving of the form less cumbersome.
+class EditableTransaction {
+  String id;
+  String title;
+  String description;
+  double amount;
+  DateTime date;
+
+  EditableTransaction({
+    this.id,
+    this.title,
+    this.description,
+    this.amount,
+    this.date,
+  });
+
+  Transaction toTransaction() {
+    final transactionType =
+        amount > 0 ? TransactionType.Income : TransactionType.Expense;
+    return Transaction(
+      id: id ?? DateTime.now().toString(),
+      title: title,
+      description: description,
+      amount: amount.abs(),
+      date: date,
+      transactionType: transactionType,
+    );
+  }
+}
 
 class EditTransactionScreen extends StatefulWidget {
   // Function that closes this screen.
@@ -17,6 +50,8 @@ class EditTransactionScreen extends StatefulWidget {
 
 class _EditTransactionScreenState extends State<EditTransactionScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  var _editableTransaction = EditableTransaction();
 
   // Used for determining what color the form header should be based on if it's positive or negative.
   final _amountController = TextEditingController();
@@ -85,6 +120,18 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           onFieldSubmitted: (value) {
             FocusScope.of(context).requestFocus(_amountFocusNode);
           },
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter a title.';
+            }
+            if (value.length > 50) {
+              return 'Please shorten your title from ${value.length} characters to 50.';
+            }
+            return null;
+          },
+          onSaved: (newValue) {
+            _editableTransaction.title = newValue;
+          },
         );
 
     return AnimatedContainer(
@@ -106,9 +153,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       // because we want part of the colored Container to be under the status bar to look better.
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 15, 15, 30),
+          padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,6 +164,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                   buildSubmitButton(),
                 ],
               ),
+              SizedBox(height: 12),
               buildTitleFormField(),
             ],
           ),
@@ -142,7 +189,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     }
   }
 
-  void _saveForm() {}
+  void _saveForm() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    Provider.of<Transactions>(context, listen: false)
+        .addTransaction(_editableTransaction.toTransaction());
+    widget.closeContainer();
+  }
 
   @override
   void initState() {
@@ -185,6 +240,23 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       controller: _amountController,
                       focusNode: _amountFocusNode,
                       keyboardType: TextInputType.number,
+                      validator: (value) {
+                        final amountVal = double.tryParse(value);
+                        if (value.isEmpty || amountVal == null) {
+                          return 'Please enter a number';
+                        }
+                        if (amountVal == 0) {
+                          return 'Please enter a non-zero number';
+                        }
+                        if (double.parse(amountVal.toStringAsFixed(2)) !=
+                            amountVal) {
+                          return 'Please enter a number with a maximum of 2 decimal digits';
+                        }
+                        return null;
+                      },
+                      onSaved: (newValue) {
+                        _editableTransaction.amount = double.parse(newValue);
+                      },
                     ),
                     TextFormField(
                       decoration: InputDecoration(
@@ -194,12 +266,18 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       readOnly: true,
                       onTap: _selectDate,
                       controller: _dateController,
+                      onSaved: (_) {
+                        _editableTransaction.date = _selectedDate;
+                      },
                     ),
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Description',
                       ),
                       maxLines: 4,
+                      onSaved: (newValue) {
+                        _editableTransaction.description = newValue;
+                      },
                     ),
                   ],
                 ),
