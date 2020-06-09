@@ -48,6 +48,11 @@ class HistoryScreen extends StatelessWidget {
         SizedBox(height: 8),
         buildListHeader(),
         SizedBox(height: 5),
+        // A psuedo-shadow.
+        Divider(
+          height: 0,
+          thickness: 1.5,
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: transactions.length,

@@ -173,22 +173,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     );
   }
 
-  Future<void> _selectDate() async {
-    final DateTime pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime.utc(1970),
-      lastDate: DateTime.now().add(Duration(days: 1)),
-      helpText: 'When did your transaction take place?',
-    );
-    if (pickedDate != null) {
-      _dateController.text = DateFormat.yMMMMd().format(pickedDate);
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    }
-  }
-
   void _saveForm() {
     if (!_formKey.currentState.validate()) {
       return;
@@ -264,7 +248,22 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                         helperText: 'Click to change the date',
                       ),
                       readOnly: true,
-                      onTap: _selectDate,
+                      onTap: () async {
+                        final DateTime pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: _selectedDate,
+                          firstDate: DateTime.utc(1970),
+                          lastDate: DateTime.now().add(Duration(days: 1)),
+                          helpText: 'When did your transaction take place?',
+                        );
+                        if (pickedDate != null) {
+                          _dateController.text =
+                              DateFormat.yMMMMd().format(pickedDate);
+                          setState(() {
+                            _selectedDate = pickedDate;
+                          });
+                        }
+                      },
                       controller: _dateController,
                       onSaved: (_) {
                         _editableTransaction.date = _selectedDate;
