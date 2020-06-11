@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import '../custom_colors.dart';
 
 class BalanceSummaryCard extends StatelessWidget {
-  final double amount;
+  // Only asking for the balance in case the way formatting the balance changes later.
+  // Use it to see if it's negative or positive to determine the color of the card
+  final double balance;
+  final String formattedBalance;
 
-  const BalanceSummaryCard(this.amount);
+  const BalanceSummaryCard({
+    @required this.balance,
+    @required this.formattedBalance,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class BalanceSummaryCard extends StatelessWidget {
         decoration: BoxDecoration(
           // To match Card's border radius.
           borderRadius: BorderRadius.circular(4),
-          color: amount >= 0
+          color: balance >= 0
               ? CustomColors.incomeColor
               : CustomColors.expenseColor,
         ),
@@ -48,7 +54,7 @@ class BalanceSummaryCard extends StatelessWidget {
                 // Only shrink the fontSize if needed, but don't grow it.
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  '\$${amount.toStringAsFixed(2)}',
+                  formattedBalance,
                   textAlign: TextAlign.end,
                   style: const TextStyle(
                     fontSize: 60,

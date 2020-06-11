@@ -44,7 +44,10 @@ class HistoryScreen extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        BalanceSummaryCard(transactionsData.balance),
+        BalanceSummaryCard(
+          balance: transactionsData.balance,
+          formattedBalance: transactionsData.formattedBalance,
+        ),
         SizedBox(height: 8),
         buildListHeader(),
         SizedBox(height: 5),

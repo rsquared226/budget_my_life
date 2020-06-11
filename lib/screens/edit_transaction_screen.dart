@@ -25,17 +25,14 @@ class EditableTransaction {
   });
 
   Transaction toTransaction() {
-    final transactionType =
-        amount > 0 ? TransactionType.Income : TransactionType.Expense;
     return Transaction(
       // If we are editing a transaction, an id would've already been provided. If not, we're making a new one and will
       // make a new id on the fly.
       id: id ?? DateTime.now().toString(),
       title: title,
       description: description,
-      amount: amount.abs(),
+      amount: amount,
       date: date,
-      transactionType: transactionType,
     );
   }
 }
@@ -207,14 +204,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
     if (widget.editTransactionId != null) {
       final initTx = transactionsData.findById(widget.editTransactionId);
-      final initialAmount = initTx.transactionType == TransactionType.Expense
-          ? initTx.amount * -1
-          : initTx.amount;
 
       _editableTransaction = EditableTransaction(
         id: initTx.id,
         title: initTx.title,
-        amount: initialAmount,
+        amount: initTx.amount,
         date: initTx.date,
         description: initTx.description,
       );

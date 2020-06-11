@@ -31,7 +31,7 @@ class TransactionCard extends StatelessWidget {
             height: 25,
             width: 25,
             decoration: BoxDecoration(
-              color: transaction.transactionType == TransactionType.Income
+              color: transaction.amount > 0
                   ? CustomColors.incomeColor
                   : CustomColors.expenseColor,
               borderRadius: BorderRadius.circular(6),
@@ -48,7 +48,7 @@ class TransactionCard extends StatelessWidget {
         ),
         subtitle: Text(DateFormat.yMMMMd().format(transaction.date)),
         trailing: Text(
-          '\$${transaction.amount.toStringAsFixed(2)}',
+          transaction.formattedAmount,
           softWrap: false,
           overflow: TextOverflow.fade,
           style: const TextStyle(
