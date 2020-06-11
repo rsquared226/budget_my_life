@@ -1,3 +1,4 @@
+import 'package:budget_my_life/screens/edit_transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -55,6 +56,17 @@ class TransactionCard extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditTransactionScreen(
+                closeContainer: () => Navigator.pop(context),
+                editTransactionId: transaction.id,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

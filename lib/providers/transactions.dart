@@ -64,4 +64,15 @@ class Transactions with ChangeNotifier {
     _items.add(newTransaction);
     notifyListeners();
   }
+
+  void editTransaction(Transaction editedTransaction) {
+    final editedIndex = _items
+        .indexWhere((transaction) => editedTransaction.id == transaction.id);
+
+    if (editedIndex == null) {
+      return;
+    }
+    _items[editedIndex] = editedTransaction;
+    notifyListeners();
+  }
 }

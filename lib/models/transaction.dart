@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 enum TransactionType { Income, Expense }
 
+// TODO: Remove TransactionType and just have the amount be negative. Make a getter string for a formatted output for the amount.
 class Transaction {
   final String id;
   final String title;

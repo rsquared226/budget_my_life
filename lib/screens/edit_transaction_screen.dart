@@ -28,6 +28,8 @@ class EditableTransaction {
     final transactionType =
         amount > 0 ? TransactionType.Income : TransactionType.Expense;
     return Transaction(
+      // If we are editing a transaction, an id would've already been provided. If not, we're making a new one and will
+      // make a new id on the fly.
       id: id ?? DateTime.now().toString(),
       title: title,
       description: description,
@@ -41,8 +43,11 @@ class EditableTransaction {
 class EditTransactionScreen extends StatefulWidget {
   // Function that closes this screen.
   final Function closeContainer;
+  // Optional parameter, can be filled with a product id if we want to edit that product.
+  final String editTransactionId;
 
-  const EditTransactionScreen({@required this.closeContainer});
+  const EditTransactionScreen(
+      {@required this.closeContainer, this.editTransactionId});
 
   @override
   _EditTransactionScreenState createState() => _EditTransactionScreenState();
@@ -51,7 +56,11 @@ class EditTransactionScreen extends StatefulWidget {
 class _EditTransactionScreenState extends State<EditTransactionScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  var _editableTransaction = EditableTransaction();
+  // The provider data is initialized later because it requires context.
+  Transactions transactionsData;
+
+  // This is initialized in initState so we can see if we're editing or adding a transaction.
+  EditableTransaction _editableTransaction;
 
   // Used for determining what color the form header should be based on if it's positive or negative.
   final _amountController = TextEditingController();
@@ -103,6 +112,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         );
 
     Widget buildTitleFormField() => TextFormField(
+          initialValue: _editableTransaction.title ?? '',
           decoration: InputDecoration(
             labelText: 'Title',
             labelStyle: TextStyle(color: onPrimaryColor),
@@ -178,8 +188,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       return;
     }
     _formKey.currentState.save();
-    Provider.of<Transactions>(context, listen: false)
-        .addTransaction(_editableTransaction.toTransaction());
+    if (_editableTransaction.id != null) {
+      transactionsData.editTransaction(_editableTransaction.toTransaction());
+    } else {
+      transactionsData.addTransaction(_editableTransaction.toTransaction());
+    }
     widget.closeContainer();
   }
 
@@ -190,7 +203,32 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       setState(() {});
     });
 
+    transactionsData = Provider.of<Transactions>(context, listen: false);
+
+    if (widget.editTransactionId != null) {
+      final initTx = transactionsData.findById(widget.editTransactionId);
+      final initialAmount = initTx.transactionType == TransactionType.Expense
+          ? initTx.amount * -1
+          : initTx.amount;
+
+      _editableTransaction = EditableTransaction(
+        id: initTx.id,
+        title: initTx.title,
+        amount: initialAmount,
+        date: initTx.date,
+        description: initTx.description,
+      );
+
+      _amountController.text =
+          _editableTransaction.amount.toStringAsFixed(2) ?? '';
+      // Don't forget to set the selectedDate.
+      _selectedDate = initTx.date;
+    } else {
+      _editableTransaction = EditableTransaction();
+    }
+
     _dateController.text = DateFormat.yMMMMd().format(_selectedDate);
+
     super.initState();
   }
 
@@ -270,6 +308,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       },
                     ),
                     TextFormField(
+                      initialValue: _editableTransaction.description ?? '',
                       decoration: InputDecoration(
                         labelText: 'Description',
                       ),
