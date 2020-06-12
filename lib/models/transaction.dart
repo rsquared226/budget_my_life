@@ -7,13 +7,21 @@ class Transaction {
   final String title;
   final String description;
   final double amount;
-  final TransactionType transactionType;
+  final DateTime date;
 
   const Transaction({
     @required this.id,
     @required this.title,
     this.description = '',
     @required this.amount,
-    @required this.transactionType,
+    @required this.date,
   });
+
+  String get formattedAmount {
+    var formattedAmount = '\$${amount.abs().toStringAsFixed(2)}';
+    if (amount < 0) {
+      formattedAmount = '-' + formattedAmount;
+    }
+    return formattedAmount;
+  }
 }

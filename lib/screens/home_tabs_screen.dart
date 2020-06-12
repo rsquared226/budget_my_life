@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 
-import './add_transaction_screen.dart';
+import './edit_transaction_screen.dart';
 import '../widgets/app_drawer.dart';
 import './graphs_screen.dart';
 import './history_screen.dart';
@@ -59,8 +59,10 @@ class _HomeTabsScreenState extends State<HomeTabsScreen> {
             ),
           );
         },
-        openBuilder: (_, __) {
-          return AddTransactionScreen();
+        openBuilder: (_, closeContainer) {
+          return EditTransactionScreen(
+            closeContainer: closeContainer,
+          );
         },
       ),
       bottomNavigationBar: BottomNavigationBar(

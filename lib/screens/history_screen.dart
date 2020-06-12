@@ -8,7 +8,7 @@ import '../providers/transactions.dart';
 // This screen is a tab under home_screen.
 
 class HistoryScreen extends StatelessWidget {
-  Widget buildSectionHeader() {
+  Widget buildListHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -44,21 +44,23 @@ class HistoryScreen extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        BalanceSummaryCard(transactionsData.balance),
+        BalanceSummaryCard(
+          balance: transactionsData.balance,
+          formattedBalance: transactionsData.formattedBalance,
+        ),
         SizedBox(height: 8),
-        buildSectionHeader(),
+        buildListHeader(),
         SizedBox(height: 5),
+        // A psuedo-shadow.
+        Divider(
+          height: 0,
+          thickness: 1.5,
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (_, index) {
-              final transaction = transactions[index];
-              return TransactionCard(
-                id: transaction.id,
-                title: transaction.title,
-                amount: transaction.amount,
-                transactionType: transaction.transactionType,
-              );
+              return TransactionCard(transaction: transactions[index]);
             },
           ),
         ),
