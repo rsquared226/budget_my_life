@@ -1,9 +1,8 @@
-import 'package:budget_my_life/screens/edit_transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/transaction.dart';
 import '../custom_colors.dart';
+import '../models/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
@@ -12,61 +11,45 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
+    // No need to surround this with a card because it is surrounded by OpenContainer in HistoryScreen.
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 22,
+        vertical: 2,
       ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 22,
-          vertical: 2,
-        ),
-        // Need to align the square in the center (height) of the card.
-        leading: Align(
-          // Don't have Align take up entire ListTile width.
-          widthFactor: 1,
-          // Small rounded square to easily show if it is an income or expense.
-          child: Container(
-            height: 25,
-            width: 25,
-            decoration: BoxDecoration(
-              color: transaction.amount > 0
-                  ? CustomColors.incomeColor
-                  : CustomColors.expenseColor,
-              borderRadius: BorderRadius.circular(6),
-            ),
+      // Need to align the square in the center (height) of the card.
+      leading: Align(
+        // Don't have Align take up entire ListTile width.
+        widthFactor: 1,
+        // Small rounded square to easily show if it is an income or expense.
+        child: Container(
+          height: 25,
+          width: 25,
+          decoration: BoxDecoration(
+            color: transaction.amount > 0
+                ? CustomColors.incomeColor
+                : CustomColors.expenseColor,
+            borderRadius: BorderRadius.circular(6),
           ),
         ),
-        title: Text(
-          transaction.title,
-          softWrap: false,
-          overflow: TextOverflow.fade,
-          style: const TextStyle(
-            fontSize: 16,
-          ),
+      ),
+      title: Text(
+        transaction.title,
+        softWrap: false,
+        overflow: TextOverflow.fade,
+        style: const TextStyle(
+          fontSize: 16,
         ),
-        subtitle: Text(DateFormat.yMMMMd().format(transaction.date)),
-        trailing: Text(
-          transaction.formattedAmount,
-          softWrap: false,
-          overflow: TextOverflow.fade,
-          style: const TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
-          ),
+      ),
+      subtitle: Text(DateFormat.yMMMMd().format(transaction.date)),
+      trailing: Text(
+        transaction.formattedAmount,
+        softWrap: false,
+        overflow: TextOverflow.fade,
+        style: const TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EditTransactionScreen(
-                closeContainer: () => Navigator.pop(context),
-                editTransactionId: transaction.id,
-              ),
-            ),
-          );
-        },
       ),
     );
   }

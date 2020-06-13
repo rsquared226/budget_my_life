@@ -41,11 +41,27 @@ class Transactions with ChangeNotifier {
   }
 
   double get balance {
-    var total = 0.0;
+    return incomeTotal - expensesTotal;
+  }
+
+  double get expensesTotal {
+    var totalExpenses = 0.0;
     _items.forEach((transaction) {
-      total += transaction.amount;
+      if (transaction.amount < 0) {
+        totalExpenses += transaction.amount;
+      }
     });
-    return total;
+    return totalExpenses;
+  }
+
+  double get incomeTotal {
+    var totalIncome = 0.0;
+    _items.forEach((transaction) {
+      if (transaction.amount > 0) {
+        totalIncome += transaction.amount;
+      }
+    });
+    return totalIncome;
   }
 
   String get formattedBalance {

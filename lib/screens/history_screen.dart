@@ -1,12 +1,14 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../card_items/transaction_card.dart';
-import '../widgets/balance_summary_card.dart';
+import '../screens/view_transaction_screen.dart';
 import '../providers/transactions.dart';
+import '../widgets/balance_summary_card.dart';
 
 // This screen is a tab under home_screen.
-
+// TODO: Use slivers
 class HistoryScreen extends StatelessWidget {
   Widget buildListHeader() {
     return Padding(
@@ -60,7 +62,21 @@ class HistoryScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (_, index) {
-              return TransactionCard(transaction: transactions[index]);
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                child: OpenContainer(
+                  closedBuilder: (_, __) {
+                    return TransactionCard(transaction: transactions[index]);
+                  },
+                  openBuilder: (context, action) {
+                    return ViewTransactionScreen(
+                        transaction: transactions[index]);
+                  },
+                ),
+              );
             },
           ),
         ),
