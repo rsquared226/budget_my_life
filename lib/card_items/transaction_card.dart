@@ -26,9 +26,7 @@ class TransactionCard extends StatelessWidget {
           height: 25,
           width: 25,
           decoration: BoxDecoration(
-            color: transaction.amount > 0
-                ? CustomColors.incomeColor
-                : CustomColors.expenseColor,
+            color: CustomColors.transactionTypeColor(transaction.amount),
             borderRadius: BorderRadius.circular(6),
           ),
         ),

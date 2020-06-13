@@ -74,9 +74,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
     final amount = double.tryParse(_amountController.text);
     // By default we will assume the transaction is an income.
-    final containerColor = amount != null && amount < 0
-        ? CustomColors.expenseColor
-        : CustomColors.incomeColor;
+    final containerColor = CustomColors.transactionTypeColor(amount);
     final stringTransactionType =
         amount != null && amount < 0 ? 'Expense' : 'Income';
 
