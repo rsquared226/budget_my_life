@@ -10,26 +10,51 @@ class ViewTransactionScreen extends StatelessWidget {
 
   const ViewTransactionScreen({@required this.transaction});
 
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          expandedHeight: 150,
-          pinned: true,
-          backgroundColor:
-              CustomColors.transactionTypeColor(transaction.amount),
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text(transaction.title),
-            collapseMode: CollapseMode.parallax,
+  Widget buildAppBar(ThemeData appTheme) {
+    return SliverAppBar(
+      expandedHeight: 150,
+      pinned: true,
+      backgroundColor: appTheme.colorScheme.surface,
+      iconTheme: IconThemeData(color: appTheme.colorScheme.onSurface),
+      actions: <Widget>[
+        // TODO: Actually link these buttons to stuff.
+        IconButton(
+          icon: const Icon(Icons.edit),
+          onPressed: () {},
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          onPressed: () {},
+        ),
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        title: Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: CustomColors.transactionTypeColor(transaction.amount),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            transaction.formattedAmount,
+            style: TextStyle(
+              color: CustomColors.onIncomeExpenseColor,
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
+    return CustomScrollView(
+      slivers: <Widget>[
+        buildAppBar(appTheme),
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (_, __) {
-              return ListTile(title: const Text('ugh'));
-            },
-            childCount: 50,
+          delegate: SliverChildListDelegate.fixed(
+            <Widget>[],
           ),
         ),
       ],

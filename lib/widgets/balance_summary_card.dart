@@ -34,11 +34,11 @@ class BalanceSummaryCard extends StatelessWidget {
             // Must surround text with container so it will take up space to align left.
             Container(
               width: double.infinity,
-              child: const Text(
+              child: Text(
                 'Balance',
                 textAlign: TextAlign.start,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: CustomColors.onIncomeExpenseColor,
                 ),
               ),
             ),
@@ -54,10 +54,10 @@ class BalanceSummaryCard extends StatelessWidget {
                 child: Text(
                   formattedBalance,
                   textAlign: TextAlign.end,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 60,
                     fontWeight: FontWeight.w300,
-                    color: Colors.white,
+                    color: CustomColors.onIncomeExpenseColor,
                   ),
                 ),
               ),
