@@ -5,10 +5,10 @@ import '../models/transaction.dart';
 
 // This is shown when a user clicks on a transaction card in HistoryScreen.
 
-class ViewTransactionScreen extends StatelessWidget {
+class TransactionDetailsScreen extends StatelessWidget {
   final Transaction transaction;
 
-  const ViewTransactionScreen({@required this.transaction});
+  const TransactionDetailsScreen({@required this.transaction});
 
   Widget buildAppBar(ThemeData appTheme) {
     return SliverAppBar(

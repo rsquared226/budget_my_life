@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../card_items/transaction_card.dart';
-import '../screens/view_transaction_screen.dart';
+import '../screens/transaction_details_screen.dart';
 import '../providers/transactions.dart';
 import '../widgets/balance_summary_card.dart';
 
@@ -72,7 +72,7 @@ class HistoryScreen extends StatelessWidget {
                     return TransactionCard(transaction: transactions[index]);
                   },
                   openBuilder: (context, action) {
-                    return ViewTransactionScreen(
+                    return TransactionDetailsScreen(
                         transaction: transactions[index]);
                   },
                 ),
