@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../custom_colors.dart';
 import '../models/transaction.dart';
@@ -52,9 +53,35 @@ class TransactionDetailsScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         buildAppBar(appTheme),
-        SliverList(
-          delegate: SliverChildListDelegate.fixed(
-            <Widget>[],
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate.fixed(
+              <Widget>[
+                Text(
+                  transaction.title,
+                  style: appTheme.textTheme.headline6.copyWith(
+                    fontSize: 40,
+                  ),
+                ),
+                SizedBox(height: 10),
+                // TODO: Make this a getter method in transactions model.
+                Text(
+                  DateFormat.yMMMMd().format(transaction.date),
+                  style: appTheme.textTheme.caption.copyWith(
+                    fontSize: 17,
+                  ),
+                ),
+                SizedBox(height: 15),
+                // TODO: Put graphs here.
+                Placeholder(fallbackHeight: 250),
+                SizedBox(height: 15),
+                Text(
+                  transaction.description,
+                  style: appTheme.textTheme.subtitle1,
+                ),
+              ],
+            ),
           ),
         ),
       ],

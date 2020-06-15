@@ -25,8 +25,7 @@ class Transactions with ChangeNotifier {
     ),
     Transaction(
       id: 't4',
-      title:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a nulla in orci viverra scelerisque. Nullam dignissim sit amet orci.',
+      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       amount: -20,
       date: DateTime.now(),
       description:
