@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../custom_colors.dart';
 import '../models/transaction.dart';
@@ -39,7 +38,7 @@ class TransactionCard extends StatelessWidget {
           fontSize: 16,
         ),
       ),
-      subtitle: Text(DateFormat.yMMMMd().format(transaction.date)),
+      subtitle: Text(transaction.formattedDate),
       trailing: Text(
         transaction.formattedAmount,
         softWrap: false,

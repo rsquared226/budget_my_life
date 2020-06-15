@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 enum TransactionType { Income, Expense }
 
@@ -23,5 +24,9 @@ class Transaction {
       formattedAmount = '-' + formattedAmount;
     }
     return formattedAmount;
+  }
+
+  String get formattedDate {
+    return DateFormat.yMMMMd().format(date);
   }
 }

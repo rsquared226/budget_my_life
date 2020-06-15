@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../custom_colors.dart';
 import '../models/transaction.dart';
@@ -67,7 +66,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                 SizedBox(height: 10),
                 // TODO: Make this a getter method in transactions model.
                 Text(
-                  DateFormat.yMMMMd().format(transaction.date),
+                  transaction.formattedDate,
                   style: appTheme.textTheme.caption.copyWith(
                     fontSize: 17,
                   ),
