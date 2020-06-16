@@ -73,7 +73,8 @@ class HistoryScreen extends StatelessWidget {
                   },
                   openBuilder: (context, action) {
                     return TransactionDetailsScreen(
-                        transaction: transactions[index]);
+                      transactionId: transactions[index].id,
+                    );
                   },
                 ),
               );

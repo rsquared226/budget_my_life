@@ -1,57 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../custom_colors.dart';
-import '../models/transaction.dart';
+import '../providers/transactions.dart';
+import './edit_transaction_screen.dart';
+import '../widgets/transaction_details_appbar.dart';
 
 // This is shown when a user clicks on a transaction card in HistoryScreen.
 
 class TransactionDetailsScreen extends StatelessWidget {
-  final Transaction transaction;
+  // Use a provider rather than actual data so that when the transaction is edited the changes are reflected.
+  final String transactionId;
 
-  const TransactionDetailsScreen({@required this.transaction});
-
-  Widget buildAppBar(ThemeData appTheme) {
-    return SliverAppBar(
-      expandedHeight: 150,
-      pinned: true,
-      backgroundColor: appTheme.colorScheme.surface,
-      iconTheme: IconThemeData(color: appTheme.colorScheme.onSurface),
-      actions: <Widget>[
-        // TODO: Actually link these buttons to stuff.
-        IconButton(
-          icon: const Icon(Icons.edit),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () {},
-        ),
-      ],
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
-        title: Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: CustomColors.transactionTypeColor(transaction.amount),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Text(
-            transaction.formattedAmount,
-            style: TextStyle(
-              color: CustomColors.onIncomeExpenseColor,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  const TransactionDetailsScreen({@required this.transactionId});
 
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
+    final transactionsData = Provider.of<Transactions>(context);
+    final transaction = transactionsData.findById(transactionId);
+
+    // This is needed for that split second after a transaction is deleted and and this screen is still visible before
+    // it is closed. Otherwise, a nasty error is thrown.
+    if (transaction == null) {
+      return Container();
+    }
+
     return CustomScrollView(
       slivers: <Widget>[
-        buildAppBar(appTheme),
+        TransactionDetailsAppBar(
+          transactionAmount: transaction.amount,
+          formattedAmount: transaction.formattedAmount,
+          editTransaction: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => EditTransactionScreen(
+                  closeContainer: () => Navigator.pop(context),
+                  editTransactionId: transactionId,
+                ),
+              ),
+            );
+          },
+          deleteTransaction: () {
+            // TODO: add "are you sure" dialogue.
+            transactionsData.deleteTransaction(transactionId);
+            // Doing this will avoid animation errors. It pops everything and goes back to the homescreen so the
+            // closeContainer animation won't play on a deleted transaction.
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          },
+        ),
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
           sliver: SliverList(
@@ -64,7 +61,6 @@ class TransactionDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                // TODO: Make this a getter method in transactions model.
                 Text(
                   transaction.formattedDate,
                   style: appTheme.textTheme.caption.copyWith(

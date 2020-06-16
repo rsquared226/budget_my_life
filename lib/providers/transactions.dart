@@ -72,7 +72,10 @@ class Transactions with ChangeNotifier {
   }
 
   Transaction findById(String id) {
-    return _items.firstWhere((transaction) => transaction.id == id);
+    return _items.firstWhere(
+      (transaction) => transaction.id == id,
+      orElse: () => null,
+    );
   }
 
   void addTransaction(Transaction newTransaction) {
@@ -88,6 +91,11 @@ class Transactions with ChangeNotifier {
       return;
     }
     _items[editedIndex] = editedTransaction;
+    notifyListeners();
+  }
+
+  void deleteTransaction(String id) {
+    _items.removeWhere((transaction) => transaction.id == id);
     notifyListeners();
   }
 }
