@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../charts/transaction_details_pie_chart.dart';
 import '../providers/transactions.dart';
 import './edit_transaction_screen.dart';
 import '../widgets/transaction_details_appbar.dart';
@@ -108,10 +109,18 @@ class TransactionDetailsScreen extends StatelessWidget {
                     fontSize: 17,
                   ),
                 ),
-                SizedBox(height: 15),
-                // TODO: Put graphs here.
-                Placeholder(fallbackHeight: 250),
-                SizedBox(height: 15),
+                SizedBox(height: 20),
+                SizedBox(
+                  height: 250,
+                  child: TransactionDetailsPieChart(
+                    transactionTitle: transaction.title,
+                    transactionAmount: transaction.amount,
+                    totalAmount: transaction.amount > 0
+                        ? transactionsData.incomeTotal
+                        : transactionsData.expensesTotal,
+                  ),
+                ),
+                SizedBox(height: 20),
                 Text(
                   transaction.description,
                   style: appTheme.textTheme.subtitle1,
