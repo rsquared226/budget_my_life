@@ -74,7 +74,7 @@ class TransactionDetailsScreen extends StatelessWidget {
     final transactionsData = Provider.of<Transactions>(context);
     final transaction = transactionsData.findById(transactionId);
 
-    // This is needed for that split second after a transaction is deleted and and this screen is still visible before
+    // This is needed for that split second after a transaction is deleted and this screen is still visible before
     // it is closed. Otherwise, a nasty error is thrown.
     if (transaction == null) {
       return Container();
@@ -109,7 +109,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                     fontSize: 17,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 250,
                   child: TransactionDetailsPieChart(
@@ -120,7 +120,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                         : transactionsData.expensesTotal,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   transaction.description,
                   style: appTheme.textTheme.subtitle1,

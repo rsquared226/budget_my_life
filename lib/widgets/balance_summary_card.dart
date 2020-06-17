@@ -44,7 +44,7 @@ class BalanceSummaryCard extends StatelessWidget {
             ),
             // Must surround text with container so it will take up space to align right.
             Container(
-              // SizedBox would take up too much height otherwise.
+              // FittedBox would take up too much height otherwise.
               height: 80,
               width: double.infinity,
               child: FittedBox(

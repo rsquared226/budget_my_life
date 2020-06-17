@@ -50,9 +50,9 @@ class HistoryScreen extends StatelessWidget {
           balance: transactionsData.balance,
           formattedBalance: transactionsData.formattedBalance,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         buildListHeader(),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         // A psuedo-shadow.
         Divider(
           height: 0,
@@ -71,7 +71,7 @@ class HistoryScreen extends StatelessWidget {
                   closedBuilder: (_, __) {
                     return TransactionCard(transaction: transactions[index]);
                   },
-                  openBuilder: (context, action) {
+                  openBuilder: (_, __) {
                     return TransactionDetailsScreen(
                       transactionId: transactions[index].id,
                     );

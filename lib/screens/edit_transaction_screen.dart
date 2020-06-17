@@ -169,7 +169,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                   buildSubmitButton(),
                 ],
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               buildTitleFormField(),
             ],
           ),
