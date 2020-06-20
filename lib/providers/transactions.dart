@@ -7,7 +7,7 @@ class Transactions with ChangeNotifier {
     Transaction(
       id: 't1',
       title: 'Payday baby',
-      amount: 20000000,
+      amount: 2000,
       date: DateTime(2019, 5, 7),
     ),
     Transaction(
@@ -25,12 +25,18 @@ class Transactions with ChangeNotifier {
     ),
     Transaction(
       id: 't4',
-      title:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque a nulla in orci viverra scelerisque. Nullam dignissim sit amet orci.',
+      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
       amount: -20,
       date: DateTime.now(),
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam in est in iaculis. Sed suscipit tristique venenatis. Sed egestas tellus et sem mattis, at imperdiet justo semper. Aenean blandit tincidunt sagittis. Nunc pulvinar leo in sapien varius, sit amet sodales mi tempus. In sit amet porta elit, et faucibus erat. Pellentesque hendrerit sapien in lacus vehicula, vitae semper lorem dignissim. Nullam viverra vestibulum tellus eu interdum. Pellentesque nec pellentesque turpis. Donec porta varius porta. Vestibulum tempor sollicitudin ex, id sollicitudin felis iaculis non. Sed sed efficitur lorem. Nulla aliquet metus vel laoreet semper. Phasellus eget dui ut tortor cursus rutrum. Sed tincidunt diam id congue mattis. Pellentesque vitae erat nec tortor tempus porttitor. Nullam accumsan pretium suscipit. Donec condimentum, est sit amet aliquam eleifend, erat arcu gravida nisl, quis commodo purus ipsum eu turpis. Pellentesque tristique laoreet tortor. Nulla elit orci, cursus nec tincidunt ut, molestie id sem. Cras varius eget ligula nec pellentesque. Quisque et orci nec ante cursus vestibulum a quis arcu. Vivamus ante ligula, porta sit amet iaculis a, ultricies porta nibh. Ut sollicitudin facilisis purus quis tincidunt. Mauris quis gravida leo.',
+    ),
+    Transaction(
+      id: 't5',
+      title: 'Another payday I guess',
+      amount: 500,
+      date: DateTime.now().subtract(Duration(days: 1)),
+      description: 'filler description.',
     ),
   ];
 
@@ -41,11 +47,27 @@ class Transactions with ChangeNotifier {
   }
 
   double get balance {
-    var total = 0.0;
+    return incomeTotal - expensesTotal;
+  }
+
+  double get expensesTotal {
+    var totalExpenses = 0.0;
     _items.forEach((transaction) {
-      total += transaction.amount;
+      if (transaction.amount < 0) {
+        totalExpenses += transaction.amount;
+      }
     });
-    return total;
+    return totalExpenses;
+  }
+
+  double get incomeTotal {
+    var totalIncome = 0.0;
+    _items.forEach((transaction) {
+      if (transaction.amount > 0) {
+        totalIncome += transaction.amount;
+      }
+    });
+    return totalIncome;
   }
 
   String get formattedBalance {
@@ -57,7 +79,10 @@ class Transactions with ChangeNotifier {
   }
 
   Transaction findById(String id) {
-    return _items.firstWhere((transaction) => transaction.id == id);
+    return _items.firstWhere(
+      (transaction) => transaction.id == id,
+      orElse: () => null,
+    );
   }
 
   void addTransaction(Transaction newTransaction) {
@@ -73,6 +98,11 @@ class Transactions with ChangeNotifier {
       return;
     }
     _items[editedIndex] = editedTransaction;
+    notifyListeners();
+  }
+
+  void deleteTransaction(String id) {
+    _items.removeWhere((transaction) => transaction.id == id);
     notifyListeners();
   }
 }

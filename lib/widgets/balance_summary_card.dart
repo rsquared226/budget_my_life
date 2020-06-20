@@ -27,26 +27,24 @@ class BalanceSummaryCard extends StatelessWidget {
         decoration: BoxDecoration(
           // To match Card's border radius.
           borderRadius: BorderRadius.circular(4),
-          color: balance >= 0
-              ? CustomColors.incomeColor
-              : CustomColors.expenseColor,
+          color: CustomColors.transactionTypeColor(balance),
         ),
         child: Column(
           children: <Widget>[
             // Must surround text with container so it will take up space to align left.
             Container(
               width: double.infinity,
-              child: const Text(
+              child: Text(
                 'Balance',
                 textAlign: TextAlign.start,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: CustomColors.onIncomeExpenseColor,
                 ),
               ),
             ),
             // Must surround text with container so it will take up space to align right.
             Container(
-              // SizedBox would take up too much height otherwise.
+              // FittedBox would take up too much height otherwise.
               height: 80,
               width: double.infinity,
               child: FittedBox(
@@ -56,10 +54,10 @@ class BalanceSummaryCard extends StatelessWidget {
                 child: Text(
                   formattedBalance,
                   textAlign: TextAlign.end,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 60,
                     fontWeight: FontWeight.w300,
-                    color: Colors.white,
+                    color: CustomColors.onIncomeExpenseColor,
                   ),
                 ),
               ),
