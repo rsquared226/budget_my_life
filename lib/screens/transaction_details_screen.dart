@@ -102,7 +102,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                     fontSize: 40,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   transaction.formattedDate,
                   style: appTheme.textTheme.caption.copyWith(

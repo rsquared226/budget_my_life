@@ -30,14 +30,14 @@ class TransactionDetailsAppBar extends StatelessWidget {
         IconButton(
           icon: Icon(
             Icons.edit,
-            color: Colors.blue[800],
+            color: Colors.blue.shade800,
           ),
           onPressed: editTransaction,
         ),
         IconButton(
           icon: Icon(
             Icons.delete,
-            color: Colors.red[900],
+            color: Colors.red.shade900,
           ),
           onPressed: deleteTransaction,
         ),
