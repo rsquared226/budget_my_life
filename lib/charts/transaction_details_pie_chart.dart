@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import './chart_models/transaction_detail_chart_model.dart';
+import '../custom_colors.dart';
 
 // This is used in TransactionDetailsScreen.
 
@@ -23,13 +24,12 @@ class TransactionDetailsPieChart extends StatelessWidget {
       TransactionDetailChartModel(
         label: transactionTitle,
         amount: transactionAmount,
-        // TODO: make colors relate to expense/income thing with (dark) green/red stuff.
-        color: charts.Color.fromHex(code: '#03A9F4'),
+        color: CustomColors.transactionTypeColor(transactionAmount),
       ),
       TransactionDetailChartModel(
         label: otherTitle,
         amount: totalAmount - transactionAmount,
-        color: charts.Color.fromHex(code: '#01579B'),
+        color: CustomColors.secondaryTransactionTypeColor(transactionAmount),
       ),
     ];
     return [

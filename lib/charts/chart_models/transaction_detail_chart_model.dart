@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class TransactionDetailChartModel {
@@ -6,9 +6,11 @@ class TransactionDetailChartModel {
   final double amount;
   final charts.Color color;
 
-  const TransactionDetailChartModel({
+  TransactionDetailChartModel({
     @required this.label,
     @required this.amount,
-    @required this.color,
-  });
+    @required Color color,
+  }) : // Convert material color to chart color.
+        this.color = charts.Color(
+            r: color.red, g: color.green, b: color.blue, a: color.alpha);
 }
