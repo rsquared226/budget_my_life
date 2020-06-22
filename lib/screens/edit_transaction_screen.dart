@@ -76,7 +76,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     // By default we will assume the transaction is an income.
     final containerColor = CustomColors.transactionTypeColor(amount);
     final stringTransactionType =
-        amount != null && amount < 0 ? 'Expense' : 'Income';
+        amount != null && amount > 0 ? 'Income' : 'Expense';
 
     Widget buildCloseButton() => IconButton(
           // Padding is 0 to get icon to align with the title form field.

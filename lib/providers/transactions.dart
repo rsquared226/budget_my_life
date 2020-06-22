@@ -13,7 +13,8 @@ class Transactions with ChangeNotifier {
   }
 
   double get balance {
-    return incomeTotal - expensesTotal;
+    // expensesTotal is already negative.
+    return incomeTotal + expensesTotal;
   }
 
   double get expensesTotal {
