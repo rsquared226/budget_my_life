@@ -57,6 +57,7 @@ class Transactions with ChangeNotifier {
     DBHelper.insert(newTransaction);
   }
 
+  // TODO: Check if the all the stuff before dbhelper is needed.
   void editTransaction(Transaction editedTransaction) {
     final editedIndex = _items
         .indexWhere((transaction) => editedTransaction.id == transaction.id);
@@ -66,11 +67,13 @@ class Transactions with ChangeNotifier {
     }
     _items[editedIndex] = editedTransaction;
     notifyListeners();
+    DBHelper.update(editedTransaction);
   }
 
   void deleteTransaction(String id) {
     _items.removeWhere((transaction) => transaction.id == id);
     notifyListeners();
+    DBHelper.delete(id);
   }
 
   Future<void> fetchAndSetTransactions() async {
