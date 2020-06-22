@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../card_items/transaction_card.dart';
+import '../models/transaction.dart';
 import '../screens/transaction_details_screen.dart';
 import '../providers/transactions.dart';
 import '../widgets/balance_summary_card.dart';
@@ -39,6 +40,39 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 
+  Widget buildList(List<Transaction> transactionsList) {
+    if (transactionsList.length == 0) {
+      return const Expanded(
+        child: Center(
+          child: Text('Start adding some transactions!'),
+        ),
+      );
+    }
+    return Expanded(
+      child: ListView.builder(
+        itemCount: transactionsList.length,
+        itemBuilder: (_, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5,
+            ),
+            child: OpenContainer(
+              closedBuilder: (_, __) {
+                return TransactionCard(transaction: transactionsList[index]);
+              },
+              openBuilder: (_, __) {
+                return TransactionDetailsScreen(
+                  transactionId: transactionsList[index].id,
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -51,15 +85,7 @@ class HistoryScreen extends StatelessWidget {
           );
         }
         return Consumer<Transactions>(
-          // child is shown when there are 0 transactions.
-          child: const Center(
-            child: Text('Start adding some transactions!'),
-          ),
-          builder: (_, transactionsData, child) {
-            final transactions = transactionsData.items;
-            if (transactions.length == 0) {
-              return child;
-            }
+          builder: (_, transactionsData, __) {
             return Column(
               children: <Widget>[
                 BalanceSummaryCard(
@@ -70,34 +96,8 @@ class HistoryScreen extends StatelessWidget {
                 buildListHeader(),
                 const SizedBox(height: 5),
                 // A psuedo-shadow.
-                Divider(
-                  height: 0,
-                  thickness: 1.5,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: transactions.length,
-                    itemBuilder: (_, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        child: OpenContainer(
-                          closedBuilder: (_, __) {
-                            return TransactionCard(
-                                transaction: transactions[index]);
-                          },
-                          openBuilder: (_, __) {
-                            return TransactionDetailsScreen(
-                              transactionId: transactions[index].id,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                const Divider(height: 0, thickness: 1.5),
+                buildList(transactionsData.items),
               ],
             );
           },

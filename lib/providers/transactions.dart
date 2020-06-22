@@ -58,7 +58,6 @@ class Transactions with ChangeNotifier {
     DBHelper.insert(newTransaction);
   }
 
-  // TODO: Check if the all the stuff before dbhelper is needed.
   void editTransaction(Transaction editedTransaction) {
     final editedIndex = _items
         .indexWhere((transaction) => editedTransaction.id == transaction.id);
