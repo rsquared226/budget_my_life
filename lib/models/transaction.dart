@@ -29,4 +29,14 @@ class Transaction {
   String get formattedDate {
     return DateFormat.yMMMMd().format(date);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'amount': amount,
+      'date': date.millisecondsSinceEpoch,
+    };
+  }
 }
