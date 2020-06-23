@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import './providers/labels.dart';
 import './providers/transactions.dart';
 import './screens/home_tabs_screen.dart';
 
@@ -16,8 +17,15 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return ChangeNotifierProvider(
-      create: (_) => Transactions(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => Transactions(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Labels(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Budget My Life',
         theme: ThemeData(
