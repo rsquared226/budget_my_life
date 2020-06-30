@@ -1,5 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import './label.dart';
+import '../providers/labels.dart';
 
 enum TransactionType { Income, Expense }
 
@@ -30,5 +34,10 @@ class Transaction {
 
   String get formattedDate {
     return DateFormat.yMMMMd().format(date);
+  }
+
+  // Have this here so that when outputting a transaction, 2 providers aren't needed.
+  Label getLabel(BuildContext context) {
+    return Provider.of<Labels>(context, listen: false).findById(labelId);
   }
 }
