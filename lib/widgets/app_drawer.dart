@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/edit_labels_screen.dart';
+
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,11 +16,16 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.attach_money),
             title: const Text('History'),
-            onTap: () => Navigator.of(context).pushReplacementNamed('/'),
+            onTap: () => Navigator.of(context).pushReplacementNamed(
+              '/',
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.edit),
-            title: const Text('Edit Categories'),
+            title: const Text('Edit Labels'),
+            onTap: () => Navigator.of(context).pushReplacementNamed(
+              EditLabelsScreen.routeName,
+            ),
           ),
           Divider(),
           ListTile(

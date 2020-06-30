@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './providers/labels.dart';
 import './providers/transactions.dart';
 import './screens/home_tabs_screen.dart';
+import './screens/edit_labels_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: HomeTabsScreen(),
+        routes: {
+          EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
+        },
       ),
     );
   }
