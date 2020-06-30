@@ -2,23 +2,37 @@ import 'package:flutter/material.dart';
 
 import '../models/label.dart';
 
-// TODO: Decide which provider should do the heavy-lifting. Which model should include a list of id's for the other.
 class Labels with ChangeNotifier {
+  static const otherIncomeId = 'l1';
+  static const otherExpenseId = 'l2';
+
   var _items = <Label>[
     Label(
-      id: 'l1',
+      id: otherIncomeId,
+      title: 'Other income',
+      color: Colors.blueGrey,
+      labelType: LabelType.INCOME,
+    ),
+    Label(
+      id: otherExpenseId,
+      title: 'Other expense',
+      color: Colors.orange,
+      labelType: LabelType.EXPENSE,
+    ),
+    Label(
+      id: 'l3',
       title: 'Groceries',
       color: Colors.green,
       labelType: LabelType.EXPENSE,
     ),
     Label(
-      id: 'l2',
+      id: 'l4',
       title: 'Luxury',
       color: Colors.purple,
       labelType: LabelType.EXPENSE,
     ),
     Label(
-      id: 'l3',
+      id: 'l5',
       title: 'Education',
       color: Colors.orange,
       labelType: LabelType.EXPENSE,
@@ -27,5 +41,9 @@ class Labels with ChangeNotifier {
 
   List<Label> get items {
     return [..._items];
+  }
+
+  Label findById(String id) {
+    return items.firstWhere((label) => id == label.id);
   }
 }

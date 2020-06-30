@@ -9,6 +9,7 @@ class Transaction {
   final String description;
   final double amount;
   final DateTime date;
+  final String labelId;
 
   const Transaction({
     @required this.id,
@@ -16,6 +17,7 @@ class Transaction {
     this.description = '',
     @required this.amount,
     @required this.date,
+    @required this.labelId,
   });
 
   String get formattedAmount {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../custom_colors.dart';
 import '../models/transaction.dart';
 import '../providers/transactions.dart';
+import '../providers/labels.dart';
 
 // This is what pops up when the FAB on home_screen is clicked.
 
@@ -33,6 +34,8 @@ class EditableTransaction {
       description: description,
       amount: amount,
       date: date,
+      // TODO: Actually make labels choosable in this screen.
+      labelId: amount > 0 ? Labels.otherIncomeId : Labels.otherExpenseId,
     );
   }
 }
