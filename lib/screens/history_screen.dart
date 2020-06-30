@@ -10,6 +10,7 @@ import '../widgets/balance_summary_card.dart';
 // This screen is a tab under home_screen.
 // TODO: Use slivers
 class HistoryScreen extends StatelessWidget {
+  // Contains History text and dropdown filter.
   Widget buildListHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -54,7 +55,7 @@ class HistoryScreen extends StatelessWidget {
         buildListHeader(),
         const SizedBox(height: 5),
         // A psuedo-shadow.
-        Divider(
+        const Divider(
           height: 0,
           thickness: 1.5,
         ),
@@ -62,21 +63,22 @@ class HistoryScreen extends StatelessWidget {
           child: ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (_, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                child: OpenContainer(
-                  closedBuilder: (_, __) {
-                    return TransactionCard(transaction: transactions[index]);
-                  },
-                  openBuilder: (_, __) {
-                    return TransactionDetailsScreen(
-                      transactionId: transactions[index].id,
-                    );
-                  },
-                ),
+              return Column(
+                children: <Widget>[
+                  OpenContainer(
+                    closedShape: const BeveledRectangleBorder(),
+                    closedElevation: 0,
+                    closedBuilder: (_, __) {
+                      return TransactionCard(transaction: transactions[index]);
+                    },
+                    openBuilder: (_, __) {
+                      return TransactionDetailsScreen(
+                        transactionId: transactions[index].id,
+                      );
+                    },
+                  ),
+                  const Divider(height: 1),
+                ],
               );
             },
           ),

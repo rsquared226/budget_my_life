@@ -3,10 +3,31 @@ import 'package:flutter/material.dart';
 import '../custom_colors.dart';
 import '../models/transaction.dart';
 
+// Used in HistoryScreen.
+// Design inspired by Todoist tasks at time of writing.
+
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
 
   const TransactionCard({@required this.transaction});
+
+  // This looks better than a chip.
+  Widget buildCategoryLabel(
+      ThemeData theme, String title, Color categoryColor) {
+    return Row(
+      children: <Widget>[
+        Text(
+          title,
+          style: theme.textTheme.caption,
+        ),
+        const SizedBox(width: 5),
+        CircleAvatar(
+          maxRadius: 6,
+          backgroundColor: categoryColor,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +35,8 @@ class TransactionCard extends StatelessWidget {
 
     // No need to surround this with a card because it is surrounded by OpenContainer in HistoryScreen.
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 22,
-        vertical: 2,
-      ),
+      padding: const EdgeInsets.fromLTRB(22, 5, 22, 10),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ListTile(
             contentPadding: const EdgeInsets.all(0),
@@ -55,24 +72,26 @@ class TransactionCard extends StatelessWidget {
               ),
             ),
           ),
+          // Custom subtitle.
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              const SizedBox(width: 55),
+              Icon(
+                Icons.calendar_today,
+                color: theme.hintColor,
+                size: 15,
+              ),
+              const SizedBox(width: 4),
               Text(
                 transaction.formattedDate,
                 style: theme.textTheme.caption,
               ),
-              Chip(
-                padding: const EdgeInsets.all(0),
-                backgroundColor: theme.cardColor,
-                avatar: CircleAvatar(
-                  maxRadius: 7,
-                  backgroundColor: transaction.getLabel(context).color,
-                ),
-                label: Text(
-                  transaction.getLabel(context).title,
-                  style: theme.textTheme.caption,
-                ),
+              const Spacer(),
+              // Category label.
+              buildCategoryLabel(
+                theme,
+                transaction.getLabel(context).title,
+                transaction.getLabel(context).color,
               ),
             ],
           ),
