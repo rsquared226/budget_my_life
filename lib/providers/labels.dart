@@ -43,6 +43,16 @@ class Labels with ChangeNotifier {
     return [..._items];
   }
 
+  List<Label> get incomeLabels {
+    return items
+        .where((label) => label.labelType == LabelType.EXPENSE)
+        .toList();
+  }
+
+  List<Label> get expenseLabels {
+    return items.where((label) => label.labelType == LabelType.INCOME).toList();
+  }
+
   Label findById(String id) {
     return items.firstWhere((label) => id == label.id);
   }
