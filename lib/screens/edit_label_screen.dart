@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/color_picker_form_field.dart';
+
 // This screen is navigated from the EditLabelsScreen.
+// TODO: Make adding/editing labels inline/in a modal on the same screen.
 
 class EditLabelScreen extends StatefulWidget {
   // If this is null, we are adding a label. If not, we are editing a label.
@@ -28,10 +31,18 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
           children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Title',
-              ),
+            Row(
+              children: <Widget>[
+                ColorPickerFormField(),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Title',
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
