@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../card_items/edit_labels_card.dart';
 import '../models/label.dart';
 import '../providers/labels.dart';
+import './edit_label_screen.dart';
 import '../widgets/app_drawer.dart';
 
 // This is navigated to from the drawer of the app.
@@ -34,12 +35,36 @@ class EditLabelsScreen extends StatelessWidget {
       SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return EditLabelsCard(label: labels[index]);
+            return EditLabelsCard(
+              label: labels[index],
+              editTransaction: () => editLabel(
+                context,
+                labels[index].id,
+              ),
+            );
           },
           childCount: labels.length,
         ),
       ),
     ];
+  }
+
+  void addLabel(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => EditLabelScreen()),
+    );
+  }
+
+  void editLabel(BuildContext context, String labelId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => EditLabelScreen(
+          editLabelId: labelId,
+        ),
+      ),
+    );
   }
 
   @override
@@ -49,7 +74,12 @@ class EditLabelsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Labels'),
-        actions: <Widget>[IconButton(icon: const Icon(Icons.add), onPressed: null,),],
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => addLabel(context),
+          ),
+        ],
       ),
       drawer: AppDrawer(),
       body: CustomScrollView(

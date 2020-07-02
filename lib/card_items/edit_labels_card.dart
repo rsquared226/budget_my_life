@@ -6,9 +6,11 @@ import '../models/label.dart';
 
 class EditLabelsCard extends StatelessWidget {
   final Label label;
+  final Function editTransaction;
 
   const EditLabelsCard({
     @required this.label,
+    @required this.editTransaction,
   });
 
   @override
@@ -25,7 +27,13 @@ class EditLabelsCard extends StatelessWidget {
           ),
         ),
         title: Text(label.title),
-        // trailing: IconButt,
+        trailing: IconButton(
+          icon: const Icon(
+            Icons.edit,
+            color: Colors.blue,
+          ),
+          onPressed: editTransaction,
+        ),
       ),
     );
   }
