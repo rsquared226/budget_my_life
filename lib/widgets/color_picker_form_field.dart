@@ -31,14 +31,11 @@ class ColorPickerFormField extends FormField<Color> {
 
   ColorPickerFormField({
     FormFieldSetter<Color> onSaved,
-    FormFieldValidator<Color> validator,
     Color initalValue = Colors.indigo,
-    bool autovalidate = false,
     double maxRadius = 14,
   }) : super(
           onSaved: onSaved,
           initialValue: initalValue,
-          autovalidate: autovalidate,
           builder: (state) {
             return GestureDetector(
               onTap: () {

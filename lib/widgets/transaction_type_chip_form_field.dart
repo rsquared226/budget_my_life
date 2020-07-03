@@ -34,10 +34,11 @@ class TransactionTypeChipFormField extends FormField<LabelType> {
   TransactionTypeChipFormField({
     FormFieldSetter<LabelType> onSaved,
     FormFieldValidator<LabelType> validator,
-    LabelType initialValue = LabelType.INCOME,
+    LabelType initialValue,
   }) : super(
           onSaved: onSaved,
           validator: validator,
+          initialValue: initialValue,
           builder: (state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

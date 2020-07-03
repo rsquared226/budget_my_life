@@ -21,11 +21,26 @@ class EditLabelScreen extends StatefulWidget {
 class _EditLabelScreenState extends State<EditLabelScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  void _saveForm() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.editLabelId == null ? 'Add' : 'Edit'} Label'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: _saveForm,
+            child: Text(
+              'SAVE',
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+          ),
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -41,12 +56,28 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                     decoration: const InputDecoration(
                       labelText: 'Title',
                     ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter a title.';
+                      }
+                      if (value.length > 30) {
+                        return 'Please shorten your title from ${value.length} characters to 30.';
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            TransactionTypeChipFormField(),
+            TransactionTypeChipFormField(
+              validator: (value) {
+                if (value == null) {
+                  return 'Please choose a label type.';
+                }
+                return null;
+              },
+            ),
           ],
         ),
       ),
