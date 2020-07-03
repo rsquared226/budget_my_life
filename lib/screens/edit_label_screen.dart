@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/color_picker_form_field.dart';
+import '../widgets/transaction_type_chip_form_field.dart';
 
 // This screen is navigated from the EditLabelsScreen.
 // TODO: Make adding/editing labels inline/in a modal on the same screen.
@@ -37,13 +38,15 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Title',
                     ),
                   ),
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            TransactionTypeChipFormField(),
           ],
         ),
       ),
