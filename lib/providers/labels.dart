@@ -44,13 +44,13 @@ class Labels with ChangeNotifier {
   }
 
   List<Label> get incomeLabels {
-    return items
-        .where((label) => label.labelType == LabelType.EXPENSE)
-        .toList();
+    return items.where((label) => label.labelType == LabelType.INCOME).toList();
   }
 
   List<Label> get expenseLabels {
-    return items.where((label) => label.labelType == LabelType.INCOME).toList();
+    return items
+        .where((label) => label.labelType == LabelType.EXPENSE)
+        .toList();
   }
 
   Label findById(String id) {
