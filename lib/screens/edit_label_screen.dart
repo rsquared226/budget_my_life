@@ -9,6 +9,7 @@ import '../widgets/transaction_type_chip_form_field.dart';
 // This screen is navigated from the EditLabelsScreen.
 // TODO: Make adding/editing labels inline/in a modal on the same screen.
 
+// Just to make saving the form easier.
 class EditableLabel {
   // If a label is being edited, the id should never change.
   // If a label is being added, the id will be null until it is converted to a Label.
@@ -57,6 +58,14 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
     if (!_formKey.currentState.validate()) {
       return;
     }
+    _formKey.currentState.save();
+
+    if (widget.editLabelId == null) {
+      _labelsData.addLabel(_editableLabel.toLabel());
+    } else {
+      _labelsData.editLabel(_editableLabel.toLabel());
+    }
+    Navigator.pop(context);
   }
 
   @override
@@ -123,6 +132,9 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                       }
                       return null;
                     },
+                    onSaved: (newValue) {
+                      _editableLabel.title = newValue;
+                    },
                   ),
                 ),
               ],
@@ -143,6 +155,9 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                   return 'Please choose a label type.';
                 }
                 return null;
+              },
+              onSaved: (newValue) {
+                _editableLabel.labelType = newValue;
               },
             ),
           ],

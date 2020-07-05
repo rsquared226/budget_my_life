@@ -44,16 +44,34 @@ class Labels with ChangeNotifier {
   }
 
   List<Label> get incomeLabels {
-    return items.where((label) => label.labelType == LabelType.INCOME).toList();
+    return _items
+        .where((label) => label.labelType == LabelType.INCOME)
+        .toList();
   }
 
   List<Label> get expenseLabels {
-    return items
+    return _items
         .where((label) => label.labelType == LabelType.EXPENSE)
         .toList();
   }
 
   Label findById(String id) {
-    return items.firstWhere((label) => id == label.id);
+    return _items.firstWhere((label) => id == label.id);
+  }
+
+  void addLabel(Label label) {
+    _items.add(label);
+    notifyListeners();
+  }
+
+  void editLabel(Label editedLabel) {
+    final editedIndex =
+        _items.indexWhere((label) => editedLabel.id == label.id);
+
+    if (editedIndex == null) {
+      return;
+    }
+    _items[editedIndex] = editedLabel;
+    notifyListeners();
   }
 }
