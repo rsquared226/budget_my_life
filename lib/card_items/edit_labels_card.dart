@@ -7,10 +7,12 @@ import '../models/label.dart';
 class EditLabelsCard extends StatelessWidget {
   final Label label;
   final Function editTransaction;
+  final Function deleteTransaction;
 
   const EditLabelsCard({
     @required this.label,
     @required this.editTransaction,
+    @required this.deleteTransaction,
   });
 
   @override
@@ -27,12 +29,25 @@ class EditLabelsCard extends StatelessWidget {
           ),
         ),
         title: Text(label.title),
-        trailing: IconButton(
-          icon: const Icon(
-            Icons.edit,
-            color: Colors.blue,
-          ),
-          onPressed: editTransaction,
+        trailing: Row(
+          // Need to have this or row will take up entire width of card.
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.edit,
+                color: Colors.blue,
+              ),
+              onPressed: editTransaction,
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              onPressed: deleteTransaction,
+            ),
+          ],
         ),
       ),
     );

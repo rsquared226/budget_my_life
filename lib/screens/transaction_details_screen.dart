@@ -57,7 +57,10 @@ class TransactionDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Delete'),
+              child: const Text(
+                'Delete',
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );

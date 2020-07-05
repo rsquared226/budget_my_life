@@ -41,6 +41,12 @@ class EditLabelsScreen extends StatelessWidget {
                 context,
                 labels[index].id,
               ),
+              deleteTransaction: () async {
+                if (await confirmLabelDeletion(context)) {
+                  Provider.of<Labels>(context, listen: false)
+                      .deleteLabel(labels[index].id);
+                }
+              },
             );
           },
           childCount: labels.length,
@@ -65,6 +71,38 @@ class EditLabelsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> confirmLabelDeletion(BuildContext context) async {
+    final confirmDelete = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete label?'),
+          content: const Text('Are you sure you want to delete this label?'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: const Text('Cancel'),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: const Text(
+                'Delete',
+                style: const TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    // If the user clicks out of the dialog to dismiss, the result will be null. We will assume they don't want to
+    // delete the transaction if they do that.
+    return confirmDelete ?? false;
   }
 
   @override

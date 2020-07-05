@@ -74,4 +74,9 @@ class Labels with ChangeNotifier {
     _items[editedIndex] = editedLabel;
     notifyListeners();
   }
+
+  void deleteLabel(String id) {
+    _items.removeWhere((label) => label.id == id);
+    notifyListeners();
+  }
 }
