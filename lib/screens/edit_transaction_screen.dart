@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../custom_colors.dart';
 import '../models/transaction.dart';
+import '../models/label.dart';
 import '../providers/transactions.dart';
 import '../providers/labels.dart';
 
@@ -16,6 +17,7 @@ class EditableTransaction {
   String description;
   double amount;
   DateTime date;
+  String labelId;
 
   EditableTransaction({
     this.id,
@@ -23,6 +25,7 @@ class EditableTransaction {
     this.description,
     this.amount,
     this.date,
+    this.labelId,
   });
 
   Transaction toTransaction() {
@@ -57,11 +60,16 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // The provider data is initialized later because it requires context.
-  Transactions transactionsData;
+  Transactions _transactionsData;
+  Labels _labelsData;
 
   // This is initialized in initState so we can see if we're editing or adding a transaction.
   EditableTransaction _editableTransaction;
 
+  // Used for determining what color the form header should be based on the LabelType.
+  final _labelController = TextEditingController();
+  // Initialized later and determines what is shown in the Label FormField.
+  Label _selectedLabel;
   // Used for determining what color the form header should be based on if it's positive or negative.
   final _amountController = TextEditingController();
   // Default date should be now.
@@ -71,8 +79,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
   final _amountFocusNode = FocusNode();
 
+  // TODO: Move this into its own widget.
   // The header containing the close button, section title, and the title form field.
-  Widget _buildFormHeader(BuildContext context) {
+  Widget _buildFormHeader() {
     final onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
 
     final amount = double.tryParse(_amountController.text);
@@ -187,9 +196,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     }
     _formKey.currentState.save();
     if (_editableTransaction.id != null) {
-      transactionsData.editTransaction(_editableTransaction.toTransaction());
+      _transactionsData.editTransaction(_editableTransaction.toTransaction());
     } else {
-      transactionsData.addTransaction(_editableTransaction.toTransaction());
+      _transactionsData.addTransaction(_editableTransaction.toTransaction());
     }
     widget.closeContainer();
   }
@@ -201,10 +210,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       setState(() {});
     });
 
-    transactionsData = Provider.of<Transactions>(context, listen: false);
+    _transactionsData = Provider.of<Transactions>(context, listen: false);
+    _labelsData = Provider.of<Labels>(context, listen: false);
 
     if (widget.editTransactionId != null) {
-      final initTx = transactionsData.findById(widget.editTransactionId);
+      final initTx = _transactionsData.findById(widget.editTransactionId);
 
       _editableTransaction = EditableTransaction(
         id: initTx.id,
@@ -212,6 +222,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         amount: initTx.amount,
         date: initTx.date,
         description: initTx.description,
+        labelId: initTx.labelId,
       );
 
       _amountController.text =
@@ -219,9 +230,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       // Don't forget to set the selectedDate.
       _selectedDate = initTx.date;
     } else {
-      _editableTransaction = EditableTransaction();
+      _editableTransaction = EditableTransaction(labelId: Labels.otherIncomeId);
     }
 
+    _selectedLabel = _labelsData.findById(_editableTransaction.labelId);
+    _labelController.text = _selectedLabel.title;
     _dateController.text = DateFormat.yMMMMd().format(_selectedDate);
 
     super.initState();
@@ -241,78 +254,93 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            _buildFormHeader(context),
-            SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Amount',
-                        helperText:
-                            'If this is an expense, make the amount negative.',
+            _buildFormHeader(),
+            // Expanded so it doesn't overflow when keyboard pops up.
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Label',
+                          helperText: 'Click to change the label',
+                          icon: CircleAvatar(
+                            maxRadius: 12,
+                            backgroundColor: _selectedLabel.color,
+                          ),
+                        ),
+                        readOnly: true,
+                        controller: _labelController,
                       ),
-                      controller: _amountController,
-                      focusNode: _amountFocusNode,
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        final amountVal = double.tryParse(value);
-                        if (value.isEmpty || amountVal == null) {
-                          return 'Please enter a number';
-                        }
-                        if (amountVal == 0) {
-                          return 'Please enter a non-zero number';
-                        }
-                        if (double.parse(amountVal.toStringAsFixed(2)) !=
-                            amountVal) {
-                          return 'Please enter a number with a maximum of 2 decimal digits';
-                        }
-                        return null;
-                      },
-                      onSaved: (newValue) {
-                        _editableTransaction.amount = double.parse(newValue);
-                      },
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Date',
-                        helperText: 'Click to change the date',
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Amount',
+                          helperText:
+                              'If this is an expense, make the amount negative.',
+                        ),
+                        controller: _amountController,
+                        focusNode: _amountFocusNode,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          final amountVal = double.tryParse(value);
+                          if (value.isEmpty || amountVal == null) {
+                            return 'Please enter a number';
+                          }
+                          if (amountVal == 0) {
+                            return 'Please enter a non-zero number';
+                          }
+                          if (double.parse(amountVal.toStringAsFixed(2)) !=
+                              amountVal) {
+                            return 'Please enter a number with a maximum of 2 decimal digits';
+                          }
+                          return null;
+                        },
+                        onSaved: (newValue) {
+                          _editableTransaction.amount = double.parse(newValue);
+                        },
                       ),
-                      readOnly: true,
-                      onTap: () async {
-                        final DateTime pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: _selectedDate,
-                          firstDate: DateTime.utc(1970),
-                          lastDate: DateTime.now().add(Duration(days: 1)),
-                          helpText: 'When did your transaction take place?',
-                        );
-                        if (pickedDate != null) {
-                          _dateController.text =
-                              DateFormat.yMMMMd().format(pickedDate);
-                          setState(() {
-                            _selectedDate = pickedDate;
-                          });
-                        }
-                      },
-                      controller: _dateController,
-                      onSaved: (_) {
-                        _editableTransaction.date = _selectedDate;
-                      },
-                    ),
-                    TextFormField(
-                      initialValue: _editableTransaction.description ?? '',
-                      decoration: InputDecoration(
-                        labelText: 'Description',
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Date',
+                          helperText: 'Click to change the date',
+                        ),
+                        readOnly: true,
+                        onTap: () async {
+                          final DateTime pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: _selectedDate,
+                            firstDate: DateTime.utc(1970),
+                            lastDate: DateTime.now().add(Duration(days: 1)),
+                            helpText: 'When did your transaction take place?',
+                          );
+                          if (pickedDate != null) {
+                            _dateController.text =
+                                DateFormat.yMMMMd().format(pickedDate);
+                            setState(() {
+                              _selectedDate = pickedDate;
+                            });
+                          }
+                        },
+                        controller: _dateController,
+                        onSaved: (_) {
+                          _editableTransaction.date = _selectedDate;
+                        },
                       ),
-                      maxLines: 4,
-                      onSaved: (newValue) {
-                        _editableTransaction.description = newValue;
-                      },
-                    ),
-                  ],
+                      TextFormField(
+                        initialValue: _editableTransaction.description ?? '',
+                        decoration: InputDecoration(
+                          labelText: 'Description',
+                        ),
+                        maxLines: 4,
+                        onSaved: (newValue) {
+                          _editableTransaction.description = newValue;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
