@@ -94,9 +94,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     widget.closeContainer();
   }
 
-  // TODO: Separate income and expense labels.
   Future<Label> _showLabelPicker() {
-    final labels = _labelsData.items;
     return showDialog<Label>(
       context: context,
       builder: (context) {
@@ -104,23 +102,40 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           title: const Text('Select a label'),
           children: <Widget>[
             // Create a bunch of dialog options based on the labels the user has.
-            ...labels.map(
-              (label) {
-                return SimpleDialogOption(
-                  onPressed: () {
-                    Navigator.pop(context, label);
-                  },
-                  child: LabelChooserCard(
-                    color: label.color,
-                    title: label.title,
-                  ),
-                );
-              },
-            ).toList(growable: false),
+            _labelPickerHeader('Income'),
+            ..._getLabelChooserList(_labelsData.incomeLabels),
+            _labelPickerHeader('Expense'),
+            ..._getLabelChooserList(_labelsData.expenseLabels),
           ],
         );
       },
     );
+  }
+
+  Widget _labelPickerHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 25),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+      ),
+    );
+  }
+
+  List<Widget> _getLabelChooserList(List<Label> labelsList) {
+    return labelsList.map(
+      (label) {
+        return SimpleDialogOption(
+          onPressed: () {
+            Navigator.pop(context, label);
+          },
+          child: LabelChooserCard(
+            color: label.color,
+            title: label.title,
+          ),
+        );
+      },
+    ).toList(growable: false);
   }
 
   String _checkLabelExistance(String labelId, bool isAmountNegative) {
