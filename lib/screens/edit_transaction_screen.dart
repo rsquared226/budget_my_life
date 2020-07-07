@@ -74,9 +74,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   // Initialized later and determines what is shown in the Label FormField.
   // Mostly needed for the color of the label text field.
   Label _selectedLabel;
-  // Used for determining what color the form header should be based on if it's positive or negative.
-  // TODO: Don't use this to determine form header color, use _selectedLabel instead.
-  final _amountController = TextEditingController();
   // Default date should be now.
   var _selectedDate = DateTime.now();
   // To set the text inside the date text field.
@@ -128,11 +125,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
   @override
   void initState() {
-    // Ensure that the section header color/button is updated when the amount field is updated.
-    _amountController.addListener(() {
-      setState(() {});
-    });
-
     _transactionsData = Provider.of<Transactions>(context, listen: false);
     _labelsData = Provider.of<Labels>(context, listen: false);
 
@@ -147,9 +139,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         description: initTx.description,
         labelId: initTx.labelId,
       );
-
-      _amountController.text =
-          _editableTransaction.amount.toStringAsFixed(2) ?? '';
       // Don't forget to set the selectedDate.
       _selectedDate = initTx.date;
     } else {
@@ -165,25 +154,26 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
   @override
   void dispose() {
-    _amountController.dispose();
     _amountFocusNode.dispose();
+    _dateController.dispose();
+    _labelController.dispose();
     super.dispose();
   }
 
-  double get parsedAmountField {
-    return double.tryParse(_amountController.text);
-  }
-
   String get submitButtonText {
-    final addOrEdit = widget.editTransactionId != null ? 'Edit ' : 'Add ';
-    final incomeOrExpense = (parsedAmountField != null && parsedAmountField > 0)
-        ? 'Income'
-        : 'Expense';
+    final addOrEdit = widget.editTransactionId != null ? 'Save ' : 'Add ';
+    final incomeOrExpense =
+        (_selectedLabel.labelType == LabelType.INCOME) ? 'Income' : 'Expense';
     return addOrEdit + incomeOrExpense;
   }
 
   Color get onPrimaryColor {
     return Theme.of(context).colorScheme.onPrimary;
+  }
+
+  String get initialAmountFieldValue {
+    final initialVal = _editableTransaction.amount;
+    return initialVal == null ? '' : initialVal.toStringAsFixed(2);
   }
 
   @override
@@ -195,7 +185,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           children: <Widget>[
             EditTransactionAppbar(
               containerColor:
-                  CustomColors.transactionTypeColor(parsedAmountField),
+                  CustomColors.labelTypeColor(_selectedLabel.labelType),
               closeScreen: widget.closeContainer,
               submitButtonText: submitButtonText,
               onButtonSubmit: _saveForm,
@@ -266,12 +256,12 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     },
                   ),
                   TextFormField(
+                    initialValue: initialAmountFieldValue,
                     decoration: InputDecoration(
                       labelText: 'Amount',
                       helperText:
                           'If this is an expense, make the amount negative.',
                     ),
-                    controller: _amountController,
                     focusNode: _amountFocusNode,
                     keyboardType: TextInputType.number,
                     validator: (value) {
@@ -279,9 +269,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       if (value.isEmpty || amountVal == null) {
                         return 'Please enter a number';
                       }
-                      // TODO: only allow positive values.
                       if (amountVal == 0) {
                         return 'Please enter a non-zero number';
+                      }
+                      // If it is an income transaction, make sure the number is positive. Don't check for sign when it
+                      // is an expense transaction because some users would prefer to do either positive or negative
+                      // amount inputs.
+                      if (_selectedLabel.labelType == LabelType.INCOME &&
+                          amountVal < 0) {
+                        return 'Please enter a positive number';
                       }
                       if (double.parse(amountVal.toStringAsFixed(2)) !=
                           amountVal) {
@@ -290,7 +286,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       return null;
                     },
                     onSaved: (newValue) {
-                      _editableTransaction.amount = double.parse(newValue);
+                      // The difference between income and expense transactions are still kept by the sign of the
+                      // amount. Ensure the sign is correct according to the label type.
+                      if (_selectedLabel.labelType == LabelType.INCOME) {
+                        _editableTransaction.amount =
+                            double.parse(newValue).abs();
+                      } else {
+                        _editableTransaction.amount =
+                            -double.parse(newValue).abs();
+                      }
                     },
                   ),
                   TextFormField(
