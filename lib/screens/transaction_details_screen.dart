@@ -51,14 +51,14 @@ class TransactionDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Cancel'),
+              child: const Text('CANCEL'),
             ),
             FlatButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
               child: const Text(
-                'Delete',
+                'DELETE',
                 style: const TextStyle(color: Colors.red),
               ),
             ),

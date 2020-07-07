@@ -91,14 +91,14 @@ class EditLabelsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Cancel'),
+              child: const Text('CANCEL'),
             ),
             FlatButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
               child: const Text(
-                'Delete',
+                'DELETE',
                 style: const TextStyle(color: Colors.red),
               ),
             ),
@@ -117,11 +117,11 @@ class EditLabelsScreen extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: const Text('Cannot delete default label'),
-          content: const Text('The default labels cannot be deleted'),
+          content: const Text('The default labels cannot be deleted.'),
           actions: <Widget>[
             FlatButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Got it'),
+              child: const Text('GOT IT'),
             )
           ],
         );
