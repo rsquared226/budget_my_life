@@ -42,6 +42,12 @@ class EditLabelsScreen extends StatelessWidget {
                 labels[index].id,
               ),
               deleteTransaction: () async {
+                // Can't let the user delete the default labels. If this happens, the whole app could crash.
+                if (labels[index].id == Labels.otherIncomeId ||
+                    labels[index].id == Labels.otherExpenseId) {
+                  await showCannotDeleteOtherLabelDialog(context);
+                  return;
+                }
                 if (await confirmLabelDeletion(context)) {
                   Provider.of<Labels>(context, listen: false)
                       .deleteLabel(labels[index].id);
@@ -103,6 +109,24 @@ class EditLabelsScreen extends StatelessWidget {
     // If the user clicks out of the dialog to dismiss, the result will be null. We will assume they don't want to
     // delete the transaction if they do that.
     return confirmDelete ?? false;
+  }
+
+  Future<void> showCannotDeleteOtherLabelDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Cannot delete default label'),
+          content: const Text('The default labels cannot be deleted'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Got it'),
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override

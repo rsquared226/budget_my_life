@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/label.dart';
 
 class Labels with ChangeNotifier {
+  // These are the id's of default labels. They cannot be deleted.
   static const otherIncomeId = 'l1';
   static const otherExpenseId = 'l2';
 
@@ -56,7 +57,7 @@ class Labels with ChangeNotifier {
   }
 
   Label findById(String id) {
-    return _items.firstWhere((label) => id == label.id);
+    return _items.firstWhere((label) => id == label.id, orElse: () => null);
   }
 
   void addLabel(Label label) {
@@ -76,6 +77,9 @@ class Labels with ChangeNotifier {
   }
 
   void deleteLabel(String id) {
+    if (id == otherExpenseId || id == otherIncomeId) {
+      return;
+    }
     _items.removeWhere((label) => label.id == id);
     notifyListeners();
   }

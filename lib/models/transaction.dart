@@ -38,6 +38,13 @@ class Transaction {
 
   // Have this here so that when outputting a transaction, 2 providers aren't needed.
   Label getLabel(BuildContext context) {
-    return Provider.of<Labels>(context, listen: false).findById(labelId);
+    final labelsData = Provider.of<Labels>(context, listen: false);
+    final label = labelsData.findById(labelId);
+    // In case the label gets deleted/can't be found.
+    if (label == null) {
+      return labelsData
+          .findById(amount > 0 ? Labels.otherIncomeId : Labels.otherExpenseId);
+    }
+    return label;
   }
 }
