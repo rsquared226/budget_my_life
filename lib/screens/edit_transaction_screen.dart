@@ -123,6 +123,13 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     );
   }
 
+  String _checkLabelExistance(String labelId, bool isAmountNegative) {
+    if (_labelsData.findById(labelId) == null) {
+      return isAmountNegative ? Labels.otherExpenseId : Labels.otherIncomeId;
+    }
+    return labelId;
+  }
+
   @override
   void initState() {
     _transactionsData = Provider.of<Transactions>(context, listen: false);
@@ -137,7 +144,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         amount: initTx.amount,
         date: initTx.date,
         description: initTx.description,
-        labelId: initTx.labelId,
+        labelId: _checkLabelExistance(initTx.labelId, initTx.amount < 0),
       );
       // Don't forget to set the selectedDate.
       _selectedDate = initTx.date;
