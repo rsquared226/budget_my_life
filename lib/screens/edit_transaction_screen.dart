@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../custom_colors.dart';
+import '../card_items/label_chooser_card.dart';
 import '../models/transaction.dart';
 import '../models/label.dart';
 import '../providers/transactions.dart';
@@ -38,8 +39,7 @@ class EditableTransaction {
       description: description,
       amount: amount,
       date: date,
-      // TODO: Actually make labels choosable in this screen.
-      labelId: amount > 0 ? Labels.otherIncomeId : Labels.otherExpenseId,
+      labelId: labelId,
     );
   }
 }
@@ -72,8 +72,10 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   // Used for determining what color the form header should be based on the LabelType.
   final _labelController = TextEditingController();
   // Initialized later and determines what is shown in the Label FormField.
+  // Mostly needed for the color of the label text field.
   Label _selectedLabel;
   // Used for determining what color the form header should be based on if it's positive or negative.
+  // TODO: Don't use this to determine form header color, use _selectedLabel instead.
   final _amountController = TextEditingController();
   // Default date should be now.
   var _selectedDate = DateTime.now();
@@ -93,6 +95,35 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       _transactionsData.addTransaction(_editableTransaction.toTransaction());
     }
     widget.closeContainer();
+  }
+
+  // TODO: Separate income and expense labels.
+  Future<Label> _showLabelPicker() {
+    final labels = _labelsData.items;
+    return showDialog<Label>(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text('Select a label'),
+          children: <Widget>[
+            // Create a bunch of dialog options based on the labels the user has.
+            ...labels.map(
+              (label) {
+                return SimpleDialogOption(
+                  onPressed: () {
+                    Navigator.pop(context, label);
+                  },
+                  child: LabelChooserCard(
+                    color: label.color,
+                    title: label.title,
+                  ),
+                );
+              },
+            ).toList(growable: false),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -218,7 +249,21 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       ),
                     ),
                     readOnly: true,
+                    onTap: () async {
+                      final newLabel = await _showLabelPicker();
+                      // The user clicked out of the dialog.
+                      if (newLabel == null) {
+                        return;
+                      }
+                      setState(() {
+                        _selectedLabel = newLabel;
+                      });
+                      _labelController.text = newLabel.title;
+                    },
                     controller: _labelController,
+                    onSaved: (_) {
+                      _editableTransaction.labelId = _selectedLabel.id;
+                    },
                   ),
                   TextFormField(
                     decoration: InputDecoration(
@@ -234,6 +279,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       if (value.isEmpty || amountVal == null) {
                         return 'Please enter a number';
                       }
+                      // TODO: only allow positive values.
                       if (amountVal == 0) {
                         return 'Please enter a non-zero number';
                       }
