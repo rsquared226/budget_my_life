@@ -51,13 +51,16 @@ class TransactionDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text('Cancel'),
+              child: const Text('CANCEL'),
             ),
             FlatButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
-              child: const Text('Delete'),
+              child: const Text(
+                'DELETE',
+                style: const TextStyle(color: Colors.red),
+              ),
             ),
           ],
         );
@@ -103,11 +106,23 @@ class TransactionDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  transaction.formattedDate,
-                  style: appTheme.textTheme.caption.copyWith(
-                    fontSize: 17,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Chip(
+                      backgroundColor: appTheme.colorScheme.surface,
+                      avatar: CircleAvatar(
+                        backgroundColor: transaction.getLabel(context).color,
+                      ),
+                      label: Text(transaction.getLabel(context).title),
+                    ),
+                    Text(
+                      transaction.formattedDate,
+                      style: appTheme.textTheme.caption.copyWith(
+                        fontSize: 17,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

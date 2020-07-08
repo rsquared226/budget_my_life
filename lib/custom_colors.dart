@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './models/label.dart';
+
 class CustomColors {
   // The secondary colors are used in graphs.
 
@@ -14,6 +16,11 @@ class CustomColors {
   // Takes in the amount and returns the income or expense color accordingly.
   static Color transactionTypeColor(double amount) {
     return (amount != null && amount > 0) ? incomeColor : expenseColor;
+  }
+
+  // Same method above but for labelTypes.
+  static Color labelTypeColor(LabelType labelType) {
+    return (labelType == LabelType.INCOME) ? incomeColor : expenseColor;
   }
 
   static Color secondaryTransactionTypeColor(double amount) {
