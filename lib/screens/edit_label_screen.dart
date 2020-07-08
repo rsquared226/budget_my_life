@@ -122,6 +122,7 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                     decoration: const InputDecoration(
                       labelText: 'Title',
                     ),
+                    textCapitalization: TextCapitalization.words,
                     initialValue: _editableLabel.title,
                     validator: (value) {
                       if (value.isEmpty) {

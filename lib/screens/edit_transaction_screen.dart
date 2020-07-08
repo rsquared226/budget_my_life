@@ -213,6 +213,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               onButtonSubmit: _saveForm,
               titleFormField: TextFormField(
                 initialValue: _editableTransaction.title ?? '',
+                textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelText: 'Title',
                   labelStyle: TextStyle(color: onPrimaryColor),
@@ -348,6 +349,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                   ),
                   TextFormField(
                     initialValue: _editableTransaction.description ?? '',
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       labelText: 'Description',
                     ),
