@@ -14,7 +14,9 @@ import '../widgets/edit_transaction_appbar.dart';
 
 // This is to make the saving of the form less cumbersome.
 class EditableTransaction {
-  String id;
+  // If a transaction is being edited, the id should never change.
+  // If a transaction is being added, the id will be null until it is converted to a Label.
+  final String id;
   String title;
   String description;
   double amount;
@@ -32,8 +34,6 @@ class EditableTransaction {
 
   Transaction toTransaction() {
     return Transaction(
-      // If we are editing a transaction, an id would've already been provided. If not, we're making a new one and will
-      // make a new id on the fly.
       id: id ?? DateTime.now().toString(),
       title: title,
       description: description,

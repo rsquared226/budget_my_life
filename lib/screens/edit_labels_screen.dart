@@ -99,7 +99,7 @@ class EditLabelsScreen extends StatelessWidget {
               },
               child: const Text(
                 'DELETE',
-                style: const TextStyle(color: Colors.red),
+                style: TextStyle(color: Colors.red),
               ),
             ),
           ],
