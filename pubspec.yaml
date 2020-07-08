@@ -23,8 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  animations: ^1.0.0+5
-  provider: ^4.1.2
+  animations: ^1.1.1
+  provider: ^4.2.0
   intl: ^0.16.1
   charts_flutter: ^0.9.0
   flutter_colorpicker: ^0.3.4
