@@ -31,8 +31,7 @@ class DBHelper {
       id TEXT PRIMARY KEY,
       title TEXT,
       color INTEGER,
-      label_type INTEGER
-      ''');
+      labelType INTEGER)''');
   }
 
   static Future<void> insertTransaction(Transaction transaction) async {
