@@ -24,6 +24,28 @@ class Transaction {
     @required this.labelId,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'amount': amount,
+      'date': date.millisecondsSinceEpoch,
+      'labelId': labelId,
+    };
+  }
+
+  static Transaction fromMap(Map<String, dynamic> map) {
+    return Transaction(
+      id: map['id'],
+      title: map['title'],
+      description: map['description'],
+      amount: map['amount'],
+      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      labelId: map['labelId'],
+    );
+  }
+
   String get formattedAmount {
     var formattedAmount = '\$${amount.abs().toStringAsFixed(2)}';
     if (amount < 0) {
