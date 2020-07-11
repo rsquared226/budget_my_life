@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../database/db_helper.dart';
 import '../models/label.dart';
 
 class Labels with ChangeNotifier {
@@ -7,38 +8,7 @@ class Labels with ChangeNotifier {
   static const otherIncomeId = 'l1';
   static const otherExpenseId = 'l2';
 
-  var _items = <Label>[
-    Label(
-      id: otherIncomeId,
-      title: 'Other income',
-      color: Colors.blueGrey,
-      labelType: LabelType.INCOME,
-    ),
-    Label(
-      id: otherExpenseId,
-      title: 'Other expense',
-      color: Colors.orange,
-      labelType: LabelType.EXPENSE,
-    ),
-    Label(
-      id: 'l3',
-      title: 'Groceries',
-      color: Colors.green,
-      labelType: LabelType.EXPENSE,
-    ),
-    Label(
-      id: 'l4',
-      title: 'Luxury',
-      color: Colors.purple,
-      labelType: LabelType.EXPENSE,
-    ),
-    Label(
-      id: 'l5',
-      title: 'Education',
-      color: Colors.orange,
-      labelType: LabelType.EXPENSE,
-    ),
-  ];
+  var _items = <Label>[];
 
   List<Label> get items {
     return [..._items];
@@ -63,6 +33,7 @@ class Labels with ChangeNotifier {
   void addLabel(Label label) {
     _items.add(label);
     notifyListeners();
+    DBHelper.insertLabel(label);
   }
 
   void editLabel(Label editedLabel) {
@@ -74,6 +45,7 @@ class Labels with ChangeNotifier {
     }
     _items[editedIndex] = editedLabel;
     notifyListeners();
+    DBHelper.updateLabel(editedLabel);
   }
 
   void deleteLabel(String id) {
@@ -81,6 +53,35 @@ class Labels with ChangeNotifier {
       return;
     }
     _items.removeWhere((label) => label.id == id);
+    notifyListeners();
+    DBHelper.deleteLabel(id);
+  }
+
+  Future<void> fetchAndSetLabels() async {
+    _items = await DBHelper.getLabels();
+
+    // If the default labels weren't in storage, add them here.
+    if (this.findById(otherIncomeId) == null ||
+        this.findById(otherExpenseId) == null) {
+      // By adding both of these labels, the user can edit labels without a problem. If these aren't added to the db,
+      // then the db will attempt to update a nonexistant label when edited.
+      this.addLabel(
+        Label(
+          id: otherIncomeId,
+          title: 'Other income',
+          color: Colors.blueGrey,
+          labelType: LabelType.INCOME,
+        ),
+      );
+      this.addLabel(
+        Label(
+          id: otherExpenseId,
+          title: 'Other expense',
+          color: Colors.orange,
+          labelType: LabelType.EXPENSE,
+        ),
+      );
+    }
     notifyListeners();
   }
 }

@@ -1,50 +1,10 @@
 import 'package:flutter/foundation.dart';
 
+import '../database/db_helper.dart';
 import '../models/transaction.dart';
-import './labels.dart';
 
 class Transactions with ChangeNotifier {
-  var _items = <Transaction>[
-    Transaction(
-      id: 't1',
-      title: 'Payday baby',
-      amount: 2000,
-      date: DateTime(2019, 5, 7),
-      labelId: Labels.otherIncomeId,
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New TV',
-      amount: -300,
-      date: DateTime(2020, 5, 7),
-      labelId: 'l4',
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Bet',
-      amount: -20,
-      date: DateTime(2019, 8, 29),
-      description: 'Oopsie',
-      labelId: Labels.otherExpenseId,
-    ),
-    Transaction(
-      id: 't4',
-      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing',
-      amount: -20,
-      date: DateTime.now(),
-      description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam aliquam in est in iaculis. Sed suscipit tristique venenatis. Sed egestas tellus et sem mattis, at imperdiet justo semper. Aenean blandit tincidunt sagittis. Nunc pulvinar leo in sapien varius, sit amet sodales mi tempus. In sit amet porta elit, et faucibus erat. Pellentesque hendrerit sapien in lacus vehicula, vitae semper lorem dignissim. Nullam viverra vestibulum tellus eu interdum. Pellentesque nec pellentesque turpis. Donec porta varius porta. Vestibulum tempor sollicitudin ex, id sollicitudin felis iaculis non. Sed sed efficitur lorem. Nulla aliquet metus vel laoreet semper. Phasellus eget dui ut tortor cursus rutrum. Sed tincidunt diam id congue mattis. Pellentesque vitae erat nec tortor tempus porttitor. Nullam accumsan pretium suscipit. Donec condimentum, est sit amet aliquam eleifend, erat arcu gravida nisl, quis commodo purus ipsum eu turpis. Pellentesque tristique laoreet tortor. Nulla elit orci, cursus nec tincidunt ut, molestie id sem. Cras varius eget ligula nec pellentesque. Quisque et orci nec ante cursus vestibulum a quis arcu. Vivamus ante ligula, porta sit amet iaculis a, ultricies porta nibh. Ut sollicitudin facilisis purus quis tincidunt. Mauris quis gravida leo.',
-      labelId: Labels.otherExpenseId,
-    ),
-    Transaction(
-      id: 't5',
-      title: 'Another payday I guess',
-      amount: 500,
-      date: DateTime.now().subtract(Duration(days: 1)),
-      description: 'filler description.',
-      labelId: Labels.otherIncomeId,
-    ),
-  ];
+  var _items = <Transaction>[];
 
   List<Transaction> get items {
     // Sort items in non-chronological order.
@@ -53,7 +13,7 @@ class Transactions with ChangeNotifier {
   }
 
   double get balance {
-    return incomeTotal - expensesTotal;
+    return incomeTotal + expensesTotal;
   }
 
   double get expensesTotal {
@@ -94,6 +54,7 @@ class Transactions with ChangeNotifier {
   void addTransaction(Transaction newTransaction) {
     _items.add(newTransaction);
     notifyListeners();
+    DBHelper.insertTransaction(newTransaction);
   }
 
   void editTransaction(Transaction editedTransaction) {
@@ -105,10 +66,17 @@ class Transactions with ChangeNotifier {
     }
     _items[editedIndex] = editedTransaction;
     notifyListeners();
+    DBHelper.updateTransaction(editedTransaction);
   }
 
   void deleteTransaction(String id) {
     _items.removeWhere((transaction) => transaction.id == id);
+    notifyListeners();
+    DBHelper.deleteTransaction(id);
+  }
+
+  Future<void> fetchAndSetTransactions() async {
+    _items = await DBHelper.getTransactions();
     notifyListeners();
   }
 }
