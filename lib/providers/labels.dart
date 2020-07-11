@@ -63,20 +63,24 @@ class Labels with ChangeNotifier {
     // If the default labels weren't in storage, add them here.
     if (this.findById(otherIncomeId) == null ||
         this.findById(otherExpenseId) == null) {
-      _items.addAll([
+      // By adding both of these labels, the user can edit labels without a problem. If these aren't added to the db,
+      // then the db will attempt to update a nonexistant label when edited.
+      this.addLabel(
         Label(
           id: otherIncomeId,
           title: 'Other income',
           color: Colors.blueGrey,
           labelType: LabelType.INCOME,
         ),
+      );
+      this.addLabel(
         Label(
           id: otherExpenseId,
           title: 'Other expense',
           color: Colors.orange,
           labelType: LabelType.EXPENSE,
         ),
-      ]);
+      );
     }
     notifyListeners();
   }
