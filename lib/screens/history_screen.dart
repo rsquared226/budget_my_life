@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../card_items/filter_label_card.dart';
 import '../card_items/transaction_card.dart';
 import '../screens/transaction_details_screen.dart';
 import '../models/transaction.dart';
@@ -25,16 +26,34 @@ class HistoryScreen extends StatelessWidget {
               color: Colors.black54,
             ),
           ),
-          // TODO: add stuff here when categories are finished.
           // Idea: have the dropdown highlighted when an actual filter is selected.
-          DropdownButton<String>(
-            icon: const Icon(Icons.filter_list),
-            items: [
-              DropdownMenuItem(
-                child: const Text('All'),
-              ),
-            ],
-            onChanged: (newVal) {},
+          Consumer<Labels>(
+            builder: (_, labels, __) {
+              return DropdownButton<String>(
+                icon: const Icon(Icons.filter_list),
+                items: [
+                  DropdownMenuItem(
+                    value: null,
+                    child: const FilterLabelCard(
+                      title: 'All',
+                      categoryColor: Colors.transparent,
+                    ),
+                  ),
+                  ...labels.items.map(
+                    (label) {
+                      return DropdownMenuItem(
+                        value: label.id,
+                        child: FilterLabelCard(
+                          title: label.title,
+                          categoryColor: label.color,
+                        ),
+                      );
+                    },
+                  ).toList()
+                ],
+                onChanged: (newVal) {},
+              );
+            },
           ),
         ],
       ),
