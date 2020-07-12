@@ -51,6 +51,17 @@ class Transactions with ChangeNotifier {
     );
   }
 
+  List<Transaction> filterTransactions(String labelId) {
+    if (labelId == null) {
+      return items;
+    }
+    // TODO: work on pruning transactions that have deleted labelId's
+    // Use the getter so transactions are already sorted.
+    return items
+        .where((transaction) => transaction.labelId == labelId)
+        .toList();
+  }
+
   void addTransaction(Transaction newTransaction) {
     _items.add(newTransaction);
     notifyListeners();

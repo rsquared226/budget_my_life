@@ -3,6 +3,7 @@ import 'package:animations/animations.dart';
 import 'package:provider/provider.dart';
 
 import '../card_items/transaction_card.dart';
+import '../providers/filter.dart';
 import '../providers/transactions.dart';
 import '../screens/transaction_details_screen.dart';
 
@@ -11,7 +12,9 @@ import '../screens/transaction_details_screen.dart';
 class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final transactions = Provider.of<Transactions>(context).items;
+    final filterLabelId = Provider.of<Filter>(context).labelId;
+    final transactions =
+        Provider.of<Transactions>(context).filterTransactions(filterLabelId);
 
     if (transactions.length == 0) {
       return const Center(
