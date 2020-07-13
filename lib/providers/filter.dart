@@ -1,6 +1,6 @@
-// Used in HistoryScreen for filtering transactions there.
-
 import 'package:flutter/material.dart';
+
+// Used in HistoryScreen for filtering transactions there.
 
 class Filter with ChangeNotifier {
   String _labelId;
