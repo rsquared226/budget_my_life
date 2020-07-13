@@ -1,4 +1,4 @@
-package com.example.budget_my_life
+package rsquared226.budget_my_life
 
 import io.flutter.embedding.android.FlutterActivity
 
