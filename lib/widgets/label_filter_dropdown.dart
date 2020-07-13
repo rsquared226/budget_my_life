@@ -25,10 +25,16 @@ class LabelFilterDropdown extends StatelessWidget {
     final labels = Provider.of<Labels>(context).items;
     final filterData = Provider.of<Filter>(context);
 
-    // Idea: have the dropdown highlighted when an actual filter is selected.
     return DropdownButton<String>(
       icon: const Icon(Icons.filter_list),
       value: filterData.labelId,
+      // So it's easy to tell when the list is actually filtering.
+      underline: Container(
+        height: filterData.labelId == null ? 1 : 2,
+        color: filterData.labelId == null
+            ? Colors.grey[300]
+            : Theme.of(context).primaryColor,
+      ),
       items: [
         DropdownMenuItem(
           value: null,

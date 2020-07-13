@@ -128,8 +128,8 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                       if (value.isEmpty) {
                         return 'Please enter a title.';
                       }
-                      if (value.length > 30) {
-                        return 'Please shorten your title from ${value.length} characters to 30.';
+                      if (value.length > 20) {
+                        return 'Please shorten your title from ${value.length} characters to 20.';
                       }
                       return null;
                     },
