@@ -1,13 +1,12 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../card_items/transaction_card.dart';
-import '../screens/transaction_details_screen.dart';
-import '../models/transaction.dart';
+import '../providers/filter.dart';
 import '../providers/labels.dart';
 import '../providers/transactions.dart';
 import '../widgets/balance_summary_card.dart';
+import '../widgets/label_filter_dropdown.dart';
+import '../widgets/transactions_list.dart';
 
 // This screen is a tab under home_screen.
 class HistoryScreen extends StatelessWidget {
@@ -25,49 +24,9 @@ class HistoryScreen extends StatelessWidget {
               color: Colors.black54,
             ),
           ),
-          // TODO: add stuff here when categories are finished.
-          // Idea: have the dropdown highlighted when an actual filter is selected.
-          DropdownButton<String>(
-            icon: const Icon(Icons.filter_list),
-            items: [
-              DropdownMenuItem(
-                child: const Text('All'),
-              ),
-            ],
-            onChanged: (newVal) {},
-          ),
+          LabelFilterDropdown(),
         ],
       ),
-    );
-  }
-
-  Widget buildTransactionsList(List<Transaction> transactions) {
-    if (transactions.length == 0) {
-      return const Center(
-        child: Text('Start adding some transactions!'),
-      );
-    }
-    return ListView.builder(
-      itemCount: transactions.length,
-      itemBuilder: (_, index) {
-        return Column(
-          children: <Widget>[
-            OpenContainer(
-              closedShape: const BeveledRectangleBorder(),
-              closedElevation: 0,
-              closedBuilder: (_, __) {
-                return TransactionCard(transaction: transactions[index]);
-              },
-              openBuilder: (_, __) {
-                return TransactionDetailsScreen(
-                  transactionId: transactions[index].id,
-                );
-              },
-            ),
-            const Divider(height: 1),
-          ],
-        );
-      },
     );
   }
 
@@ -78,39 +37,42 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Fetch and set data in this screen because it is the first screen the user sees.
-    return FutureBuilder(
-      future: fetchAndSetData(context),
-      builder: (_, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return Consumer<Transactions>(
-          builder: (_, transactionsData, __) {
-            return Column(
-              children: <Widget>[
-                BalanceSummaryCard(
-                  balance: transactionsData.balance,
-                  formattedBalance: transactionsData.formattedBalance,
-                ),
-                const SizedBox(height: 8),
-                buildListHeader(),
-                const SizedBox(height: 5),
-                // A psuedo-shadow.
-                const Divider(
-                  height: 0,
-                  thickness: 1.5,
-                ),
-                Expanded(
-                  child: buildTransactionsList(transactionsData.items),
-                ),
-              ],
+    return ChangeNotifierProvider(
+      create: (_) => Filter(),
+      // Fetch and set data in this screen because it is the first screen the user sees.
+      child: FutureBuilder(
+        future: fetchAndSetData(context),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          },
-        );
-      },
+          }
+          return Column(
+            children: <Widget>[
+              Consumer<Transactions>(
+                builder: (_, transactionsData, __) {
+                  return BalanceSummaryCard(
+                    balance: transactionsData.balance,
+                    formattedBalance: transactionsData.formattedBalance,
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              buildListHeader(),
+              const SizedBox(height: 5),
+              // A psuedo-shadow.
+              const Divider(
+                height: 0,
+                thickness: 1.5,
+              ),
+              Expanded(
+                child: TransactionsList(),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
