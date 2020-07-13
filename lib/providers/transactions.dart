@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../database/db_helper.dart';
 import '../models/transaction.dart';
+import './labels.dart';
 
 class Transactions with ChangeNotifier {
   var _items = <Transaction>[];
@@ -51,11 +53,11 @@ class Transactions with ChangeNotifier {
     );
   }
 
-  List<Transaction> filterTransactions(String labelId) {
+  List<Transaction> filterTransactions(BuildContext context, String labelId) {
     if (labelId == null) {
       return items;
     }
-    // TODO: work on pruning transactions that have deleted labelId's
+    pruneDeletedLabelIds(context);
     // Use the getter so transactions are already sorted.
     return items
         .where((transaction) => transaction.labelId == labelId)
@@ -89,5 +91,28 @@ class Transactions with ChangeNotifier {
   Future<void> fetchAndSetTransactions() async {
     _items = await DBHelper.getTransactions();
     notifyListeners();
+  }
+
+  // If a transaction has the id of a deleted label, replace it with one of the default labels.
+  void pruneDeletedLabelIds(BuildContext context) {
+    final labelsData = Provider.of<Labels>(context, listen: false);
+
+    for (var i = 0; i < _items.length; i++) {
+      final transaction = _items[i];
+      if (labelsData.findById(transaction.labelId) == null) {
+        final newLabelId = transaction.amount >= 0
+            ? Labels.otherIncomeId
+            : Labels.otherExpenseId;
+
+        _items[i] = Transaction(
+          id: transaction.id,
+          title: transaction.title,
+          amount: transaction.amount,
+          date: transaction.date,
+          labelId: newLabelId,
+        );
+        DBHelper.updateTransaction(_items[i]);
+      }
+    }
   }
 }

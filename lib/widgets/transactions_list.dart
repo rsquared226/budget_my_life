@@ -13,8 +13,8 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filterLabelId = Provider.of<Filter>(context).labelId;
-    final transactions =
-        Provider.of<Transactions>(context).filterTransactions(filterLabelId);
+    final transactions = Provider.of<Transactions>(context)
+        .filterTransactions(context, filterLabelId);
 
     if (transactions.length == 0) {
       return const Center(
