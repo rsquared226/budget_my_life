@@ -22,25 +22,21 @@ class TransactionsList extends StatelessWidget {
       );
     }
 
-    return ListView.builder(
+    return ListView.separated(
       itemCount: transactions.length,
+      separatorBuilder: (_, __) => const Divider(height: 1),
       itemBuilder: (_, index) {
-        return Column(
-          children: <Widget>[
-            OpenContainer(
-              closedShape: const BeveledRectangleBorder(),
-              closedElevation: 0,
-              closedBuilder: (_, __) {
-                return TransactionCard(transaction: transactions[index]);
-              },
-              openBuilder: (_, __) {
-                return TransactionDetailsScreen(
-                  transactionId: transactions[index].id,
-                );
-              },
-            ),
-            const Divider(height: 1),
-          ],
+        return OpenContainer(
+          closedShape: const BeveledRectangleBorder(),
+          closedElevation: 0,
+          closedBuilder: (_, __) {
+            return TransactionCard(transaction: transactions[index]);
+          },
+          openBuilder: (_, __) {
+            return TransactionDetailsScreen(
+              transactionId: transactions[index].id,
+            );
+          },
         );
       },
     );

@@ -189,9 +189,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     return addOrEdit + incomeOrExpense;
   }
 
-  Color get onPrimaryColor {
-    return Theme.of(context).colorScheme.onPrimary;
-  }
+  Color get onPrimaryColor => Theme.of(context).colorScheme.onPrimary;
 
   String get initialAmountFieldValue {
     final initialVal = _editableTransaction.amount;

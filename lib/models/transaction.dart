@@ -54,9 +54,7 @@ class Transaction {
     return formattedAmount;
   }
 
-  String get formattedDate {
-    return DateFormat.yMMMMd().format(date);
-  }
+  String get formattedDate => DateFormat.yMMMMd().format(date);
 
   // Have this here so that when outputting a transaction, 2 providers aren't needed.
   Label getLabel(BuildContext context) {
