@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/edit_labels_screen.dart';
+import './about_app_list_tile.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -28,10 +29,7 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           Divider(),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-          ),
+          AboutAppListTile(),
         ],
       ),
     );
