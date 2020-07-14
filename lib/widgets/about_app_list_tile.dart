@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
-import '../custom_icons_icons.dart';
+import '../utils/custom_icons_icons.dart';
 
 class AboutAppListTile extends StatelessWidget {
   Future<void> launchUrl(BuildContext context, String url) async {

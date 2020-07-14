@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../database/db_helper.dart';
+import '../utils/db_helper.dart';
 import '../models/label.dart';
 
 class Labels with ChangeNotifier {
