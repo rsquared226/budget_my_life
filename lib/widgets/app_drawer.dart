@@ -11,8 +11,7 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 200,
-            color: Theme.of(context).accentColor,
-            // TODO: add app icon later.
+            color: Theme.of(context).primaryColor,
           ),
           ListTile(
             leading: const Icon(Icons.attach_money),
