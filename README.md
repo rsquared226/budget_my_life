@@ -6,9 +6,11 @@ A beautiful and informative budgeting Android app.
 
 It's light-weight and all data stays on your device. The app requires no permissions from the user.
 
-## Demos
+## Some Highlights
 
-(Coming soon! Check out some of the PR's for screenrecordings of the app for now.)
+| Transaction Addition                 | Transaction Filtering                | Label Editing                        |
+|--------------------------------------|--------------------------------------|--------------------------------------|
+| ![](https://i.imgur.com/gNTToXN.gif) | ![](https://i.imgur.com/yOwE1bO.gif) | ![](https://i.imgur.com/z3G88Zi.gif) |
 
 ## Technologies Used
 - [Flutter](https://flutter.dev/) (SDK)
