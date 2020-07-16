@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import './chart_models/transaction_detail_chart_model.dart';
-import '../custom_colors.dart';
+import '../utils/custom_colors.dart';
 
 // This is used in TransactionDetailsScreen.
 

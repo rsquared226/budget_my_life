@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../custom_colors.dart';
+import '../utils/custom_colors.dart';
 import '../card_items/label_chooser_card.dart';
 import '../models/transaction.dart';
 import '../models/label.dart';
@@ -189,9 +189,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     return addOrEdit + incomeOrExpense;
   }
 
-  Color get onPrimaryColor {
-    return Theme.of(context).colorScheme.onPrimary;
-  }
+  Color get onPrimaryColor => Theme.of(context).colorScheme.onPrimary;
 
   String get initialAmountFieldValue {
     final initialVal = _editableTransaction.amount;

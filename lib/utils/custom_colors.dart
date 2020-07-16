@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './models/label.dart';
+import '../models/label.dart';
 
 class CustomColors {
   // The secondary colors are used in graphs.

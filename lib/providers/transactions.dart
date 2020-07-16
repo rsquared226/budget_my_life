@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../database/db_helper.dart';
+import '../utils/db_helper.dart';
 import '../models/transaction.dart';
 import './labels.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../custom_colors.dart';
+import '../utils/custom_colors.dart';
 import '../models/label.dart';
 
 // Used in EditLabelScreen.

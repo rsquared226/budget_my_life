@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../custom_colors.dart';
+import '../utils/custom_colors.dart';
 
 class BalanceSummaryCard extends StatelessWidget {
   // Only asking for the balance in case the way formatting the balance changes later.
