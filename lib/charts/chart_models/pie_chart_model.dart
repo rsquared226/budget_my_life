@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class TransactionDetailChartModel {
+class PieChartModel {
   final String label;
   final double amount;
   final charts.Color color;
 
-  TransactionDetailChartModel({
+  PieChartModel({
     @required this.label,
     @required this.amount,
     @required Color color,

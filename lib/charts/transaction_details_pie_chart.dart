@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import './chart_models/transaction_detail_chart_model.dart';
+import 'chart_models/pie_chart_model.dart';
 import '../utils/custom_colors.dart';
 
 // This is used in TransactionDetailsScreen.
@@ -17,16 +17,16 @@ class TransactionDetailsPieChart extends StatelessWidget {
     @required this.totalAmount,
   });
 
-  List<charts.Series<TransactionDetailChartModel, String>> get chartData {
+  List<charts.Series<PieChartModel, String>> get chartData {
     final otherTitle =
         'Other ' + (transactionAmount < 0 ? 'Expenses' : 'Income');
     final pieData = [
-      TransactionDetailChartModel(
+      PieChartModel(
         label: transactionTitle,
         amount: transactionAmount,
         color: CustomColors.transactionTypeColor(transactionAmount),
       ),
-      TransactionDetailChartModel(
+      PieChartModel(
         label: otherTitle,
         amount: totalAmount - transactionAmount,
         color: CustomColors.secondaryTransactionTypeColor(transactionAmount),
@@ -35,12 +35,9 @@ class TransactionDetailsPieChart extends StatelessWidget {
     return [
       charts.Series(
         id: transactionTitle,
-        domainFn: (TransactionDetailChartModel transactionData, _) =>
-            transactionData.label,
-        measureFn: (TransactionDetailChartModel transactionData, _) =>
-            transactionData.amount,
-        colorFn: (TransactionDetailChartModel transactionData, _) =>
-            transactionData.color,
+        domainFn: (PieChartModel transactionData, _) => transactionData.label,
+        measureFn: (PieChartModel transactionData, _) => transactionData.amount,
+        colorFn: (PieChartModel transactionData, _) => transactionData.color,
         data: pieData,
       ),
     ];
