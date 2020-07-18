@@ -7,10 +7,12 @@ import '../chart_models/pie_chart_model.dart';
 
 class PieChartBase extends StatelessWidget {
   final String id;
+  final bool animated;
   final List<PieChartModel> pieData;
 
   const PieChartBase({
     @required this.id,
+    @required this.animated,
     @required this.pieData,
   });
 
@@ -30,6 +32,7 @@ class PieChartBase extends StatelessWidget {
   Widget build(BuildContext context) {
     return charts.PieChart(
       chartData,
+      animate: animated,
       defaultRenderer: charts.ArcRendererConfig(
         arcRendererDecorators: [
           charts.ArcLabelDecorator(

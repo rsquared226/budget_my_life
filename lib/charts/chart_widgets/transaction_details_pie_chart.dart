@@ -23,6 +23,7 @@ class TransactionDetailsPieChart extends StatelessWidget {
         'Other ' + (transactionAmount < 0 ? 'Expenses' : 'Income');
     return PieChartBase(
       id: transactionTitle,
+      animated: true,
       pieData: [
         PieChartModel(
           label: transactionTitle,

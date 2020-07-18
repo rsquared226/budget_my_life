@@ -22,6 +22,7 @@ class LabelsPieChart extends StatelessWidget {
 
     return PieChartBase(
       id: labelType.toString(),
+      animated: false,
       pieData: labels
           .map(
             (label) => PieChartModel(
