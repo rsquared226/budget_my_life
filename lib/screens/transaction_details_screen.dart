@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../charts/transaction_details_pie_chart.dart';
+import '../charts/chart_widgets/transaction_details_pie_chart.dart';
 import '../providers/transactions.dart';
 import './edit_transaction_screen.dart';
 import '../widgets/transaction_details_appbar.dart';
