@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../models/label.dart';
 import '../charts/chart_widgets/labels_pie_chart.dart';
+import '../utils/custom_colors.dart';
+import '../widgets/chart_container.dart';
 
 // This screen is a screen under home_screen
 
 class GraphsScreen extends StatelessWidget {
-  static Widget _buildGraphContainer(Widget graph) {
-    return Center(
-      child: SizedBox(
-        height: 275,
-        child: graph,
-      ),
-    );
-  }
-
   final graphScreens = <Widget>[
-    _buildGraphContainer(
-      LabelsPieChart(labelType: LabelType.INCOME),
+    ChartContainer(
+      chart: LabelsPieChart(labelType: LabelType.INCOME),
+      color: CustomColors.incomeColor,
     ),
-    _buildGraphContainer(
-      LabelsPieChart(labelType: LabelType.EXPENSE),
+    ChartContainer(
+      chart: LabelsPieChart(labelType: LabelType.EXPENSE),
+      color: CustomColors.expenseColor,
     ),
   ];
 

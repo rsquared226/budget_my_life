@@ -9,11 +9,17 @@ class PieChartBase extends StatelessWidget {
   final String id;
   final bool animated;
   final List<PieChartModel> pieData;
+  final bool showArcLabels;
+  final charts.ArcLabelPosition arcLabelPosition;
+  final List<charts.ChartBehavior> behaviors;
 
   const PieChartBase({
     @required this.id,
     @required this.animated,
     @required this.pieData,
+    @required this.showArcLabels,
+    this.arcLabelPosition = charts.ArcLabelPosition.auto,
+    this.behaviors,
   });
 
   List<charts.Series<PieChartModel, String>> get chartData {
@@ -33,13 +39,17 @@ class PieChartBase extends StatelessWidget {
     return charts.PieChart(
       chartData,
       animate: animated,
-      defaultRenderer: charts.ArcRendererConfig(
-        arcRendererDecorators: [
-          charts.ArcLabelDecorator(
-            labelPosition: charts.ArcLabelPosition.outside,
-          ),
-        ],
-      ),
+      behaviors: behaviors,
+      // if defaultRenderer is null, no arc labels will show.
+      defaultRenderer: showArcLabels
+          ? charts.ArcRendererConfig(
+              arcRendererDecorators: [
+                charts.ArcLabelDecorator(
+                  labelPosition: arcLabelPosition,
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

@@ -9,6 +9,7 @@ import '../widgets/label_filter_dropdown.dart';
 import '../widgets/transactions_list.dart';
 
 // This screen is a tab under home_screen.
+// TODO: Only make list header as sticky with sliverlist.
 class HistoryScreen extends StatelessWidget {
   // Contains History text and dropdown filter.
   Widget buildListHeader() {
