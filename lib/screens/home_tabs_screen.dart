@@ -5,6 +5,7 @@ import '../widgets/app_drawer.dart';
 import './graphs_screen.dart';
 import './dashboard_screen.dart';
 import '../widgets/history_screen_fab.dart';
+import '../widgets/home_tabs_bar.dart';
 
 // Need this because the built-in FloatingActionButton widget isn't being used. A custom one is for the animation.
 
@@ -43,23 +44,13 @@ class _HomeTabsScreenState extends State<HomeTabsScreen> {
         duration: const Duration(milliseconds: 150),
         child: HistoryScreenFAB(tappable: _pageIndex == 0),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageIndex,
-        onTap: (newPageIndex) {
+      bottomNavigationBar: HomeTabsBar(
+        pageIndex: _pageIndex,
+        onPressed: (newPageIndex) {
           setState(() {
             _pageIndex = newPageIndex;
           });
         },
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.attach_money),
-            title: Text('Dashboard'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assessment),
-            title: Text('Graphs'),
-          ),
-        ],
       ),
     );
   }
