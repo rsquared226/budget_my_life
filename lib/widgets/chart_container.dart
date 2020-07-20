@@ -4,28 +4,27 @@ import 'package:flutter/material.dart';
 
 class ChartContainer extends StatelessWidget {
   final Widget chart;
-  final Color color;
+  final Color backgroundColor;
 
   const ChartContainer({
     @required this.chart,
-    @required this.color,
+    @required this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color,
+      color: backgroundColor,
       child: Center(
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
+          // Uneven because room is needed for ScrollingPageIndicator.
+          margin: const EdgeInsets.only(left: 18, right: 25),
+          height: 275,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: SizedBox(
-            child: chart,
-            height: 275,
-          ),
+          child: chart,
         ),
       ),
     );
