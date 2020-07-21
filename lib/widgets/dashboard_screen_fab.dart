@@ -3,11 +3,11 @@ import 'package:animations/animations.dart';
 
 import '../screens/edit_transaction_screen.dart';
 
-// Used in HomeTabsScreen. Is not shown when in the Graphs tab.
+// Used in DashboardScreen
 
 const _fabDimension = 56.0;
 
-class HistoryScreenFAB extends StatelessWidget {
+class DashboardScreenFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OpenContainer(

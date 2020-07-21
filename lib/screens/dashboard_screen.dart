@@ -5,7 +5,7 @@ import '../providers/filter.dart';
 import '../providers/labels.dart';
 import '../providers/transactions.dart';
 import '../widgets/balance_summary_card.dart';
-import '../widgets/history_screen_fab.dart';
+import '../widgets/dashboard_screen_fab.dart';
 import '../widgets/label_filter_dropdown.dart';
 import '../widgets/transactions_list.dart';
 
@@ -40,7 +40,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: HistoryScreenFAB(),
+      floatingActionButton: DashboardScreenFAB(),
       body: ChangeNotifierProvider(
         create: (_) => Filter(),
         // Fetch and set data in this screen because it is the first screen the user sees.
