@@ -15,7 +15,7 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.attach_money),
-            title: const Text('History'),
+            title: const Text('Dashboard'),
             onTap: () => Navigator.of(context).pushReplacementNamed(
               '/',
             ),

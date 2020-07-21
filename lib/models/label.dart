@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/transactions.dart';
 
 enum LabelType { INCOME, EXPENSE }
 
@@ -31,5 +34,18 @@ class Label {
       color: Color(map['color']),
       labelType: LabelType.values[map['labelType']],
     );
+  }
+
+  double getLabelTotal(BuildContext context) {
+    final labelTransactions = Provider.of<Transactions>(context, listen: false)
+        .filterTransactions(context, id);
+    var labelTotal = 0.0;
+
+    labelTransactions.forEach(
+      (transaction) {
+        labelTotal += transaction.amount;
+      },
+    );
+    return labelTotal;
   }
 }
