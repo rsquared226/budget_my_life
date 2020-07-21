@@ -35,7 +35,7 @@ class LabelsPieChart extends StatelessWidget {
       return const Center(
         child: Text(
           'Start adding some transactions!',
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 15),
         ),
       );
     }

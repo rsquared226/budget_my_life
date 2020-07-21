@@ -24,10 +24,12 @@ class _GraphsScreenState extends State<GraphsScreen> {
 
   final _graphScreens = <Widget>[
     ChartContainer(
+      title: 'Income Insights',
       chart: LabelsPieChart(labelType: LabelType.INCOME),
       backgroundColor: CustomColors.incomeColor,
     ),
     ChartContainer(
+      title: 'Expenses Insights',
       chart: LabelsPieChart(labelType: LabelType.EXPENSE),
       backgroundColor: CustomColors.expenseColor,
     ),
