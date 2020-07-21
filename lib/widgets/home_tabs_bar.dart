@@ -23,7 +23,7 @@ class HomeTabsBar extends StatelessWidget {
       backgroundColor:
           pageIndex == 0 ? themeData.canvasColor : themeData.primaryColor,
       currentIndex: pageIndex,
-      onTap: (newPageIndex) => onPressed(newPageIndex),
+      onTap: onPressed,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.attach_money),
@@ -31,7 +31,7 @@ class HomeTabsBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.assessment),
-          title: Text('Graphs'),
+          title: Text('Insights'),
         ),
       ],
     );

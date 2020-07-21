@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 
 import '../widgets/app_drawer.dart';
-import './graphs_screen.dart';
+import 'insights_screen.dart';
 import './dashboard_screen.dart';
 import '../widgets/home_tabs_bar.dart';
 
@@ -18,7 +18,7 @@ class _HomeTabsScreenState extends State<HomeTabsScreen> {
 
   final List<Widget> _pageList = <Widget>[
     DashboardScreen(),
-    GraphsScreen(),
+    InsightsScreen(),
   ];
 
   @override

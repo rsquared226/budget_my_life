@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Used in GraphsScreen.
+// Used in InsightsScreen.
 
 class ChartContainer extends StatelessWidget {
   final String title;

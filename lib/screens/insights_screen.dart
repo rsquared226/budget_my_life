@@ -8,12 +8,12 @@ import '../widgets/chart_container.dart';
 
 // This screen is a screen under home_screen.
 
-class GraphsScreen extends StatefulWidget {
+class InsightsScreen extends StatefulWidget {
   @override
-  _GraphsScreenState createState() => _GraphsScreenState();
+  _InsightsScreenState createState() => _InsightsScreenState();
 }
 
-class _GraphsScreenState extends State<GraphsScreen> {
+class _InsightsScreenState extends State<InsightsScreen> {
   PageController _pageController = PageController();
 
   @override
