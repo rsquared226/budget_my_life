@@ -7,7 +7,6 @@ import '../utils/custom_colors.dart';
 import '../widgets/chart_container.dart';
 
 // This screen is a screen under home_screen.
-// TODO: add case for 0 transactions in graphs
 
 class GraphsScreen extends StatefulWidget {
   @override

@@ -29,6 +29,17 @@ class LabelsPieChart extends StatelessWidget {
 
     // Remove the labels with 0 transactions so there's no extra labels.
     labels.removeWhere((label) => label.getLabelTotal(context) == 0);
+
+    // Return something suggesting to add transactions if there's nothing to display in the graph.
+    if (labels.isEmpty) {
+      return const Center(
+        child: Text(
+          'Start adding some transactions!',
+          style: TextStyle(fontSize: 16),
+        ),
+      );
+    }
+
     // Sort labels so the label with the most spending shows up first in the legend (descending order).
     labels.sort(
       (a, b) {
