@@ -13,28 +13,35 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filterLabelId = Provider.of<Filter>(context).labelId;
-    final transactions = Provider.of<Transactions>(context)
-        .filterTransactions(context, filterLabelId);
+    final transactionsData = Provider.of<Transactions>(context);
+    final filteredTransactions =
+        transactionsData.filterTransactions(context, filterLabelId);
 
-    if (transactions.length == 0) {
+    if (transactionsData.items.isEmpty) {
       return const Center(
         child: Text('Start adding some transactions!'),
       );
     }
 
+    if (filteredTransactions.isEmpty) {
+      return const Center(
+        child: Text('No transactions for this filter!'),
+      );
+    }
+
     return ListView.separated(
-      itemCount: transactions.length,
+      itemCount: filteredTransactions.length,
       separatorBuilder: (_, __) => const Divider(height: 1),
       itemBuilder: (_, index) {
         return OpenContainer(
           closedShape: const BeveledRectangleBorder(),
           closedElevation: 0,
           closedBuilder: (_, __) {
-            return TransactionCard(transaction: transactions[index]);
+            return TransactionCard(transaction: filteredTransactions[index]);
           },
           openBuilder: (_, __) {
             return TransactionDetailsScreen(
-              transactionId: transactions[index].id,
+              transactionId: filteredTransactions[index].id,
             );
           },
         );
