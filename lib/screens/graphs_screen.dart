@@ -6,8 +6,8 @@ import '../charts/chart_widgets/labels_pie_chart.dart';
 import '../utils/custom_colors.dart';
 import '../widgets/chart_container.dart';
 
-// This screen is a screen under home_screen
-// TODO: Change color of bottom tabs using provider (?)
+// This screen is a screen under home_screen.
+// TODO: add case for 0 transactions in graphs
 
 class GraphsScreen extends StatefulWidget {
   @override
@@ -44,7 +44,6 @@ class _GraphsScreenState extends State<GraphsScreen> {
           scrollDirection: Axis.vertical,
           controller: _pageController,
           itemBuilder: (_, index) {
-            // TODO: do the color change thing here.
             return _graphScreens[index];
           },
           itemCount: _graphScreens.length,

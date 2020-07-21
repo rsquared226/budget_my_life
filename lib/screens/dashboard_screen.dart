@@ -5,6 +5,7 @@ import '../providers/filter.dart';
 import '../providers/labels.dart';
 import '../providers/transactions.dart';
 import '../widgets/balance_summary_card.dart';
+import '../widgets/history_screen_fab.dart';
 import '../widgets/label_filter_dropdown.dart';
 import '../widgets/transactions_list.dart';
 
@@ -38,41 +39,44 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => Filter(),
-      // Fetch and set data in this screen because it is the first screen the user sees.
-      child: FutureBuilder(
-        future: fetchAndSetData(context),
-        builder: (_, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
+    return Scaffold(
+      floatingActionButton: HistoryScreenFAB(),
+      body: ChangeNotifierProvider(
+        create: (_) => Filter(),
+        // Fetch and set data in this screen because it is the first screen the user sees.
+        child: FutureBuilder(
+          future: fetchAndSetData(context),
+          builder: (_, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Column(
+              children: <Widget>[
+                Consumer<Transactions>(
+                  builder: (_, transactionsData, __) {
+                    return BalanceSummaryCard(
+                      balance: transactionsData.balance,
+                      formattedBalance: transactionsData.formattedBalance,
+                    );
+                  },
+                ),
+                const SizedBox(height: 8),
+                buildListHeader(),
+                const SizedBox(height: 5),
+                // A psuedo-shadow.
+                const Divider(
+                  height: 0,
+                  thickness: 1.5,
+                ),
+                Expanded(
+                  child: TransactionsList(),
+                ),
+              ],
             );
-          }
-          return Column(
-            children: <Widget>[
-              Consumer<Transactions>(
-                builder: (_, transactionsData, __) {
-                  return BalanceSummaryCard(
-                    balance: transactionsData.balance,
-                    formattedBalance: transactionsData.formattedBalance,
-                  );
-                },
-              ),
-              const SizedBox(height: 8),
-              buildListHeader(),
-              const SizedBox(height: 5),
-              // A psuedo-shadow.
-              const Divider(
-                height: 0,
-                thickness: 1.5,
-              ),
-              Expanded(
-                child: TransactionsList(),
-              ),
-            ],
-          );
-        },
+          },
+        ),
       ),
     );
   }

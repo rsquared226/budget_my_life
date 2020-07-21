@@ -8,16 +8,9 @@ import '../screens/edit_transaction_screen.dart';
 const _fabDimension = 56.0;
 
 class HistoryScreenFAB extends StatelessWidget {
-  final bool tappable;
-
-  const HistoryScreenFAB({
-    @required this.tappable,
-  });
-
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
-      tappable: tappable,
       closedElevation: 6.0,
       closedShape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

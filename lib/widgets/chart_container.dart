@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ChartContainer extends StatelessWidget {
   final Widget chart;
   final Color backgroundColor;
+  // TODO: Add title stuff.
 
   const ChartContainer({
     @required this.chart,

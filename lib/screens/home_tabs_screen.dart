@@ -4,7 +4,6 @@ import 'package:animations/animations.dart';
 import '../widgets/app_drawer.dart';
 import './graphs_screen.dart';
 import './dashboard_screen.dart';
-import '../widgets/history_screen_fab.dart';
 import '../widgets/home_tabs_bar.dart';
 
 // Need this because the built-in FloatingActionButton widget isn't being used. A custom one is for the animation.
@@ -38,11 +37,6 @@ class _HomeTabsScreenState extends State<HomeTabsScreen> {
           );
         },
         child: _pageList[_pageIndex],
-      ),
-      floatingActionButton: AnimatedOpacity(
-        opacity: _pageIndex == 0 ? 1 : 0,
-        duration: const Duration(milliseconds: 150),
-        child: HistoryScreenFAB(tappable: _pageIndex == 0),
       ),
       bottomNavigationBar: HomeTabsBar(
         pageIndex: _pageIndex,
