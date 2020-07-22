@@ -10,42 +10,59 @@ import '../screens/transaction_details_screen.dart';
 // Used in HistoryScreen.
 
 class TransactionsList extends StatelessWidget {
+  SliverList buildEmptyListMessage(String message) {
+    return SliverList(
+      delegate: SliverChildListDelegate(
+        <Widget>[
+          const SizedBox(height: 20),
+          Center(
+            child: Text(message),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  SliverList build(BuildContext context) {
     final filterLabelId = Provider.of<Filter>(context).labelId;
     final transactionsData = Provider.of<Transactions>(context);
     final filteredTransactions =
         transactionsData.filterTransactions(context, filterLabelId);
 
     if (transactionsData.items.isEmpty) {
-      return const Center(
-        child: Text('Start adding some transactions!'),
-      );
+      return buildEmptyListMessage('No transactions for this filter!');
     }
 
     if (filteredTransactions.isEmpty) {
-      return const Center(
-        child: Text('No transactions for this filter!'),
-      );
+      return buildEmptyListMessage('No transactions for this filter!');
     }
 
-    return ListView.separated(
-      itemCount: filteredTransactions.length,
-      separatorBuilder: (_, __) => const Divider(height: 1),
-      itemBuilder: (_, index) {
-        return OpenContainer(
-          closedShape: const BeveledRectangleBorder(),
-          closedElevation: 0,
-          closedBuilder: (_, __) {
-            return TransactionCard(transaction: filteredTransactions[index]);
-          },
-          openBuilder: (_, __) {
-            return TransactionDetailsScreen(
-              transactionId: filteredTransactions[index].id,
-            );
-          },
-        );
-      },
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return Column(
+            children: <Widget>[
+              OpenContainer(
+                closedShape: const BeveledRectangleBorder(),
+                closedElevation: 0,
+                closedBuilder: (_, __) {
+                  return TransactionCard(
+                    transaction: filteredTransactions[index],
+                  );
+                },
+                openBuilder: (_, __) {
+                  return TransactionDetailsScreen(
+                    transactionId: filteredTransactions[index].id,
+                  );
+                },
+              ),
+              const Divider(height: 1),
+            ],
+          );
+        },
+        childCount: filteredTransactions.length,
+      ),
     );
   }
 }
