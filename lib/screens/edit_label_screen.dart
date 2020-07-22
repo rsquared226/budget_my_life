@@ -93,15 +93,6 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.editLabelId == null ? 'Add' : 'Edit'} Label'),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: _saveForm,
-            child: Text(
-              'SAVE',
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-            ),
-          ),
-        ],
       ),
       body: Form(
         key: _formKey,
@@ -160,6 +151,14 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
               onSaved: (newValue) {
                 _editableLabel.labelType = newValue;
               },
+            ),
+            const SizedBox(height: 5),
+            RaisedButton.icon(
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).colorScheme.onPrimary,
+              onPressed: _saveForm,
+              icon: const Icon(Icons.save),
+              label: const Text('SAVE'),
             ),
           ],
         ),
