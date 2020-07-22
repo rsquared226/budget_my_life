@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/filter.dart';
 import '../providers/labels.dart';
 
-// Used in HistoryScreen.
+// Used in DashboardListHeader.
 
 class LabelFilterDropdown extends StatelessWidget {
   Widget buildFilterLabelCard(Color color, String title) {
