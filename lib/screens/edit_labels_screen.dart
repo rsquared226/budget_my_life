@@ -12,6 +12,25 @@ import '../widgets/app_drawer.dart';
 class EditLabelsScreen extends StatelessWidget {
   static const routeName = '/edit-labels';
 
+  Widget buildAddLabelButton(BuildContext context) {
+    return SliverList(
+      delegate: SliverChildListDelegate.fixed(
+        <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+            child: RaisedButton.icon(
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).colorScheme.onPrimary,
+              onPressed: () => addLabel(context),
+              icon: const Icon(Icons.add),
+              label: const Text('ADD LABEL'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   List<Widget> _buildSliverHeaderList(
     BuildContext context,
     String headerText,
@@ -136,16 +155,11 @@ class EditLabelsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Labels'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => addLabel(context),
-          ),
-        ],
       ),
       drawer: AppDrawer(),
       body: CustomScrollView(
         slivers: <Widget>[
+          buildAddLabelButton(context),
           ..._buildSliverHeaderList(
             context,
             'Income Labels',

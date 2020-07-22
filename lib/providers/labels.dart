@@ -63,23 +63,54 @@ class Labels with ChangeNotifier {
     // If the default labels weren't in storage, add them here.
     if (this.findById(otherIncomeId) == null ||
         this.findById(otherExpenseId) == null) {
-      // By adding both of these labels, the user can edit labels without a problem. If these aren't added to the db,
-      // then the db will attempt to update a nonexistant label when edited.
-      this.addLabel(
+      const starterLabels = const <Label>[
+        // By adding both of these labels, the user can edit labels without a problem. If these aren't added to the db,
+        // then the db will attempt to update a nonexistant label when edited.
         Label(
           id: otherIncomeId,
           title: 'Other income',
           color: Colors.blueGrey,
           labelType: LabelType.INCOME,
         ),
-      );
-      this.addLabel(
         Label(
           id: otherExpenseId,
           title: 'Other expense',
-          color: Colors.orange,
+          color: Colors.grey,
           labelType: LabelType.EXPENSE,
         ),
+
+        // Some nice starter labels. They can be edited/deleted with no problem.
+        Label(
+          id: 'l3',
+          title: 'Job',
+          color: Colors.orange,
+          labelType: LabelType.INCOME,
+        ),
+        Label(
+          id: 'l4',
+          title: 'Groceries',
+          color: Colors.green,
+          labelType: LabelType.EXPENSE,
+        ),
+        Label(
+          id: 'l5',
+          title: 'Restaurants',
+          color: Colors.amber,
+          labelType: LabelType.EXPENSE,
+        ),
+        Label(
+          id: 'l6',
+          title: 'Luxury',
+          color: Colors.deepPurple,
+          labelType: LabelType.EXPENSE,
+        ),
+      ];
+
+      starterLabels.forEach(
+        (starterLabel) {
+          _items.add(starterLabel);
+          DBHelper.insertLabel(starterLabel);
+        },
       );
     }
     notifyListeners();
