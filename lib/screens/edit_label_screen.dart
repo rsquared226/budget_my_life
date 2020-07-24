@@ -110,6 +110,7 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextFormField(
+                    autofocus: true,
                     decoration: const InputDecoration(
                       labelText: 'Title',
                     ),
