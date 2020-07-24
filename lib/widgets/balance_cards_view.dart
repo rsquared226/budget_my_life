@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
@@ -26,32 +27,44 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
 
     // If the user isn't filtering data, show the total balance. If the user is filtering data, show the total for that
     // specific label.
-    return SizedBox(
-      // This is the height of the BalanceSummaryCard.
-      height: 132,
-      child: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          // Monthly balance card.
-          BalanceSummaryCard(
-            title: labelFilter == null
-                ? 'Monthly Balance'
-                : labelFilter.title + ' monthly total',
-            balance: labelFilter == null
-                ? transactionsData.monthlyBalance
-                : labelFilter.getLabelTotal(context),
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          // This is the height of the BalanceSummaryCard.
+          height: 132,
+          child: PageView(
+            controller: _pageController,
+            children: <Widget>[
+              // Monthly balance card.
+              BalanceSummaryCard(
+                title: labelFilter == null
+                    ? 'Monthly Balance'
+                    : labelFilter.title + ' monthly total',
+                balance: labelFilter == null
+                    ? transactionsData.monthlyBalance
+                    : labelFilter.getLabelTotal(context),
+              ),
+              // Total balance card.
+              BalanceSummaryCard(
+                title: labelFilter == null
+                    ? 'Total Balance'
+                    : labelFilter.title + ' total',
+                balance: labelFilter == null
+                    ? transactionsData.balance
+                    : labelFilter.getLabelTotal(context),
+              ),
+            ],
           ),
-          // Total balance card.
-          BalanceSummaryCard(
-            title: labelFilter == null
-                ? 'Total Balance'
-                : labelFilter.title + ' total',
-            balance: labelFilter == null
-                ? transactionsData.balance
-                : labelFilter.getLabelTotal(context),
-          ),
-        ],
-      ),
+        ),
+        ScrollingPageIndicator(
+          dotSelectedColor: Colors.grey,
+          dotColor: Colors.black26,
+          dotSelectedSize: 8.5,
+          dotSpacing: 13,
+          controller: _pageController,
+          itemCount: 2,
+        ),
+      ],
     );
   }
 }
