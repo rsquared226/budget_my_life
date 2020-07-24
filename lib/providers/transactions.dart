@@ -18,6 +18,23 @@ class Transactions with ChangeNotifier {
     return incomeTotal + expensesTotal;
   }
 
+  double get monthlyBalance {
+    final today = DateTime.now();
+    // The day before the beginning of the month.
+    final beginningOfMonth = DateTime(today.year, today.month, 0);
+
+    // Transactions from this month.
+    var monthTransactions = [..._items];
+    monthTransactions.retainWhere(
+      (transaction) => transaction.date.isAfter(beginningOfMonth),
+    );
+
+    return monthTransactions.fold<double>(
+      0,
+      (previousValue, transaction) => previousValue + transaction.amount,
+    );
+  }
+
   double get expensesTotal {
     var totalExpenses = 0.0;
     _items.forEach((transaction) {
