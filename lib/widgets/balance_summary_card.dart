@@ -2,16 +2,24 @@ import 'package:flutter/material.dart';
 
 import '../utils/custom_colors.dart';
 
+// Used in BalanceCardsView.
+
 class BalanceSummaryCard extends StatelessWidget {
-  // Only asking for the balance in case the way formatting the balance changes later.
-  // Use it to see if it's negative or positive to determine the color of the card
+  final String title;
   final double balance;
-  final String formattedBalance;
 
   const BalanceSummaryCard({
+    @required this.title,
     @required this.balance,
-    @required this.formattedBalance,
   });
+
+  String get formattedBalance {
+    var formattedBalance = '\$${balance.abs().toStringAsFixed(2)}';
+    if (balance < 0) {
+      formattedBalance = '-' + formattedBalance;
+    }
+    return formattedBalance;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,7 @@ class BalanceSummaryCard extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Text(
-                'Balance',
+                title,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: CustomColors.onIncomeExpenseColor,

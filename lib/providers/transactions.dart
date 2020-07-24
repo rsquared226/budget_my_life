@@ -38,14 +38,6 @@ class Transactions with ChangeNotifier {
     return totalIncome;
   }
 
-  String get formattedBalance {
-    var formattedBalance = '\$${balance.abs().toStringAsFixed(2)}';
-    if (balance < 0) {
-      formattedBalance = '-' + formattedBalance;
-    }
-    return formattedBalance;
-  }
-
   Transaction findById(String id) {
     return _items.firstWhere(
       (transaction) => transaction.id == id,
