@@ -18,6 +18,23 @@ class Transactions with ChangeNotifier {
     return incomeTotal + expensesTotal;
   }
 
+  double get monthlyBalance {
+    final today = DateTime.now();
+    // The day before the beginning of the month.
+    final beginningOfMonth = DateTime(today.year, today.month, 0);
+
+    // Transactions from this month.
+    var monthTransactions = [..._items];
+    monthTransactions.retainWhere(
+      (transaction) => transaction.date.isAfter(beginningOfMonth),
+    );
+
+    return monthTransactions.fold<double>(
+      0,
+      (previousValue, transaction) => previousValue + transaction.amount,
+    );
+  }
+
   double get expensesTotal {
     var totalExpenses = 0.0;
     _items.forEach((transaction) {
@@ -36,14 +53,6 @@ class Transactions with ChangeNotifier {
       }
     });
     return totalIncome;
-  }
-
-  String get formattedBalance {
-    var formattedBalance = '\$${balance.abs().toStringAsFixed(2)}';
-    if (balance < 0) {
-      formattedBalance = '-' + formattedBalance;
-    }
-    return formattedBalance;
   }
 
   Transaction findById(String id) {

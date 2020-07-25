@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/filter.dart';
 import '../providers/labels.dart';
 import '../providers/transactions.dart';
-import '../widgets/balance_summary_card.dart';
+import '../widgets/balance_cards_view.dart';
 import '../widgets/dashboard_list_header.dart';
 import '../widgets/dashboard_screen_fab.dart';
 import '../widgets/transactions_list.dart';
@@ -15,14 +15,7 @@ class DashboardScreen extends StatelessWidget {
     return SliverList(
       delegate: SliverChildListDelegate(
         <Widget>[
-          Consumer<Transactions>(
-            builder: (_, transactionsData, __) {
-              return BalanceSummaryCard(
-                balance: transactionsData.balance,
-                formattedBalance: transactionsData.formattedBalance,
-              );
-            },
-          ),
+          BalanceCardsView(),
         ],
       ),
     );
