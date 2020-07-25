@@ -18,6 +18,14 @@ class BalanceCardsView extends StatefulWidget {
 class _BalanceCardsViewState extends State<BalanceCardsView> {
   PageController _pageController = PageController();
 
+  void _moveTo(PageController pageController, int toPage) {
+    pageController.animateToPage(
+      toPage,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final transactionsData = Provider.of<Transactions>(context);
@@ -43,6 +51,7 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
                 balance: labelFilter == null
                     ? transactionsData.monthlyBalance
                     : labelFilter.getLabelMonthTotal(context),
+                onTap: () => _moveTo(_pageController, 1),
               ),
               // Total balance card.
               BalanceSummaryCard(
@@ -52,6 +61,7 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
                 balance: labelFilter == null
                     ? transactionsData.balance
                     : labelFilter.getLabelTotal(context),
+                onTap: () => _moveTo(_pageController, 0),
               ),
             ],
           ),
