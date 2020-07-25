@@ -25,8 +25,6 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
     final labelFilter =
         Provider.of<Labels>(context).findById(filterData.labelId);
 
-    // If the user isn't filtering data, show the total balance. If the user is filtering data, show the total for that
-    // specific label.
     return Column(
       children: <Widget>[
         SizedBox(
@@ -34,6 +32,8 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
           height: 132,
           child: PageView(
             controller: _pageController,
+            // If the user isn't filtering data, show the total balance. If the user is filtering data, show the total
+            // for that specific label.
             children: <Widget>[
               // Monthly balance card.
               BalanceSummaryCard(
@@ -42,7 +42,7 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
                     : labelFilter.title + ' monthly total',
                 balance: labelFilter == null
                     ? transactionsData.monthlyBalance
-                    : labelFilter.getLabelTotal(context),
+                    : labelFilter.getLabelMonthTotal(context),
               ),
               // Total balance card.
               BalanceSummaryCard(
