@@ -46,8 +46,8 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
               // Monthly balance card.
               BalanceSummaryCard(
                 title: labelFilter == null
-                    ? 'Monthly Balance'
-                    : labelFilter.title + ' monthly total',
+                    ? 'This Month\'s Balance'
+                    : 'This Month\'s ' + labelFilter.title,
                 balance: labelFilter == null
                     ? transactionsData.monthlyBalance
                     : labelFilter.getLabelMonthTotal(context),
@@ -56,8 +56,8 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
               // Total balance card.
               BalanceSummaryCard(
                 title: labelFilter == null
-                    ? 'Total Balance'
-                    : labelFilter.title + ' total',
+                    ? 'Lifetime Balance'
+                    : 'Lifetime ' + labelFilter.title,
                 balance: labelFilter == null
                     ? transactionsData.balance
                     : labelFilter.getLabelTotal(context),
