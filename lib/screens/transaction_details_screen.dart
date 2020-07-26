@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../charts/chart_widgets/transaction_details_pie_chart.dart';
 import '../providers/transactions.dart';
 import './edit_transaction_screen.dart';
 import '../widgets/transaction_details_appbar.dart';
+import '../widgets/transaction_details_charts_view.dart';
 
 // This is shown when a user clicks on a transaction card in HistoryScreen.
 
@@ -127,12 +127,8 @@ class TransactionDetailsScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 SizedBox(
                   height: 250,
-                  child: TransactionDetailsPieChart(
-                    transactionTitle: transaction.title,
-                    transactionAmount: transaction.amount,
-                    totalAmount: transaction.amount > 0
-                        ? transactionsData.incomeTotal
-                        : transactionsData.expensesTotal,
+                  child: TransactionDetailsChartsView(
+                    transactionId: transactionId,
                   ),
                 ),
                 const SizedBox(height: 20),
