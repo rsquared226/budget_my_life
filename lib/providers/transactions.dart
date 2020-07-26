@@ -14,45 +14,60 @@ class Transactions with ChangeNotifier {
     return [..._items];
   }
 
+  // Add them because incomeTotal will always produce a positive amount
+  // while expensesTotal will always produce a negative amount.
   double get balance {
     return incomeTotal + expensesTotal;
   }
 
   double get monthlyBalance {
-    final today = DateTime.now();
-    // The day before the beginning of the month.
-    final beginningOfMonth = DateTime(today.year, today.month, 0);
+    return monthIncomeTotal + monthExpensesTotal;
+  }
 
-    // Transactions from this month.
-    var monthTransactions = [..._items];
-    monthTransactions.retainWhere(
-      (transaction) => transaction.date.isAfter(beginningOfMonth),
+  double get incomeTotal {
+    return _totalTransactionsAmountWithFilter(
+      (transaction) => transaction.amount > 0,
     );
+  }
 
-    return monthTransactions.fold<double>(
+  double get expensesTotal {
+    return _totalTransactionsAmountWithFilter(
+      (transaction) => transaction.amount < 0,
+    );
+  }
+
+  double get monthIncomeTotal {
+    return _totalTransactionsAmountWithFilter(
+      (transaction) =>
+          transaction.amount > 0 && _isAfterBeginningOfMonth(transaction.date),
+    );
+  }
+
+  double get monthExpensesTotal {
+    return _totalTransactionsAmountWithFilter(
+      (transaction) =>
+          transaction.amount < 0 && _isAfterBeginningOfMonth(transaction.date),
+    );
+  }
+
+  double _totalTransactionsAmountWithFilter(
+      bool Function(Transaction transaction) filter) {
+    var transactions = [..._items];
+    transactions.retainWhere(filter);
+
+    // This simply totals the amounts from transactions.
+    return transactions.fold<double>(
       0,
       (previousValue, transaction) => previousValue + transaction.amount,
     );
   }
 
-  double get expensesTotal {
-    var totalExpenses = 0.0;
-    _items.forEach((transaction) {
-      if (transaction.amount < 0) {
-        totalExpenses += transaction.amount;
-      }
-    });
-    return totalExpenses;
-  }
+  bool _isAfterBeginningOfMonth(DateTime date) {
+    final today = DateTime.now();
+    // The day before the beginning of the month.
+    final beginningOfMonth = DateTime(today.year, today.month, 0);
 
-  double get incomeTotal {
-    var totalIncome = 0.0;
-    _items.forEach((transaction) {
-      if (transaction.amount > 0) {
-        totalIncome += transaction.amount;
-      }
-    });
-    return totalIncome;
+    return date.isAfter(beginningOfMonth);
   }
 
   Transaction findById(String id) {
@@ -62,11 +77,12 @@ class Transactions with ChangeNotifier {
     );
   }
 
-  List<Transaction> filterTransactions(BuildContext context, String labelId) {
+  List<Transaction> filterTransactionsByLabel(
+      BuildContext context, String labelId) {
     if (labelId == null) {
       return items;
     }
-    pruneDeletedLabelIds(context);
+    _pruneDeletedLabelIds(context);
     // Use the getter so transactions are already sorted.
     return items
         .where((transaction) => transaction.labelId == labelId)
@@ -103,7 +119,7 @@ class Transactions with ChangeNotifier {
   }
 
   // If a transaction has the id of a deleted label, replace it with one of the default labels.
-  void pruneDeletedLabelIds(BuildContext context) {
+  void _pruneDeletedLabelIds(BuildContext context) {
     final labelsData = Provider.of<Labels>(context, listen: false);
 
     for (var i = 0; i < _items.length; i++) {

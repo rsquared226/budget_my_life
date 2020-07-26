@@ -28,7 +28,7 @@ class TransactionsList extends StatelessWidget {
     final filterLabelId = Provider.of<Filter>(context).labelId;
     final transactionsData = Provider.of<Transactions>(context);
     final filteredTransactions =
-        transactionsData.filterTransactions(context, filterLabelId);
+        transactionsData.filterTransactionsByLabel(context, filterLabelId);
 
     if (transactionsData.items.isEmpty) {
       return buildEmptyListMessage('No transactions for this filter!');

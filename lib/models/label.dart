@@ -37,22 +37,10 @@ class Label {
     );
   }
 
-  List<Transaction> _getLabelTransactions(BuildContext context) {
-    return Provider.of<Transactions>(context, listen: false)
-        .filterTransactions(context, id);
-  }
-
-  double _getListAmountTotal(List<Transaction> transactionList) {
-    return transactionList.fold<double>(
-      0,
-      (previousValue, transaction) => previousValue + transaction.amount,
-    );
-  }
-
-  double getLabelTotal(BuildContext context) =>
+  double getLabelAmountTotal(BuildContext context) =>
       _getListAmountTotal(_getLabelTransactions(context));
 
-  double getLabelMonthTotal(BuildContext context) {
+  double getLabelMonthAmountTotal(BuildContext context) {
     final labelMonthTransactions = _getLabelTransactions(context);
 
     final today = DateTime.now();
@@ -65,5 +53,17 @@ class Label {
     );
 
     return _getListAmountTotal(labelMonthTransactions);
+  }
+
+  List<Transaction> _getLabelTransactions(BuildContext context) {
+    return Provider.of<Transactions>(context, listen: false)
+        .filterTransactionsByLabel(context, id);
+  }
+
+  double _getListAmountTotal(List<Transaction> transactionList) {
+    return transactionList.fold<double>(
+      0,
+      (previousValue, transaction) => previousValue + transaction.amount,
+    );
   }
 }

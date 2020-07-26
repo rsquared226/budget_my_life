@@ -28,7 +28,7 @@ class LabelsPieChart extends StatelessWidget {
         : transactionsData.expensesTotal;
 
     // Remove the labels with 0 transactions so there's no extra labels.
-    labels.removeWhere((label) => label.getLabelTotal(context) == 0);
+    labels.removeWhere((label) => label.getLabelAmountTotal(context) == 0);
 
     // Return something suggesting to add transactions if there's nothing to display in the graph.
     if (labels.isEmpty) {
@@ -44,9 +44,9 @@ class LabelsPieChart extends StatelessWidget {
     labels.sort(
       (a, b) {
         return b
-            .getLabelTotal(context)
+            .getLabelAmountTotal(context)
             .abs()
-            .compareTo(a.getLabelTotal(context).abs());
+            .compareTo(a.getLabelAmountTotal(context).abs());
       },
     );
 
@@ -72,7 +72,7 @@ class LabelsPieChart extends StatelessWidget {
           .map(
             (label) => PieChartModel(
               label: label.title,
-              amount: label.getLabelTotal(context),
+              amount: label.getLabelAmountTotal(context),
               color: label.color,
             ),
           )
