@@ -7,6 +7,7 @@ import '../providers/transactions.dart';
 import '../utils/custom_colors.dart';
 
 // Used in TransactionDetailsScreen.
+// TODO: make it so that this month's transactions are shown with other month totals.
 
 class TransactionDetailsChartsView extends StatefulWidget {
   final String transactionId;
@@ -40,22 +41,25 @@ class _TransactionDetailsChartsViewState
       children: <Widget>[
         // Need SizedBox or PageView will attempt to take up entire vertical viewport.
         SizedBox(
-          height: 250,
+          height: 290,
           child: PageView(
             controller: _pageController,
             children: <Widget>[
               TransactionDetailsPieChart(
+                chartTitle: 'Impact on Label ${label.title}',
                 transactionTitle: transaction.title,
-                otherTitle: 'Rest of ' + label.title,
+                otherTitle: 'Rest of ${label.title}',
                 transactionAmount: transaction.amount,
                 totalAmount: label.getLabelAmountTotal(context),
                 mainColor: label.color,
                 otherColor: label.color.withAlpha(125),
               ),
               TransactionDetailsPieChart(
+                chartTitle:
+                    'Impact on ${transaction.amount < 0 ? 'Expense' : 'Income'} Totals',
                 transactionTitle: transaction.title,
-                otherTitle: 'Rest of ' +
-                    (transaction.amount < 0 ? 'Expenses' : 'Income'),
+                otherTitle:
+                    'Rest of ${transaction.amount < 0 ? 'Expenses' : 'Income'}',
                 transactionAmount: transaction.amount,
                 totalAmount: transaction.amount > 0
                     ? transactionsData.incomeTotal

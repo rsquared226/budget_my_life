@@ -7,39 +7,55 @@ import '../chart_models/pie_chart_model.dart';
 // This is used in TransactionDetailsChartView.
 
 class TransactionDetailsPieChart extends StatelessWidget {
+  final String chartTitle;
   final String transactionTitle;
   final String otherTitle;
   final double transactionAmount;
   final double totalAmount;
   final Color mainColor;
   final Color otherColor;
+  final double height;
 
   const TransactionDetailsPieChart({
+    @required this.chartTitle,
     @required this.transactionTitle,
     @required this.otherTitle,
     @required this.transactionAmount,
     @required this.totalAmount,
     @required this.mainColor,
     @required this.otherColor,
+    this.height = 250,
   });
 
   @override
   Widget build(BuildContext context) {
-    return PieChartBase(
-      id: transactionTitle,
-      animated: false,
-      showArcLabels: true,
-      arcLabelPosition: charts.ArcLabelPosition.outside,
-      pieData: [
-        PieChartModel(
-          label: transactionTitle,
-          amount: transactionAmount,
-          color: mainColor,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          chartTitle,
+          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 24),
         ),
-        PieChartModel(
-          label: otherTitle,
-          amount: totalAmount - transactionAmount,
-          color: otherColor,
+        SizedBox(
+          height: height,
+          child: PieChartBase(
+            id: transactionTitle,
+            animated: false,
+            showArcLabels: true,
+            arcLabelPosition: charts.ArcLabelPosition.outside,
+            pieData: [
+              PieChartModel(
+                label: transactionTitle,
+                amount: transactionAmount,
+                color: mainColor,
+              ),
+              PieChartModel(
+                label: otherTitle,
+                amount: totalAmount - transactionAmount,
+                color: otherColor,
+              ),
+            ],
+          ),
         ),
       ],
     );

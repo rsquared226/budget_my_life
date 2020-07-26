@@ -6,8 +6,6 @@ import 'insights_screen.dart';
 import './dashboard_screen.dart';
 import '../widgets/home_tabs_bar.dart';
 
-// Need this because the built-in FloatingActionButton widget isn't being used. A custom one is for the animation.
-
 class HomeTabsScreen extends StatefulWidget {
   @override
   _HomeTabsScreenState createState() => _HomeTabsScreenState();
