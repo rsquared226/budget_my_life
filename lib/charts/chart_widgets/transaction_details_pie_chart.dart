@@ -34,7 +34,7 @@ class TransactionDetailsPieChart extends StatelessWidget {
       children: <Widget>[
         Text(
           chartTitle,
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 24),
+          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 22),
         ),
         SizedBox(
           height: height,
