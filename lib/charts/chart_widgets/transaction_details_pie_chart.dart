@@ -27,7 +27,7 @@ class TransactionDetailsPieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return PieChartBase(
       id: transactionTitle,
-      animated: true,
+      animated: false,
       showArcLabels: true,
       arcLabelPosition: charts.ArcLabelPosition.outside,
       pieData: [

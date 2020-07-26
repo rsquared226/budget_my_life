@@ -23,17 +23,31 @@ class _TransactionDetailsChartsViewState
   Widget build(BuildContext context) {
     final transactionsData = Provider.of<Transactions>(context);
     final transaction = transactionsData.findById(widget.transactionId);
+    final label = transaction.getLabel(context);
 
-    return TransactionDetailsPieChart(
-      transactionTitle: transaction.title,
-      otherTitle: 'Other ' + (transaction.amount < 0 ? 'Expenses' : 'Income'),
-      transactionAmount: transaction.amount,
-      totalAmount: transaction.amount > 0
-          ? transactionsData.incomeTotal
-          : transactionsData.expensesTotal,
-      mainColor: CustomColors.transactionTypeColor(transaction.amount),
-      otherColor:
-          CustomColors.secondaryTransactionTypeColor(transaction.amount),
+    return PageView(
+      children: <Widget>[
+        TransactionDetailsPieChart(
+          transactionTitle: transaction.title,
+          otherTitle: 'Rest of ' + label.title,
+          transactionAmount: transaction.amount,
+          totalAmount: label.getLabelAmountTotal(context),
+          mainColor: label.color,
+          otherColor: label.color.withAlpha(125),
+        ),
+        TransactionDetailsPieChart(
+          transactionTitle: transaction.title,
+          otherTitle:
+              'Rest of ' + (transaction.amount < 0 ? 'Expenses' : 'Income'),
+          transactionAmount: transaction.amount,
+          totalAmount: transaction.amount > 0
+              ? transactionsData.incomeTotal
+              : transactionsData.expensesTotal,
+          mainColor: CustomColors.transactionTypeColor(transaction.amount),
+          otherColor:
+              CustomColors.secondaryTransactionTypeColor(transaction.amount),
+        ),
+      ],
     );
   }
 }
