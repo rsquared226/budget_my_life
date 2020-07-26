@@ -39,14 +39,14 @@ class Transactions with ChangeNotifier {
   double get monthIncomeTotal {
     return _totalTransactionsAmountWithFilter(
       (transaction) =>
-          transaction.amount > 0 && _isAfterBeginningOfMonth(transaction.date),
+          transaction.amount > 0 && transaction.isAfterBeginningOfMonth,
     );
   }
 
   double get monthExpensesTotal {
     return _totalTransactionsAmountWithFilter(
       (transaction) =>
-          transaction.amount < 0 && _isAfterBeginningOfMonth(transaction.date),
+          transaction.amount < 0 && transaction.isAfterBeginningOfMonth,
     );
   }
 
@@ -60,14 +60,6 @@ class Transactions with ChangeNotifier {
       0,
       (previousValue, transaction) => previousValue + transaction.amount,
     );
-  }
-
-  bool _isAfterBeginningOfMonth(DateTime date) {
-    final today = DateTime.now();
-    // The day before the beginning of the month.
-    final beginningOfMonth = DateTime(today.year, today.month, 0);
-
-    return date.isAfter(beginningOfMonth);
   }
 
   Transaction findById(String id) {

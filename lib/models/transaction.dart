@@ -67,4 +67,12 @@ class Transaction {
     }
     return label;
   }
+
+  bool get isAfterBeginningOfMonth {
+    final today = DateTime.now();
+    // The day before the beginning of the month.
+    final beginningOfMonth = DateTime(today.year, today.month, 0);
+
+    return date.isAfter(beginningOfMonth);
+  }
 }

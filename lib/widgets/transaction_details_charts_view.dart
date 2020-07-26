@@ -7,7 +7,6 @@ import '../providers/transactions.dart';
 import '../utils/custom_colors.dart';
 
 // Used in TransactionDetailsScreen.
-// TODO: make it so that this month's transactions are shown with other month totals.
 
 class TransactionDetailsChartsView extends StatefulWidget {
   final String transactionId;
@@ -41,29 +40,40 @@ class _TransactionDetailsChartsViewState
       children: <Widget>[
         // Need SizedBox or PageView will attempt to take up entire vertical viewport.
         SizedBox(
-          height: 290,
+          height: 285,
           child: PageView(
             controller: _pageController,
             children: <Widget>[
+              // Both pie charts will show this month's statistics if the transaction is in the current month.
+              // If not, it will show lifetime/total statistics.
+              // This pie chart is for label statistics.
               TransactionDetailsPieChart(
-                chartTitle: 'Impact on Label ${label.title}',
+                chartTitle:
+                    '${transaction.isAfterBeginningOfMonth ? 'Month\'s' : ''} Impact on Label ${label.title}',
                 transactionTitle: transaction.title,
                 otherTitle: 'Rest of ${label.title}',
                 transactionAmount: transaction.amount,
-                totalAmount: label.getLabelAmountTotal(context),
+                totalAmount: transaction.isAfterBeginningOfMonth
+                    ? label.getLabelMonthAmountTotal(context)
+                    : label.getLabelAmountTotal(context),
                 mainColor: label.color,
                 otherColor: label.color.withAlpha(125),
               ),
+              // This pie chart is for general income/expense statistics.
               TransactionDetailsPieChart(
                 chartTitle:
-                    'Impact on ${transaction.amount < 0 ? 'Expense' : 'Income'} Totals',
+                    '${transaction.isAfterBeginningOfMonth ? 'Month\'s' : ''} Impact on ${transaction.amount < 0 ? 'Expense' : 'Income'} Totals',
                 transactionTitle: transaction.title,
                 otherTitle:
                     'Rest of ${transaction.amount < 0 ? 'Expenses' : 'Income'}',
                 transactionAmount: transaction.amount,
                 totalAmount: transaction.amount > 0
-                    ? transactionsData.incomeTotal
-                    : transactionsData.expensesTotal,
+                    ? (transaction.isAfterBeginningOfMonth
+                        ? transactionsData.monthIncomeTotal
+                        : transactionsData.incomeTotal)
+                    : (transaction.isAfterBeginningOfMonth
+                        ? transactionsData.monthExpensesTotal
+                        : transactionsData.expensesTotal),
                 mainColor:
                     CustomColors.transactionTypeColor(transaction.amount),
                 otherColor: CustomColors.secondaryTransactionTypeColor(
