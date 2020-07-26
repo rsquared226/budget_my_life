@@ -27,6 +27,12 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final transactionsData = Provider.of<Transactions>(context);
     final filterData = Provider.of<Filter>(context);

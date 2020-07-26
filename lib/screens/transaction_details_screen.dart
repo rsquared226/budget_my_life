@@ -125,11 +125,8 @@ class TransactionDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  height: 250,
-                  child: TransactionDetailsChartsView(
-                    transactionId: transactionId,
-                  ),
+                TransactionDetailsChartsView(
+                  transactionId: transactionId,
                 ),
                 const SizedBox(height: 20),
                 Text(

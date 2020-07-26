@@ -4,7 +4,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import '../charts_base/pie_chart_base.dart';
 import '../chart_models/pie_chart_model.dart';
 
-// This is used in TransactionDetailsScreen.
+// This is used in TransactionDetailsChartView.
 
 class TransactionDetailsPieChart extends StatelessWidget {
   final String transactionTitle;
