@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/insights_range_buttons.dart';
+
 // Used in InsightsScreen.
 
 class ChartContainer extends StatelessWidget {
@@ -39,7 +41,9 @@ class ChartContainer extends StatelessWidget {
             ),
             child: chart,
           ),
-          const Spacer(flex: 8),
+          const Spacer(flex: 4),
+          InsightsRangeButtons(),
+          const Spacer(flex: 4),
         ],
       ),
     );
