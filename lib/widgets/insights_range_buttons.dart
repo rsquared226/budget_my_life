@@ -24,25 +24,35 @@ class InsightsRangeButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final insightsRangeData = Provider.of<InsightsRange>(context);
 
-    return Wrap(
-      spacing: 10,
-      children: _chipsData.map(
-        (e) {
-          return FlatButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
-              side: BorderSide(color: Colors.green),
-            ),
-            child: Text(e.text),
-            onPressed: () {
-              // Don't want to have to unnecessarily call notifyListeners.
-              if (e.rangeValue != insightsRangeData.range) {
-                insightsRangeData.range = e.rangeValue;
-              }
-            },
-          );
-        },
-      ).toList(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        children: _chipsData.map(
+          (e) {
+            final isSelected = e.rangeValue == insightsRangeData.range;
+
+            return Expanded(
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  side: BorderSide(
+                    width: 2,
+                    color: isSelected ? Colors.green : Colors.transparent,
+                  ),
+                ),
+                textColor: isSelected ? Colors.white : Colors.white54,
+                child: Text(e.text),
+                onPressed: () {
+                  // Don't want to have to unnecessarily call notifyListeners.
+                  if (!isSelected) {
+                    insightsRangeData.range = e.rangeValue;
+                  }
+                },
+              ),
+            );
+          },
+        ).toList(),
+      ),
     );
   }
 }
