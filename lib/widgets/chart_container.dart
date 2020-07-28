@@ -41,7 +41,7 @@ class ChartContainer extends StatelessWidget {
             ),
             child: chart,
           ),
-          const Spacer(flex: 4),
+          const Spacer(flex: 3),
           InsightsRangeButtons(),
           const Spacer(flex: 4),
         ],

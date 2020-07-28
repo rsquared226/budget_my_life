@@ -5,8 +5,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import '../chart_models/pie_chart_model.dart';
 import '../charts_base/pie_chart_base.dart';
 import '../../models/label.dart';
+import '../../providers/insights_range.dart';
 import '../../providers/labels.dart';
-import '../../providers/transactions.dart';
 
 class LabelsPieChart extends StatelessWidget {
   final LabelType labelType;
@@ -18,17 +18,16 @@ class LabelsPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final labelsData = Provider.of<Labels>(context, listen: false);
-    final transactionsData = Provider.of<Transactions>(context, listen: false);
+    final range = Provider.of<InsightsRange>(context).range;
 
     final labels = labelType == LabelType.INCOME
         ? labelsData.incomeLabels
         : labelsData.expenseLabels;
-    final total = labelType == LabelType.INCOME
-        ? transactionsData.incomeTotal
-        : transactionsData.expensesTotal;
 
     // Remove the labels with 0 transactions so there's no extra labels.
-    labels.removeWhere((label) => label.getLabelAmountTotal(context) == 0);
+    labels.removeWhere(
+      (label) => label.getLabelTotalWithRange(context, range) == 0,
+    );
 
     // Return something suggesting to add transactions if there's nothing to display in the graph.
     if (labels.isEmpty) {
@@ -40,13 +39,20 @@ class LabelsPieChart extends StatelessWidget {
       );
     }
 
+    // To calculate percentages for the pie chart labels.
+    final total = labels.fold<double>(
+      0,
+      (previousValue, label) =>
+          label.getLabelTotalWithRange(context, range).abs() + previousValue,
+    );
+
     // Sort labels so the label with the most spending shows up first in the legend (descending order).
     labels.sort(
       (a, b) {
         return b
-            .getLabelAmountTotal(context)
+            .getLabelTotalWithRange(context, range)
             .abs()
-            .compareTo(a.getLabelAmountTotal(context).abs());
+            .compareTo(a.getLabelTotalWithRange(context, range).abs());
       },
     );
 
@@ -72,7 +78,7 @@ class LabelsPieChart extends StatelessWidget {
           .map(
             (label) => PieChartModel(
               label: label.title,
-              amount: label.getLabelAmountTotal(context),
+              amount: label.getLabelTotalWithRange(context, range),
               color: label.color,
             ),
           )
