@@ -33,6 +33,7 @@ class TimeSeriesBase extends StatelessWidget {
     return charts.TimeSeriesChart(
       chartData,
       animate: false,
+      defaultInteractions: false,
     );
   }
 }
