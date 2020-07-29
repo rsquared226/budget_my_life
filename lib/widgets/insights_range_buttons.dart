@@ -37,7 +37,7 @@ class InsightsRangeButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   side: BorderSide(
                     width: 2,
-                    color: isSelected ? Colors.green : Colors.transparent,
+                    color: isSelected ? Colors.white60 : Colors.transparent,
                   ),
                 ),
                 textColor: isSelected ? Colors.white : Colors.white54,

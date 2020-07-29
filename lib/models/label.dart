@@ -75,7 +75,7 @@ class Label {
 
       default:
         // Just in case a future range is added and it's not implemented here.
-        throw UnimplementedError();
+        throw UnimplementedError('An unimplemented or null range was passed.');
     }
   }
 

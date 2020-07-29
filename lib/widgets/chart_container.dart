@@ -5,6 +5,8 @@ import '../widgets/insights_range_buttons.dart';
 
 // Used in InsightsScreen.
 
+// TODO: Make chart range change animated so it's less jarring.
+
 class ChartContainer extends StatelessWidget {
   final String title;
   final Widget chart;
