@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 
 import '../models/label.dart';
 import '../charts/chart_widgets/labels_pie_chart.dart';
+import '../providers/insights_range.dart';
 import '../utils/custom_colors.dart';
 import '../widgets/chart_container.dart';
 
@@ -41,13 +43,16 @@ class _InsightsScreenState extends State<InsightsScreen> {
     return Stack(
       children: <Widget>[
         // Use a builder instead of directly accessing the widgets so it's less resource intensive.
-        PageView.builder(
-          scrollDirection: Axis.vertical,
-          controller: _pageController,
-          itemBuilder: (_, index) {
-            return _graphScreens[index];
-          },
-          itemCount: _graphScreens.length,
+        ChangeNotifierProvider(
+          create: (_) => InsightsRange(),
+          child: PageView.builder(
+            scrollDirection: Axis.vertical,
+            controller: _pageController,
+            itemBuilder: (_, index) {
+              return _graphScreens[index];
+            },
+            itemCount: _graphScreens.length,
+          ),
         ),
         Container(
           alignment: Alignment.centerRight,

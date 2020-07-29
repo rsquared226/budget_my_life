@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import './transaction.dart';
+import '../providers/insights_range.dart';
 import '../providers/transactions.dart';
 
 enum LabelType { INCOME, EXPENSE }
@@ -48,11 +49,34 @@ class Label {
     final beginningOfMonth = DateTime(today.year, today.month, 0);
 
     // Filtered Transactions from this month.
-    labelMonthTransactions.retainWhere(
-      (transaction) => transaction.date.isAfter(beginningOfMonth),
-    );
+    _retainTransactionsAfterDate(labelMonthTransactions, beginningOfMonth);
 
     return _getListAmountTotal(labelMonthTransactions);
+  }
+
+  double getLabelTotalWithRange(BuildContext context, Range range) {
+    final labelTransactions = _getLabelTransactions(context);
+
+    switch (range) {
+      case Range.lifetime:
+        return getLabelAmountTotal(context);
+
+      case Range.thirtyDays:
+        final thirtyDaysRange = DateTime.now().subtract(Duration(days: 30));
+        _retainTransactionsAfterDate(labelTransactions, thirtyDaysRange);
+        return _getListAmountTotal(labelTransactions);
+        break;
+
+      case Range.sevenDays:
+        final sevenDaysRange = DateTime.now().subtract(Duration(days: 7));
+        _retainTransactionsAfterDate(labelTransactions, sevenDaysRange);
+        return _getListAmountTotal(labelTransactions);
+        break;
+
+      default:
+        // Just in case a future range is added and it's not implemented here.
+        throw UnimplementedError('An unimplemented or null range was passed.');
+    }
   }
 
   List<Transaction> _getLabelTransactions(BuildContext context) {
@@ -64,6 +88,14 @@ class Label {
     return transactionList.fold<double>(
       0,
       (previousValue, transaction) => previousValue + transaction.amount,
+    );
+  }
+
+  // Doesn't return anything, modifies the array itself (pass-by-reference).
+  void _retainTransactionsAfterDate(
+      List<Transaction> transactionList, DateTime date) {
+    transactionList.retainWhere(
+      (transaction) => transaction.date.isAfter(date),
     );
   }
 }
