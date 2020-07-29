@@ -32,9 +32,12 @@ class TransactionDetailsPieChart extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          chartTitle,
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 22),
+        // Just in case the text overflows.
+        FittedBox(
+          child: Text(
+            chartTitle,
+            style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 22),
+          ),
         ),
         SizedBox(
           height: height,

@@ -36,7 +36,7 @@ class DashboardScreen extends StatelessWidget {
         child: FutureBuilder(
           future: fetchAndSetData(context),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            if (snapshot.connectionState != ConnectionState.done) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
