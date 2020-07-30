@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../utils/db_helper.dart';
 import '../models/transaction.dart';
+import './insights_range.dart';
 import './labels.dart';
 
 class Transactions with ChangeNotifier {
@@ -69,6 +70,14 @@ class Transactions with ChangeNotifier {
     );
   }
 
+  List<Transaction> filterTransactionsByLabelAndRange(
+      BuildContext context, String labelId, Range range) {
+    return _internalFilterTransactionsByRange(
+      range,
+      filterTransactionsByLabel(context, labelId),
+    );
+  }
+
   List<Transaction> filterTransactionsByLabel(
       BuildContext context, String labelId) {
     if (labelId == null) {
@@ -79,6 +88,36 @@ class Transactions with ChangeNotifier {
     return items
         .where((transaction) => transaction.labelId == labelId)
         .toList();
+  }
+
+  // So the optional positional argument isn't visible outside the class.
+  List<Transaction> filterTransactionsByRange(Range range) =>
+      _internalFilterTransactionsByRange(range);
+
+  // optionalItems so filterTransactionByLabelAndRange is easy.
+  List<Transaction> _internalFilterTransactionsByRange(Range range,
+      [List<Transaction> optionalItems]) {
+    var transactions = optionalItems ?? items;
+
+    switch (range) {
+      case Range.lifetime:
+        return transactions;
+
+      case Range.month:
+        transactions.retainWhere(
+          (transaction) => transaction.isAfterBeginningOfMonth,
+        );
+        return transactions;
+
+      case Range.week:
+        transactions.retainWhere(
+          (transaction) => transaction.isAfterBeginningOfWeek,
+        );
+        return transactions;
+
+      default:
+        throw UnimplementedError('An unimplemented or null range was passed.');
+    }
   }
 
   void addTransaction(Transaction newTransaction) {
