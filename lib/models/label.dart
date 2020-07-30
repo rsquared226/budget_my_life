@@ -39,45 +39,18 @@ class Label {
   }
 
   double getLabelAmountTotal(BuildContext context) =>
-      _getListAmountTotal(_getLabelTransactions(context));
+      getLabelTotalWithRange(context, Range.lifetime);
 
+  // From the beginning of the month.
   double getLabelMonthAmountTotal(BuildContext context) =>
       getLabelTotalWithRange(context, Range.month);
 
   double getLabelTotalWithRange(BuildContext context, Range range) {
-    final labelTransactions = _getLabelTransactions(context);
+    final transactionsData = Provider.of<Transactions>(context, listen: false);
+    final labelTransactionsWithRange =
+        transactionsData.filterTransactionsByLabelAndRange(context, id, range);
 
-    switch (range) {
-      case Range.lifetime:
-        return getLabelAmountTotal(context);
-
-      case Range.month:
-        labelTransactions.retainWhere(
-          (transaction) => transaction.isAfterBeginningOfMonth,
-        );
-        return _getListAmountTotal(labelTransactions);
-        break;
-
-      case Range.week:
-        labelTransactions.retainWhere(
-          (transaction) => transaction.isAfterBeginningOfWeek,
-        );
-        return _getListAmountTotal(labelTransactions);
-        break;
-
-      default:
-        // Just in case a future range is added and it's not implemented here.
-        throw UnimplementedError('An unimplemented or null range was passed.');
-    }
-  }
-
-  List<Transaction> _getLabelTransactions(BuildContext context) {
-    return Provider.of<Transactions>(context, listen: false)
-        .filterTransactionsByLabel(context, id);
-  }
-
-  double _getListAmountTotal(List<Transaction> transactionList) {
-    return transactionList.fold<double>(
+    return labelTransactionsWithRange.fold<double>(
       0,
       (previousValue, transaction) => previousValue + transaction.amount,
     );
