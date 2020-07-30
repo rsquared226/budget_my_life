@@ -3,15 +3,16 @@ import 'package:provider/provider.dart';
 
 import '../charts_base/time_series_base.dart';
 import '../chart_models/time_series_model.dart';
+import '../../providers/insights_range.dart';
 import '../../providers/transactions.dart';
 
 class BalanceHistoryChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // List of transactions in chronological order (oldest first).
-    // TODO: Implement range in transactions provider.
+    final range = Provider.of<InsightsRange>(context).range;
     final transactions = Provider.of<Transactions>(context, listen: false)
-        .items
+        .filterTransactionsByRange(range)
         .reversed
         .toList();
 
@@ -43,7 +44,7 @@ class BalanceHistoryChart extends StatelessWidget {
       },
     );
 
-    if (data.length < 3) {
+    if (data.length < 2) {
       return const Center(
         child: Text(
           'Add some more transactions!',
