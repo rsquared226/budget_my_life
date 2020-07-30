@@ -4,6 +4,7 @@ import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 
 import '../models/label.dart';
 import '../charts/chart_widgets/labels_pie_chart.dart';
+import '../charts/chart_widgets/balance_history_chart.dart';
 import '../providers/insights_range.dart';
 import '../utils/custom_colors.dart';
 import '../widgets/chart_container.dart';
@@ -35,6 +36,11 @@ class _InsightsScreenState extends State<InsightsScreen> {
       chart: LabelsPieChart(labelType: LabelType.EXPENSE),
       backgroundColor: CustomColors.expenseColor,
     ),
+    ChartContainer(
+      title: 'Balance History',
+      chart: BalanceHistoryChart(),
+      backgroundColor: Colors.blue[800],
+    )
   ];
 
   @override
@@ -61,6 +67,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
             orientation: Axis.vertical,
             dotColor: Colors.white30,
             dotSelectedColor: Colors.white,
+            dotSpacing: 16,
             controller: _pageController,
             itemCount: _graphScreens.length,
           ),

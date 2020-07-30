@@ -74,8 +74,10 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   // Initialized later and determines what is shown in the Label FormField.
   // Mostly needed for the color of the label text field.
   Label _selectedLabel;
-  // Default date should be now.
-  var _selectedDate = DateTime.now();
+  // Default date should be now. Also remove time on the date. If the time is there, it messes up the balance history
+  // graph.
+  var _selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   // To set the text inside the date text field.
   final _dateController = TextEditingController();
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './transaction.dart';
 import '../providers/insights_range.dart';
 import '../providers/transactions.dart';
 
