@@ -15,8 +15,8 @@ class _ChipsData {
 
 const _chipsData = const <_ChipsData>[
   _ChipsData(rangeValue: Range.lifetime, text: 'LIFETIME'),
-  _ChipsData(rangeValue: Range.thirtyDays, text: 'PAST 30 DAYS'),
-  _ChipsData(rangeValue: Range.sevenDays, text: 'PAST 7 DAYS'),
+  _ChipsData(rangeValue: Range.month, text: 'THIS MONTH'),
+  _ChipsData(rangeValue: Range.week, text: 'THIS WEEK'),
 ];
 
 class InsightsRangeButtons extends StatelessWidget {

@@ -39,63 +39,20 @@ class Label {
   }
 
   double getLabelAmountTotal(BuildContext context) =>
-      _getListAmountTotal(_getLabelTransactions(context));
+      getLabelTotalWithRange(context, Range.lifetime);
 
-  double getLabelMonthAmountTotal(BuildContext context) {
-    final labelMonthTransactions = _getLabelTransactions(context);
-
-    final today = DateTime.now();
-    // The day before the beginning of the month.
-    final beginningOfMonth = DateTime(today.year, today.month, 0);
-
-    // Filtered Transactions from this month.
-    _retainTransactionsAfterDate(labelMonthTransactions, beginningOfMonth);
-
-    return _getListAmountTotal(labelMonthTransactions);
-  }
+  // From the beginning of the month.
+  double getLabelMonthAmountTotal(BuildContext context) =>
+      getLabelTotalWithRange(context, Range.month);
 
   double getLabelTotalWithRange(BuildContext context, Range range) {
-    final labelTransactions = _getLabelTransactions(context);
+    final transactionsData = Provider.of<Transactions>(context, listen: false);
+    final labelTransactionsWithRange =
+        transactionsData.filterTransactionsByLabelAndRange(context, id, range);
 
-    switch (range) {
-      case Range.lifetime:
-        return getLabelAmountTotal(context);
-
-      case Range.thirtyDays:
-        final thirtyDaysRange = DateTime.now().subtract(Duration(days: 30));
-        _retainTransactionsAfterDate(labelTransactions, thirtyDaysRange);
-        return _getListAmountTotal(labelTransactions);
-        break;
-
-      case Range.sevenDays:
-        final sevenDaysRange = DateTime.now().subtract(Duration(days: 7));
-        _retainTransactionsAfterDate(labelTransactions, sevenDaysRange);
-        return _getListAmountTotal(labelTransactions);
-        break;
-
-      default:
-        // Just in case a future range is added and it's not implemented here.
-        throw UnimplementedError('An unimplemented or null range was passed.');
-    }
-  }
-
-  List<Transaction> _getLabelTransactions(BuildContext context) {
-    return Provider.of<Transactions>(context, listen: false)
-        .filterTransactionsByLabel(context, id);
-  }
-
-  double _getListAmountTotal(List<Transaction> transactionList) {
-    return transactionList.fold<double>(
+    return labelTransactionsWithRange.fold<double>(
       0,
       (previousValue, transaction) => previousValue + transaction.amount,
-    );
-  }
-
-  // Doesn't return anything, modifies the array itself (pass-by-reference).
-  void _retainTransactionsAfterDate(
-      List<Transaction> transactionList, DateTime date) {
-    transactionList.retainWhere(
-      (transaction) => transaction.date.isAfter(date),
     );
   }
 }
