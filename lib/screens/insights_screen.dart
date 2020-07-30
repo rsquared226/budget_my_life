@@ -67,6 +67,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
             orientation: Axis.vertical,
             dotColor: Colors.white30,
             dotSelectedColor: Colors.white,
+            dotSpacing: 16,
             controller: _pageController,
             itemCount: _graphScreens.length,
           ),
