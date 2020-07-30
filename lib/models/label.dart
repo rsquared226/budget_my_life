@@ -41,18 +41,8 @@ class Label {
   double getLabelAmountTotal(BuildContext context) =>
       _getListAmountTotal(_getLabelTransactions(context));
 
-  double getLabelMonthAmountTotal(BuildContext context) {
-    final labelMonthTransactions = _getLabelTransactions(context);
-
-    final today = DateTime.now();
-    // The day before the beginning of the month.
-    final beginningOfMonth = DateTime(today.year, today.month, 0);
-
-    // Filtered Transactions from this month.
-    _retainTransactionsAfterDate(labelMonthTransactions, beginningOfMonth);
-
-    return _getListAmountTotal(labelMonthTransactions);
-  }
+  double getLabelMonthAmountTotal(BuildContext context) =>
+      getLabelTotalWithRange(context, Range.month);
 
   double getLabelTotalWithRange(BuildContext context, Range range) {
     final labelTransactions = _getLabelTransactions(context);
@@ -61,15 +51,17 @@ class Label {
       case Range.lifetime:
         return getLabelAmountTotal(context);
 
-      case Range.thirtyDays:
-        final thirtyDaysRange = DateTime.now().subtract(Duration(days: 30));
-        _retainTransactionsAfterDate(labelTransactions, thirtyDaysRange);
+      case Range.month:
+        labelTransactions.retainWhere(
+          (transaction) => transaction.isAfterBeginningOfMonth,
+        );
         return _getListAmountTotal(labelTransactions);
         break;
 
-      case Range.sevenDays:
-        final sevenDaysRange = DateTime.now().subtract(Duration(days: 7));
-        _retainTransactionsAfterDate(labelTransactions, sevenDaysRange);
+      case Range.week:
+        labelTransactions.retainWhere(
+          (transaction) => transaction.isAfterBeginningOfWeek,
+        );
         return _getListAmountTotal(labelTransactions);
         break;
 
@@ -88,14 +80,6 @@ class Label {
     return transactionList.fold<double>(
       0,
       (previousValue, transaction) => previousValue + transaction.amount,
-    );
-  }
-
-  // Doesn't return anything, modifies the array itself (pass-by-reference).
-  void _retainTransactionsAfterDate(
-      List<Transaction> transactionList, DateTime date) {
-    transactionList.retainWhere(
-      (transaction) => transaction.date.isAfter(date),
     );
   }
 }

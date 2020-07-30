@@ -75,4 +75,17 @@ class Transaction {
 
     return date.isAfter(beginningOfMonth);
   }
+
+  bool get isAfterBeginningOfWeek {
+    final today = DateTime.now();
+    // Manually put in the year month and day so time isn't involved.
+    final beginningOfWeek = DateTime(today.year, today.month, today.day)
+        // This gives us the Saturday before the current date. This getter should then include transactions starting
+        // Sunday and after.
+        .subtract(today.weekday != DateTime.sunday
+            ? Duration(days: today.weekday + 1)
+            : Duration(days: 1));
+
+    return date.isAfter(beginningOfWeek);
+  }
 }

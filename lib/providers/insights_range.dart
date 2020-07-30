@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 // Used in InsightsScreen.
 
 enum Range {
-  sevenDays,
-  thirtyDays,
+  week,
+  month,
   lifetime,
 }
 
 class InsightsRange with ChangeNotifier {
-  Range _range = Range.thirtyDays;
+  Range _range = Range.month;
 
   Range get range => _range;
 
