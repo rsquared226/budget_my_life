@@ -7,7 +7,7 @@ A beautiful and informative budgeting Android app.
 It's light-weight and all data stays on your device. The app requires no permissions from the user.
 
 ## Some Highlights
-
+from v0.1.0. Will be updated with release v0.4.0 or v0.5.0
 | Transaction Addition                 | Transaction Filtering                | Label Editing                        |
 |--------------------------------------|--------------------------------------|--------------------------------------|
 | ![](https://i.imgur.com/gNTToXN.gif) | ![](https://i.imgur.com/yOwE1bO.gif) | ![](https://i.imgur.com/z3G88Zi.gif) |
