@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 
 class BalanceHistoryModel {
   final DateTime date;
-  final double incomeAmount;
-  final double expenseAmount;
+  double incomeAmount;
+  double expenseAmount;
 
-  const BalanceHistoryModel({
+  BalanceHistoryModel({
     @required this.date,
     @required this.incomeAmount,
     @required this.expenseAmount,
