@@ -52,7 +52,6 @@ class TransactionHistoryChart extends StatelessWidget {
 
     // Add earliest and latest days if they're not already in the data set so the graph is consistent (for weekly so far).
     if (data.first.date.compareTo(today.subtract(Duration(days: 6))) != 0) {
-      print('asdf');
       data.insert(
         0,
         TransactionHistoryModel(
@@ -63,7 +62,6 @@ class TransactionHistoryChart extends StatelessWidget {
       );
     }
     if (data.last.date.compareTo(today) < 0) {
-      print('est');
       data.add(
         TransactionHistoryModel(
           date: today,

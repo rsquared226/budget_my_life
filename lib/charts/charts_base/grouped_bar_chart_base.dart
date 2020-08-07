@@ -34,10 +34,10 @@ class GroupedBarChartBase extends StatelessWidget {
   }
 
   charts.Color get incomeChartColor =>
-      convertToChartColor(CustomColors.incomeColor.withOpacity(.8));
+      convertToChartColor(CustomColors.incomeColor.withOpacity(.9));
 
   charts.Color get expenseChartColor =>
-      convertToChartColor(CustomColors.expenseColor.withOpacity(.8));
+      convertToChartColor(CustomColors.expenseColor.withOpacity(.9));
 
   charts.Color convertToChartColor(Color color) => charts.Color(
         r: color.red,
