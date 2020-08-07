@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../charts_base/time_series_base.dart';
-import '../chart_models/balance_history_model.dart';
+import '../charts_base/grouped_bar_chart_base.dart';
+import '../chart_models/transaction_history_model.dart';
 import '../../providers/transactions.dart';
 
-class BalanceHistoryChart extends StatelessWidget {
+class TransactionHistoryChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement range stuff
@@ -15,7 +15,7 @@ class BalanceHistoryChart extends StatelessWidget {
         .toList();
 
     // Each TimeSeriesModel will contain one date with the sum of the transaction amounts from that specific day.
-    final data = <BalanceHistoryModel>[];
+    final data = <TransactionHistoryModel>[];
 
     // Add up all the transactions in a format that's easier to read for the bar chart.
     transactions.forEach((transaction) {
@@ -29,7 +29,7 @@ class BalanceHistoryChart extends StatelessWidget {
         }
       } else {
         data.add(
-          BalanceHistoryModel(
+          TransactionHistoryModel(
             date: transaction.date,
             incomeAmount: amount > 0 ? amount : 0,
             expenseAmount: amount < 0 ? amount.abs() : 0,
@@ -55,7 +55,7 @@ class BalanceHistoryChart extends StatelessWidget {
       print('asdf');
       data.insert(
         0,
-        BalanceHistoryModel(
+        TransactionHistoryModel(
           date: today.subtract(Duration(days: 6)),
           incomeAmount: 0,
           expenseAmount: 0,
@@ -65,7 +65,7 @@ class BalanceHistoryChart extends StatelessWidget {
     if (data.last.date.compareTo(today) < 0) {
       print('est');
       data.add(
-        BalanceHistoryModel(
+        TransactionHistoryModel(
           date: today,
           incomeAmount: 0,
           expenseAmount: 0,
@@ -75,7 +75,7 @@ class BalanceHistoryChart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: TimeSeriesBase(
+      child: GroupedBarChartBase(
         id: 'Balance History',
         color: Colors.blueAccent,
         data: data,

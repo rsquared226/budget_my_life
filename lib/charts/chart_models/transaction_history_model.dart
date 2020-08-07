@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
-class BalanceHistoryModel {
+class TransactionHistoryModel {
   final DateTime date;
   double incomeAmount;
   double expenseAmount;
 
-  BalanceHistoryModel({
+  TransactionHistoryModel({
     @required this.date,
     @required this.incomeAmount,
     @required this.expenseAmount,

@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import '../chart_models/balance_history_model.dart';
+import '../chart_models/transaction_history_model.dart';
 import '../../utils/custom_colors.dart';
 
-class TimeSeriesBase extends StatelessWidget {
+class GroupedBarChartBase extends StatelessWidget {
   final String id;
-  final List<BalanceHistoryModel> data;
+  final List<TransactionHistoryModel> data;
 
-  TimeSeriesBase({
+  GroupedBarChartBase({
     @required this.id,
     @required Color color,
     @required this.data,
   });
 
-  List<charts.Series<BalanceHistoryModel, String>> get chartData {
+  List<charts.Series<TransactionHistoryModel, String>> get chartData {
     return [
-      charts.Series<BalanceHistoryModel, String>(
+      charts.Series<TransactionHistoryModel, String>(
         id: id,
         colorFn: (_, __) => incomeChartColor,
         domainFn: (data, _) => data.dateString,
         measureFn: (data, _) => data.incomeAmount,
         data: data,
       ),
-      charts.Series<BalanceHistoryModel, String>(
+      charts.Series<TransactionHistoryModel, String>(
         id: id,
         colorFn: (_, __) => expenseChartColor,
         domainFn: (data, _) => data.dateString,
