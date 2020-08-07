@@ -47,6 +47,32 @@ class BalanceHistoryChart extends StatelessWidget {
       );
     }
 
+    final today =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+    // Add earliest and latest days if they're not already in the data set so the graph is consistent (for weekly so far).
+    if (data.first.date.compareTo(today.subtract(Duration(days: 6))) != 0) {
+      print('asdf');
+      data.insert(
+        0,
+        BalanceHistoryModel(
+          date: today.subtract(Duration(days: 6)),
+          incomeAmount: 0,
+          expenseAmount: 0,
+        ),
+      );
+    }
+    if (data.last.date.compareTo(today) < 0) {
+      print('est');
+      data.add(
+        BalanceHistoryModel(
+          date: today,
+          incomeAmount: 0,
+          expenseAmount: 0,
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: TimeSeriesBase(

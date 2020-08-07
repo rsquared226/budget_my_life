@@ -34,10 +34,10 @@ class TimeSeriesBase extends StatelessWidget {
   }
 
   charts.Color get incomeChartColor =>
-      convertToChartColor(CustomColors.incomeColor);
+      convertToChartColor(CustomColors.incomeColor.withOpacity(.8));
 
   charts.Color get expenseChartColor =>
-      convertToChartColor(CustomColors.expenseColor);
+      convertToChartColor(CustomColors.expenseColor.withOpacity(.8));
 
   charts.Color convertToChartColor(Color color) => charts.Color(
         r: color.red,

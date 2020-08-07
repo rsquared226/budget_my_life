@@ -91,9 +91,8 @@ class Transaction {
 
   bool get isWithin7Days {
     final today = DateTime.now();
-    // Use 8 so the 7th day is still included.
     final sevenDaysAgo = DateTime(today.year, today.month, today.day)
-        .subtract(Duration(days: 8));
+        .subtract(Duration(days: 7));
 
     return date.isAfter(sevenDaysAgo);
   }
