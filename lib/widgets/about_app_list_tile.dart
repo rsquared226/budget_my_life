@@ -35,7 +35,7 @@ class AboutAppListTile extends StatelessWidget {
         width: 75,
       ),
       applicationLegalese: 'Made by Rahul Ramkumar, licensed under GNU GPLv3',
-      applicationVersion: 'v0.1.0',
+      applicationVersion: 'v0.4.0',
       aboutBoxChildren: <Widget>[
         const SizedBox(height: 12),
         const Text('A beautiful and informative budgeting app'),
@@ -51,6 +51,11 @@ class AboutAppListTile extends StatelessWidget {
           title: const Text('Hire me'),
           onTap: () =>
               launchUrl(context, 'https://www.linkedin.com/in/rahulram226/'),
+        ),
+        ListTile(
+          leading: const Icon(Icons.person_outline),
+          title: const Text('About me'),
+          onTap: () => launchUrl(context, 'https://rahulramkumar.dev/'),
         ),
       ],
     );

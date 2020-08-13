@@ -12,6 +12,18 @@ class AppDrawer extends StatelessWidget {
           Container(
             height: 200,
             color: Theme.of(context).primaryColor,
+            // SafeArea so it doesn't take the notification bar in account for centering vertically.
+            child: SafeArea(
+              child: Center(
+                child: Text(
+                  'Budget your life with ease.',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.attach_money),

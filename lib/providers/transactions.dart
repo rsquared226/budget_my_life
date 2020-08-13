@@ -51,6 +51,10 @@ class Transactions with ChangeNotifier {
     );
   }
 
+  List<Transaction> get sevenDaysTransactions {
+    return items.where((transaction) => transaction.isWithin7Days).toList();
+  }
+
   double _totalTransactionsAmountWithFilter(
       bool Function(Transaction transaction) filter) {
     var transactions = [..._items];

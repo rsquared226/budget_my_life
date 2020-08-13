@@ -4,7 +4,7 @@ import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
 
 import '../models/label.dart';
 import '../charts/chart_widgets/labels_pie_chart.dart';
-import '../charts/chart_widgets/balance_history_chart.dart';
+import '../charts/chart_widgets/transaction_history_chart.dart';
 import '../providers/insights_range.dart';
 import '../utils/custom_colors.dart';
 import '../widgets/chart_container.dart';
@@ -37,9 +37,10 @@ class _InsightsScreenState extends State<InsightsScreen> {
       backgroundColor: CustomColors.expenseColor,
     ),
     ChartContainer(
-      title: 'Balance History',
-      chart: BalanceHistoryChart(),
+      title: 'Transaction History',
+      chart: TransactionHistoryChart(),
       backgroundColor: Colors.blue[800],
+      isTransactionHistoryChart: true,
     )
   ];
 
