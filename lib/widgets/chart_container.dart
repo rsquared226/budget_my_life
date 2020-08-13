@@ -11,11 +11,13 @@ class ChartContainer extends StatelessWidget {
   final String title;
   final Widget chart;
   final Color backgroundColor;
+  final bool isTransactionHistoryChart;
 
   const ChartContainer({
     @required this.title,
     @required this.chart,
     @required this.backgroundColor,
+    this.isTransactionHistoryChart = false,
   });
 
   @override
@@ -44,7 +46,9 @@ class ChartContainer extends StatelessWidget {
             child: chart,
           ),
           const Spacer(flex: 3),
-          InsightsRangeButtons(),
+          InsightsRangeButtons(
+            isTransactionHistoryChart: isTransactionHistoryChart,
+          ),
           const Spacer(flex: 4),
         ],
       ),

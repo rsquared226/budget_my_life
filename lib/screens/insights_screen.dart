@@ -40,6 +40,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
       title: 'Transaction History',
       chart: TransactionHistoryChart(),
       backgroundColor: Colors.blue[800],
+      isTransactionHistoryChart: true,
     )
   ];
 

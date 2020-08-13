@@ -8,7 +8,6 @@ import '../../providers/transactions.dart';
 class TransactionHistoryChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement range stuff
     final transactions = Provider.of<Transactions>(context, listen: false)
         .sevenDaysTransactions
         .reversed

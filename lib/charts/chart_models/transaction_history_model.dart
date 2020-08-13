@@ -12,5 +12,5 @@ class TransactionHistoryModel {
     @required this.expenseAmount,
   });
 
-  String get dateString => DateFormat.MMMd().format(date);
+  String get dateString => DateFormat.E().format(date);
 }
