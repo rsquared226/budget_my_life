@@ -1,0 +1,4 @@
+Major Updates:
+- After many iterations, we have a usuable Transaction History Chart!
+Minor Updates:
+- Added catchphrase to drawer
