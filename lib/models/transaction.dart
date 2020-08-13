@@ -69,23 +69,32 @@ class Transaction {
   }
 
   bool get isAfterBeginningOfMonth {
-    final today = DateTime.now();
     // The day before the beginning of the month.
-    final beginningOfMonth = DateTime(today.year, today.month, 0);
+    final beginningOfMonth = DateTime(_todaysDate.year, _todaysDate.month, 0);
 
     return date.isAfter(beginningOfMonth);
   }
 
   bool get isAfterBeginningOfWeek {
-    final today = DateTime.now();
-    // Manually put in the year month and day so time isn't involved.
-    final beginningOfWeek = DateTime(today.year, today.month, today.day)
+    final beginningOfWeek = _todaysDate
         // This gives us the Saturday before the current date. This getter should then include transactions starting
         // Sunday and after.
-        .subtract(today.weekday != DateTime.sunday
-            ? Duration(days: today.weekday + 1)
-            : Duration(days: 1));
+        .subtract(_todaysDate.weekday != DateTime.sunday
+            ? Duration(days: _todaysDate.weekday + 1)
+            : const Duration(days: 1));
 
     return date.isAfter(beginningOfWeek);
+  }
+
+  bool get isWithin7Days {
+    final sevenDaysAgo = _todaysDate.subtract(const Duration(days: 7));
+
+    return date.isAfter(sevenDaysAgo);
+  }
+
+  DateTime get _todaysDate {
+    final today = DateTime.now();
+    // Manually put in the year month and day so time isn't involved.
+    return DateTime(today.year, today.month, today.day);
   }
 }

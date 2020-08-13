@@ -20,8 +20,53 @@ const _chipsData = const <_ChipsData>[
 ];
 
 class InsightsRangeButtons extends StatelessWidget {
+  // The transaction history chart doesn't have any options, only stuff from the past 7 days.
+  final bool isTransactionHistoryChart;
+
+  const InsightsRangeButtons({
+    this.isTransactionHistoryChart = false,
+  });
+
+  Widget buildRangeButton(
+      bool isSelected, _ChipsData e, InsightsRange insightsRangeData) {
+    return Expanded(
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide(
+            width: 2,
+            color: isSelected ? Colors.white60 : Colors.transparent,
+          ),
+        ),
+        textColor: isSelected ? Colors.white : Colors.white54,
+        child: Text(e.text),
+        onPressed: () {
+          // Don't want to have to unnecessarily call notifyListeners.
+          if (!isSelected) {
+            insightsRangeData.range = e.rangeValue;
+          }
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isTransactionHistoryChart) {
+      return FlatButton(
+        onPressed: () {},
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: const BorderSide(
+            width: 2,
+            color: Colors.white60,
+          ),
+        ),
+        textColor: Colors.white,
+        child: const Text('PAST 7 DAYS'),
+      );
+    }
+
     final insightsRangeData = Provider.of<InsightsRange>(context);
 
     return Padding(
@@ -31,25 +76,7 @@ class InsightsRangeButtons extends StatelessWidget {
           (e) {
             final isSelected = e.rangeValue == insightsRangeData.range;
 
-            return Expanded(
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: BorderSide(
-                    width: 2,
-                    color: isSelected ? Colors.white60 : Colors.transparent,
-                  ),
-                ),
-                textColor: isSelected ? Colors.white : Colors.white54,
-                child: Text(e.text),
-                onPressed: () {
-                  // Don't want to have to unnecessarily call notifyListeners.
-                  if (!isSelected) {
-                    insightsRangeData.range = e.rangeValue;
-                  }
-                },
-              ),
-            );
+            return buildRangeButton(isSelected, e, insightsRangeData);
           },
         ).toList(),
       ),
