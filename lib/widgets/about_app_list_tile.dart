@@ -52,6 +52,11 @@ class AboutAppListTile extends StatelessWidget {
           onTap: () =>
               launchUrl(context, 'https://www.linkedin.com/in/rahulram226/'),
         ),
+        ListTile(
+          leading: const Icon(Icons.person_outline),
+          title: const Text('About me'),
+          onTap: () => launchUrl(context, 'https://rahulramkumar.dev/'),
+        ),
       ],
     );
   }
