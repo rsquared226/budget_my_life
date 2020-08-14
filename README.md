@@ -1,20 +1,42 @@
-# Budget My Life [![Codemagic build status](https://api.codemagic.io/apps/5eed544c03ad6b4769b6acfb/5eed544c03ad6b4769b6acfa/status_badge.svg)](https://codemagic.io/apps/5eed544c03ad6b4769b6acfb/5eed544c03ad6b4769b6acfa/latest_build) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/rsquared226/budget_my_life) ![Platforms](https://img.shields.io/badge/platform-android-lightgrey)
+# Budget My Life [![Codemagic build status](https://api.codemagic.io/apps/5eed544c03ad6b4769b6acfb/5eed544c03ad6b4769b6acfa/status_badge.svg)](https://codemagic.io/apps/5eed544c03ad6b4769b6acfb/5eed544c03ad6b4769b6acfa/latest_build) [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/rsquared226/budget_my_life)](https://github.com/rsquared226/budget_my_life/releases/latest) [![Platforms](https://img.shields.io/badge/platform-android-lightgrey)](https://www.android.com/)
 
-![application icon](https://i.imgur.com/PAXntBL.png "test")
+<p align="center">
+  <img src="https://i.imgur.com/PAXntBL.png" alt="App Icon" />
+</p>
 
-A beautiful and informative budgeting Android app.
+<a href='https://play.google.com/store/apps/details?id=rsquared226.budget_my_life'><img width="256" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
-It's light-weight and all data stays on your device. The app requires no permissions from the user.
+(F-Droid coming soon!)
 
 ## Some Highlights
-from v0.1.0. Will be updated with release v0.4.0 or v0.5.0
-| Transaction Addition                 | Transaction Filtering                | Label Editing                        |
-|--------------------------------------|--------------------------------------|--------------------------------------|
-| ![](https://i.imgur.com/gNTToXN.gif) | ![](https://i.imgur.com/yOwE1bO.gif) | ![](https://i.imgur.com/z3G88Zi.gif) |
+from v0.4.1
+| Transaction Adding                   | Transaction Filtering                | View Insights                        | Label Editing                        |
+|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
+| ![](https://i.imgur.com/3byRym2.gif) | ![](https://i.imgur.com/raMGRss.gif) | ![](https://i.imgur.com/YqIPU3f.gif) | ![](https://i.imgur.com/CbRsDIl.gif) |
+
+## Features
+A beautiful and informative budgeting Android app.
+It's light-weight and all data stays on your device. I built this app because I felt like there needed to be an intuitive and useful privacy-respecting budgeting app.
+
+- <b>Labels</b>: Tag your transactions with labels to gain insights on how you spend and earn your money. The app comes with some labels, feel free to edit them or add some more!
+
+- <b>Insights</b>: There's an entire screen to view insights on your money management. View different ranges from just this week, this month, and lifetime transactions.
+
+- <b>Design</b>: The design has went over many iterations to create something beautiful to look at and intuitive to use. The animations were made to make the app feel like a joy to use while not being over the top. All insights on your spending are shown through clean charts.
+
+- <b>Speed</b>: The app was coded to be as lightweight and efficient as possible, running on even the lowest end devices.
+
+- <b>Privacy</b>: With no data leaving your device, your privacy is guaranteed in this application.
+
+- <b>100% Free and No Ads</b>: This app is and always will be 100% free. It shouldn't cost money to manage your money, and ads ruin the look of the app.
+
+- <b>Open-source</b> (duh)
+
+- <b>Permissions</b>: None needed!
 
 ## Technologies Used
 - [Flutter](https://flutter.dev/) (SDK)
-- [Codemagic](https://codemagic.io/) (CI/CD)
+- [Codemagic](https://codemagic.io/) (CI/CD) (deployed when a tag is created)
 - [VSCode](https://code.visualstudio.com/) (editor)
 - [Figma](https://www.figma.com/) (design tool)
 
