@@ -39,7 +39,9 @@ class InsightsRangeButtons extends StatelessWidget {
           ),
         ),
         textColor: isSelected ? Colors.white : Colors.white54,
-        child: Text(e.text),
+        child: FittedBox(
+          child: Text(e.text),
+        ),
         onPressed: () {
           // Don't want to have to unnecessarily call notifyListeners.
           if (!isSelected) {
@@ -63,7 +65,9 @@ class InsightsRangeButtons extends StatelessWidget {
           ),
         ),
         textColor: Colors.white,
-        child: const Text('PAST 7 DAYS'),
+        child: const FittedBox(
+          child: Text('PAST 7 DAYS'),
+        ),
       );
     }
 
