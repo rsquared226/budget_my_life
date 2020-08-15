@@ -65,7 +65,9 @@ class InsightsRangeButtons extends StatelessWidget {
           ),
         ),
         textColor: Colors.white,
-        child: const Text('PAST 7 DAYS'),
+        child: const FittedBox(
+          child: Text('PAST 7 DAYS'),
+        ),
       );
     }
 
