@@ -1,3 +1,7 @@
+v0.4.2-beta
+- Fix text overflow on insights range buttons
+- Remove unused font files
+
 v0.4.1-beta
 - Hopefully fix custom fonts not showing up in Insights screen.
 

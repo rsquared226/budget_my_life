@@ -9,7 +9,7 @@
 (F-Droid coming soon!)
 
 ## Some Highlights
-from v0.4.1
+from v0.4.2
 | Transaction Adding                   | Transaction Filtering                | View Insights                        | Label Editing                        |
 |--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
 | ![](https://i.imgur.com/3byRym2.gif) | ![](https://i.imgur.com/raMGRss.gif) | ![](https://i.imgur.com/YqIPU3f.gif) | ![](https://i.imgur.com/CbRsDIl.gif) |
