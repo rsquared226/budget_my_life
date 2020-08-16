@@ -34,18 +34,20 @@ class EditTransactionAppbar extends StatelessWidget {
   Widget buildSubmitButton(BuildContext context) {
     final themeData = Theme.of(context);
     // Had to do this hacky ButtonTheme stuff to get it aligned to the close button.
-    return ButtonTheme(
-      height: 0,
-      padding: const EdgeInsets.only(bottom: 20, left: 20),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      child: FlatButton(
-        child: Text(
-          submitButtonText,
-          style: themeData.textTheme.headline6.copyWith(
-            color: themeData.colorScheme.onPrimary,
+    return FittedBox(
+      child: ButtonTheme(
+        height: 0,
+        padding: const EdgeInsets.only(bottom: 20, left: 20),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: FlatButton(
+          child: Text(
+            submitButtonText,
+            style: themeData.textTheme.headline6.copyWith(
+              color: themeData.colorScheme.onPrimary,
+            ),
           ),
+          onPressed: onButtonSubmit,
         ),
-        onPressed: onButtonSubmit,
       ),
     );
   }
