@@ -185,9 +185,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   }
 
   String get submitButtonText {
-    final addOrEdit = widget.editTransactionId != null ? 'Save ' : 'Add ';
+    final addOrEdit = widget.editTransactionId != null ? 'SAVE ' : 'ADD ';
     final incomeOrExpense =
-        (_selectedLabel.labelType == LabelType.INCOME) ? 'Income' : 'Expense';
+        (_selectedLabel.labelType == LabelType.INCOME) ? 'INCOME' : 'EXPENSE';
     return addOrEdit + incomeOrExpense;
   }
 
