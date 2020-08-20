@@ -9,6 +9,12 @@ class DBHelper {
   static const _labelsTableName = 'labels';
   static const _onboardingTableName = 'onboarding';
 
+  // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
+  static const _createOnBoardingTable = '''CREATE TABLE onboarding(
+      id INTEGER PRIMARY KEY,
+      onboarded INTEGER
+    )''';
+
   static Future<sql.Database> get _database async {
     final dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(
@@ -35,19 +41,13 @@ class DBHelper {
       color INTEGER,
       labelType INTEGER)''');
 
-    // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
-    await db.execute('''CREATE TABLE onboarding(
-      onboarded INTEGER
-    )''');
+    await db.execute(_createOnBoardingTable);
   }
 
   static Future<void> _onUpgrade(
       sql.Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      db.execute('''CREATE TABLE onboarding(
-        id INTEGER PRIMARY KEY,
-        onboarded INTEGER
-      )''');
+      db.execute(_createOnBoardingTable);
     }
   }
 
