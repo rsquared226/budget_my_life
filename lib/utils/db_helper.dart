@@ -44,8 +44,6 @@ class DBHelper {
   static Future<void> _onUpgrade(
       sql.Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // TODO: delete this print statement
-      print('Created onboarding table');
       db.execute('''CREATE TABLE onboarding(
         id INTEGER PRIMARY KEY,
         onboarded INTEGER
