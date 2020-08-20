@@ -7,13 +7,15 @@ import '../models/transaction.dart';
 class DBHelper {
   static const _transactionsTableName = 'transactions_history';
   static const _labelsTableName = 'labels';
+  static const _onboardingTableName = 'onboarding';
 
   static Future<sql.Database> get _database async {
     final dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(
       path.join(dbPath, 'bml.db'),
       onCreate: _onCreate,
-      version: 1,
+      onUpgrade: _onUpgrade,
+      version: 2,
     );
   }
 
@@ -32,6 +34,23 @@ class DBHelper {
       title TEXT,
       color INTEGER,
       labelType INTEGER)''');
+
+    // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
+    await db.execute('''CREATE TABLE onboarding(
+      onboarded INTEGER
+    )''');
+  }
+
+  static Future<void> _onUpgrade(
+      sql.Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // TODO: delete this print statement
+      print('Created onboarding table');
+      db.execute('''CREATE TABLE onboarding(
+        id INTEGER PRIMARY KEY,
+        onboarded INTEGER
+      )''');
+    }
   }
 
   static Future<void> insertTransaction(Transaction transaction) async {
@@ -104,6 +123,30 @@ class DBHelper {
       (index) {
         return Label.fromMap(labelMaps[index]);
       },
+    );
+  }
+
+  static Future<bool> isOnboarded() async {
+    final onboardingMaps = await (await _database).query(_onboardingTableName);
+
+    // If the onboarding row doesn't exist, make one and assume the user hasn't onboarded.
+    if (onboardingMaps.length == 0) {
+      (await _database).insert(
+        _onboardingTableName,
+        {'id': 1, 'onboarded': 0},
+        conflictAlgorithm: sql.ConflictAlgorithm.replace,
+      );
+      return false;
+    }
+    return onboardingMaps[0]['onboarded'] == 1;
+  }
+
+  static Future<void> onboardedUser() async {
+    (await _database).update(
+      _onboardingTableName,
+      {'id': 1, 'onboarded': 1},
+      where: 'id = ?',
+      whereArgs: [1],
     );
   }
 }
