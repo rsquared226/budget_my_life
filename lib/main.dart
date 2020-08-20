@@ -7,6 +7,7 @@ import './providers/labels.dart';
 import './providers/transactions.dart';
 import './screens/home_tabs_screen.dart';
 import './screens/edit_labels_screen.dart';
+import './screens/onboarding.dart';
 import './utils/db_helper.dart';
 
 Future<void> main() async {
@@ -60,9 +61,11 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
+        initialRoute: isOnboarded ? '/' : Onboarding.routeName,
         home: HomeTabsScreen(),
         routes: {
           EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
+          Onboarding.routeName: (_) => Onboarding()
         },
       ),
     );
