@@ -9,10 +9,10 @@
 (F-Droid coming soon!)
 
 ## Some Highlights
-from v0.4.2
-| Transaction Adding                   | Transaction Filtering                | View Insights                        | Label Editing                        |
+from v0.5.0
+| Transaction Adding | Transaction Filtering | View Insights | Label Editing |
 |--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
-| ![](https://i.imgur.com/3byRym2.gif) | ![](https://i.imgur.com/raMGRss.gif) | ![](https://i.imgur.com/YqIPU3f.gif) | ![](https://i.imgur.com/CbRsDIl.gif) |
+| ![](https://i.imgur.com/yxbGnuj.gif) | ![](https://i.imgur.com/FkMuE73.gif) | ![](https://i.imgur.com/sx6CpSI.gif) | ![](https://i.imgur.com/aDNeBDb.gif) |
 
 ## Features
 A beautiful and informative budgeting Android app.
@@ -28,9 +28,9 @@ It's light-weight and all data stays on your device. I built this app because I 
 
 - <b>Privacy</b>: With no data leaving your device, your privacy is guaranteed in this application.
 
-- <b>100% Free and No Ads</b>: This app is and always will be 100% free. It shouldn't cost money to manage your money, and ads ruin the look of the app.
+- <b>100% Free and No Ads</b>: This app is and always will be 100% free, no in-app purchases. It shouldn't cost money to manage your money, and ads ruin the look of the app.
 
-- <b>Open-source</b> (duh)
+- <b>Open-source</b> (of course)
 
 - <b>Permissions</b>: None needed!
 
