@@ -61,7 +61,7 @@ class Onboarding extends StatelessWidget {
         image: buildImage('Intro5'),
         title: 'Get Started!',
         body:
-            'You can always view this menu again by tapping "Help" in the drawer',
+            'You can always view this intro again by tapping "Help" in the drawer',
         decoration: pageDecoration,
       ),
     ];
