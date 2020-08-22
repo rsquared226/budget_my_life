@@ -6,6 +6,12 @@ import '../utils/db_helper.dart';
 class Onboarding extends StatelessWidget {
   static const routeName = '/onboarding';
 
+  final bool openedFromDrawer;
+
+  const Onboarding({
+    this.openedFromDrawer = false,
+  });
+
   Widget buildImage(String assetName) {
     return Align(
       child: Image.asset('assets/images/$assetName.jpg', width: 350.0),
@@ -81,8 +87,10 @@ class Onboarding extends StatelessWidget {
       ),
       curve: Curves.easeInOutSine,
       onDone: () {
-        DBHelper.onboardedUser();
-        Navigator.popAndPushNamed(context, '/');
+        if (!openedFromDrawer) {
+          DBHelper.onboardedUser();
+        }
+        Navigator.pop(context);
       },
     );
   }

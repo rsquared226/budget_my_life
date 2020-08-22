@@ -20,8 +20,6 @@ Future<void> main() async {
   // Needed for onboarding.
   WidgetsFlutterBinding.ensureInitialized();
   final isOnboarded = await DBHelper.isOnboarded();
-  // TODO: remove this print statement.
-  print('isOnboarded:' + isOnboarded.toString());
 
   runApp(MyApp(isOnboarded: isOnboarded));
 }
