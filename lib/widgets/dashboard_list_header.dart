@@ -12,7 +12,7 @@ class DashboardListHeader extends StatelessWidget {
       delegate: SectionHeaderDelegate(
         child: Container(
           // Need to specify the color or it'll be transparent.
-          color: Theme.of(context).canvasColor,
+          color: Colors.white,
           child: Column(
             children: <Widget>[
               const SizedBox(height: 5),

@@ -38,48 +38,51 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
     final labelFilter =
         Provider.of<Labels>(context).findById(filterData.labelId);
 
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          // This is the height of the BalanceSummaryCard.
-          height: 132,
-          child: PageView(
-            controller: _pageController,
-            // If the user isn't filtering data, show the total balance. If the user is filtering data, show the total
-            // for that specific label.
-            children: <Widget>[
-              // Monthly balance card.
-              BalanceSummaryCard(
-                title: labelFilter == null
-                    ? 'This Month\'s Balance'
-                    : 'This Month\'s ' + labelFilter.title,
-                balance: labelFilter == null
-                    ? transactionsData.monthlyBalance
-                    : labelFilter.getLabelMonthAmountTotal(context),
-                onTap: () => _moveTo(_pageController, 1),
-              ),
-              // Total balance card.
-              BalanceSummaryCard(
-                title: labelFilter == null
-                    ? 'Lifetime Balance'
-                    : 'Lifetime ' + labelFilter.title,
-                balance: labelFilter == null
-                    ? transactionsData.balance
-                    : labelFilter.getLabelAmountTotal(context),
-                onTap: () => _moveTo(_pageController, 0),
-              ),
-            ],
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            // This is the height of the BalanceSummaryCard.
+            height: 132,
+            child: PageView(
+              controller: _pageController,
+              // If the user isn't filtering data, show the total balance. If the user is filtering data, show the total
+              // for that specific label.
+              children: <Widget>[
+                // Monthly balance card.
+                BalanceSummaryCard(
+                  title: labelFilter == null
+                      ? 'This Month\'s Balance'
+                      : 'This Month\'s ' + labelFilter.title,
+                  balance: labelFilter == null
+                      ? transactionsData.monthlyBalance
+                      : labelFilter.getLabelMonthAmountTotal(context),
+                  onTap: () => _moveTo(_pageController, 1),
+                ),
+                // Total balance card.
+                BalanceSummaryCard(
+                  title: labelFilter == null
+                      ? 'Lifetime Balance'
+                      : 'Lifetime ' + labelFilter.title,
+                  balance: labelFilter == null
+                      ? transactionsData.balance
+                      : labelFilter.getLabelAmountTotal(context),
+                  onTap: () => _moveTo(_pageController, 0),
+                ),
+              ],
+            ),
           ),
-        ),
-        ScrollingPageIndicator(
-          dotSelectedColor: Colors.grey,
-          dotColor: Colors.black26,
-          dotSelectedSize: 8.5,
-          dotSpacing: 13,
-          controller: _pageController,
-          itemCount: 2,
-        ),
-      ],
+          ScrollingPageIndicator(
+            dotSelectedColor: Colors.grey,
+            dotColor: Colors.black26,
+            dotSelectedSize: 8.5,
+            dotSpacing: 13,
+            controller: _pageController,
+            itemCount: 2,
+          ),
+        ],
+      ),
     );
   }
 }
