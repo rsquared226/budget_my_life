@@ -25,19 +25,25 @@ class BalanceSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardRadius = BorderRadius.circular(15);
+
     return Card(
-      elevation: 2,
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: cardRadius,
+      ),
       margin: const EdgeInsets.all(10),
       // To ensure the InkWell shows up.
       child: Ink(
         decoration: BoxDecoration(
           // To match Card's border radius.
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: cardRadius,
           color: CustomColors.transactionTypeColor(balance),
         ),
         child: InkWell(
           highlightColor: Colors.black12,
           splashColor: Colors.black12,
+          borderRadius: cardRadius,
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(
