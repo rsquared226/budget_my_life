@@ -15,7 +15,7 @@ class CustomColors {
 
   // Takes in the amount and returns the income or expense color accordingly.
   static Color transactionTypeColor(double amount) {
-    return (amount != null && amount > 0) ? incomeColor : expenseColor;
+    return (amount != null && amount >= 0) ? incomeColor : expenseColor;
   }
 
   // Same method above but for labelTypes.
@@ -24,7 +24,7 @@ class CustomColors {
   }
 
   static Color secondaryTransactionTypeColor(double amount) {
-    return (amount != null && amount > 0)
+    return (amount != null && amount >= 0)
         ? secondaryIncomeColor
         : secondaryExpenseColor;
   }
