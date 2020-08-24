@@ -1,2 +1,6 @@
+v0.5.1 - Minor design improvements in dashboard screen
+- Round corners of balance card
+- Change color of top part of dashboard to full white
+
 v0.5.0
 - Add onboarding tutorial (can view again by clicking "help" in drawer)
