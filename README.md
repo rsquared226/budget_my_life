@@ -9,10 +9,10 @@
 (F-Droid coming soon!)
 
 ## Some Highlights
-from v0.5.0
+from v0.5.1
 | Transaction Adding | Transaction Filtering | View Insights | Label Editing |
 |--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
-| ![](https://i.imgur.com/yxbGnuj.gif) | ![](https://i.imgur.com/FkMuE73.gif) | ![](https://i.imgur.com/sx6CpSI.gif) | ![](https://i.imgur.com/aDNeBDb.gif) |
+| ![](https://i.imgur.com/psvHmMe.gif) | ![](https://i.imgur.com/V1q8zV1.gif) | ![](https://i.imgur.com/sx6CpSI.gif) | ![](https://i.imgur.com/aDNeBDb.gif) |
 
 ## Features
 A beautiful and informative budgeting Android app.
