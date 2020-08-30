@@ -282,8 +282,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     initialValue: initialAmountFieldValue,
                     decoration: InputDecoration(
                       labelText: 'Amount',
-                      helperText:
-                          'If this is an expense, make the amount negative.',
                     ),
                     focusNode: _amountFocusNode,
                     keyboardType: TextInputType.number,
@@ -320,6 +318,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       }
                     },
                   ),
+                  const SizedBox(height: 7),
                   TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Date',
