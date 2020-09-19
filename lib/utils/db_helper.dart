@@ -8,11 +8,17 @@ class DBHelper {
   static const _transactionsTableName = 'transactions_history';
   static const _labelsTableName = 'labels';
   static const _onboardingTableName = 'onboarding';
+  static const _settingsTableName = 'settings';
 
   // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
   static const _createOnBoardingTable = '''CREATE TABLE onboarding(
       id INTEGER PRIMARY KEY,
       onboarded INTEGER
+    )''';
+
+  static const _createSettingsTable = '''CREATE TABLE settings(
+      id INTEGER PRIMARY KEY,
+      currency TEXT
     )''';
 
   static Future<sql.Database> get _database async {
@@ -21,7 +27,7 @@ class DBHelper {
       path.join(dbPath, 'bml.db'),
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 2,
+      version: 3,
     );
   }
 
@@ -42,12 +48,17 @@ class DBHelper {
       labelType INTEGER)''');
 
     await db.execute(_createOnBoardingTable);
+
+    await db.execute(_createSettingsTable);
   }
 
   static Future<void> _onUpgrade(
       sql.Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
       db.execute(_createOnBoardingTable);
+    }
+    if (oldVersion < 3) {
+      db.execute(_createSettingsTable);
     }
   }
 
