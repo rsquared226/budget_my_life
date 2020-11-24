@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/edit_labels_screen.dart';
 import '../screens/onboarding.dart';
+import '../screens/settings_screen.dart';
 import './about_app_list_tile.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -42,6 +43,11 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
+            onTap: () => Navigator.of(context).pushReplacementNamed(SettingsScreen.routeName,),
+          ),
+          ListTile(
             leading: const Icon(Icons.help),
             title: const Text('Help'),
             onTap: () => Navigator.of(context).push(
@@ -50,6 +56,7 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
           ),
+          Divider(),
           AboutAppListTile(),
         ],
       ),
