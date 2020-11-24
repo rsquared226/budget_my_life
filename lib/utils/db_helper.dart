@@ -10,18 +10,6 @@ class DBHelper {
   static const _onboardingTableName = 'onboarding';
   static const _settingsTableName = 'settings';
 
-  // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
-  static const _createOnBoardingTable = '''CREATE TABLE onboarding(
-      id INTEGER PRIMARY KEY,
-      onboarded INTEGER
-    )''';
-
-  static const _createSettingsTable = '''CREATE TABLE settings(
-      id INTEGER PRIMARY KEY,
-      showCurrency INTEGER,
-      currency TEXT
-    )''';
-
   static Future<sql.Database> get _database async {
     final dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(
@@ -48,31 +36,41 @@ class DBHelper {
       color INTEGER,
       labelType INTEGER)''');
 
-    await db.execute(_createOnBoardingTable);
+    _versionUpdate2(db);
 
-    await db.execute(_createSettingsTable);
-
-    db.insert(
-      _settingsTableName,
-      {'id': 1, 'currency': '\$', 'showCurrency': 1},
-      conflictAlgorithm: sql.ConflictAlgorithm.replace,
-    );
+    _versionUpdate3(db);
   }
 
   static Future<void> _onUpgrade(
       sql.Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      db.execute(_createOnBoardingTable);
+      _versionUpdate2(db);
     }
     if (oldVersion < 3) {
-      db.execute(_createSettingsTable);
-      // Make the default value a dollar symbol.
-      db.insert(
-        _settingsTableName,
-        {'id': 1, 'currency': '\$', 'showCurrency': 1},
-        conflictAlgorithm: sql.ConflictAlgorithm.replace,
-      );
+      _versionUpdate3(db);
     }
+  }
+
+  static Future<void> _versionUpdate2(sql.Database db) async {
+    // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
+    await db.execute('''CREATE TABLE onboarding(
+      id INTEGER PRIMARY KEY,
+      onboarded INTEGER
+    )''');
+  }
+
+  static Future<void> _versionUpdate3(sql.Database db) async {
+    db.execute('''CREATE TABLE settings(
+      id INTEGER PRIMARY KEY,
+      showCurrency INTEGER,
+      currency TEXT
+    )''');
+    // Make the default value a dollar symbol.
+    db.insert(
+      _settingsTableName,
+      {'id': 1, 'currency': '\$', 'showCurrency': 1},
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+    );
   }
 
   static Future<void> insertTransaction(Transaction transaction) async {
