@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import './providers/labels.dart';
 import './providers/transactions.dart';
+import './providers/settings.dart';
 import './screens/home_tabs_screen.dart';
 import './screens/edit_labels_screen.dart';
 import './screens/settings_screen.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => Settings(),
+        ),
         ChangeNotifierProvider(
           create: (_) => Transactions(),
         ),

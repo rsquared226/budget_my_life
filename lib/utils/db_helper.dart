@@ -18,6 +18,7 @@ class DBHelper {
 
   static const _createSettingsTable = '''CREATE TABLE settings(
       id INTEGER PRIMARY KEY,
+      showCurrency INTEGER,
       currency TEXT
     )''';
 
@@ -62,7 +63,7 @@ class DBHelper {
       // Make the default value a dollar symbol.
       db.insert(
         _settingsTableName,
-        {'id': 1, 'currency': '\$'},
+        {'id': 1, 'currency': '\$', 'showCurrency': 1},
         conflictAlgorithm: sql.ConflictAlgorithm.replace,
       );
     }

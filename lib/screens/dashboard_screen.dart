@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/filter.dart';
 import '../providers/labels.dart';
+import '../providers/settings.dart';
 import '../providers/transactions.dart';
 import '../widgets/balance_cards_view.dart';
 import '../widgets/dashboard_list_header.dart';
@@ -22,6 +23,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Future<void> fetchAndSetData(BuildContext context) async {
+    Provider.of<Settings>(context, listen: false).fetchAndSetSettings();
     Provider.of<Transactions>(context, listen: false).fetchAndSetTransactions();
     Provider.of<Labels>(context, listen: false).fetchAndSetLabels();
   }
