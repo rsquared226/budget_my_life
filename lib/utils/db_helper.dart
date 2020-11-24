@@ -59,6 +59,12 @@ class DBHelper {
     }
     if (oldVersion < 3) {
       db.execute(_createSettingsTable);
+      // Make the default value a dollar symbol.
+      db.insert(
+        _settingsTableName,
+        {'id': 1, 'currency': '\$'},
+        conflictAlgorithm: sql.ConflictAlgorithm.replace,
+      );
     }
   }
 
@@ -132,6 +138,22 @@ class DBHelper {
       (index) {
         return Label.fromMap(labelMaps[index]);
       },
+    );
+  }
+
+  static Future<Map<String, dynamic>> getSettingsMap() async {
+    final settingsMap = await (await _database).query(_settingsTableName);
+    // There's only 1 row, just return that one.
+    return settingsMap[0];
+  }
+
+  // Keeping this vague for now in case there's more settings in the future.
+  static Future<void> updateSettings(Map<String, dynamic> updatedSettings) async {
+    (await _database).update(
+      _settingsTableName,
+      updatedSettings,
+      where: 'id = ?',
+      whereArgs: [1],
     );
   }
 
