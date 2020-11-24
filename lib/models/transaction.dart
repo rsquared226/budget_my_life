@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import './label.dart';
 import '../providers/labels.dart';
+import '../providers/settings.dart';
 
 enum TransactionType { Income, Expense }
 
@@ -46,8 +47,9 @@ class Transaction {
     );
   }
 
-  String get formattedAmount {
-    var formattedAmount = '\$${amount.abs().toStringAsFixed(2)}';
+  String formattedAmount(BuildContext context) {
+    final currencySymbol = Provider.of<Settings>(context).currencySymbol;
+    var formattedAmount = '$currencySymbol${amount.abs().toStringAsFixed(2)}';
     if (amount < 0) {
       formattedAmount = '-' + formattedAmount;
     }

@@ -8,8 +8,6 @@ class Settings with ChangeNotifier {
   String _currencySymbol;
   bool _showCurrency;
 
-  // TODO: Check if this needs defaults in the constructor.
-
   Future<void> fetchAndSetSettings() async {
     final settingsMap = await DBHelper.getSettingsMap();
     _currencySymbol = settingsMap['currency'];
@@ -17,8 +15,14 @@ class Settings with ChangeNotifier {
     notifyListeners();
   }
 
-  String get currencySymbol => _currencySymbol;
-  bool get showCurrency => _showCurrency;
+  String get currencySymbol {
+    // If we're showing the currency symbol, return a currency symbol.
+    // Otherwise, just return an empty string. It's easier to deal with that way.
+    if (_showCurrency) {
+      return _currencySymbol;
+    }
+    return '';
+  }
 
   set currencySymbol(String currencySymbol) {
     _currencySymbol = currencySymbol;

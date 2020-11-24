@@ -51,6 +51,12 @@ class DBHelper {
     await db.execute(_createOnBoardingTable);
 
     await db.execute(_createSettingsTable);
+
+    db.insert(
+      _settingsTableName,
+      {'id': 1, 'currency': '\$', 'showCurrency': 1},
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+    );
   }
 
   static Future<void> _onUpgrade(
@@ -149,7 +155,8 @@ class DBHelper {
   }
 
   // Keeping this vague for now in case there's more settings in the future.
-  static Future<void> updateSettings(Map<String, dynamic> updatedSettings) async {
+  static Future<void> updateSettings(
+      Map<String, dynamic> updatedSettings) async {
     (await _database).update(
       _settingsTableName,
       updatedSettings,
