@@ -45,7 +45,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
-            onTap: () => Navigator.of(context).pushReplacementNamed(SettingsScreen.routeName,),
+            onTap: () => Navigator.of(context).pushReplacementNamed(
+              SettingsScreen.routeName,
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.help),
