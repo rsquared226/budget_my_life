@@ -87,7 +87,7 @@ class TransactionDetailsScreen extends StatelessWidget {
       slivers: <Widget>[
         TransactionDetailsAppBar(
           transactionAmount: transaction.amount,
-          formattedAmount: transaction.formattedAmount,
+          formattedAmount: transaction.formattedAmount(context),
           editTransaction: () => onEditTransaction(context),
           deleteTransaction: () => onDeleteTransaction(
             context,

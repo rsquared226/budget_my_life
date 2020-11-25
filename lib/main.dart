@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 
 import './providers/labels.dart';
 import './providers/transactions.dart';
+import './providers/settings.dart';
 import './screens/home_tabs_screen.dart';
 import './screens/edit_labels_screen.dart';
+import './screens/settings_screen.dart';
 import './screens/onboarding.dart';
 import './utils/db_helper.dart';
 
@@ -40,6 +42,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => Settings(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => Transactions(),
         ),
         ChangeNotifierProvider(
@@ -63,6 +68,7 @@ class MyApp extends StatelessWidget {
         home: HomeTabsScreen(),
         routes: {
           EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
+          SettingsScreen.routeName: (_) => SettingsScreen(),
           Onboarding.routeName: (_) => Onboarding()
         },
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/settings.dart';
 import '../utils/custom_colors.dart';
 
 // Used in BalanceCardsView.
@@ -15,8 +17,10 @@ class BalanceSummaryCard extends StatelessWidget {
     this.onTap,
   });
 
-  String get formattedBalance {
-    var formattedBalance = '\$${balance.abs().toStringAsFixed(2)}';
+  String formattedBalance(BuildContext context) {
+    final currencySymbol =
+        Provider.of<Settings>(context).displayedCurrencySymbol;
+    var formattedBalance = '$currencySymbol${balance.abs().toStringAsFixed(2)}';
     if (balance < 0) {
       formattedBalance = '-' + formattedBalance;
     }
@@ -73,7 +77,7 @@ class BalanceSummaryCard extends StatelessWidget {
                     // Only shrink the fontSize if needed, but don't grow it.
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      formattedBalance,
+                      formattedBalance(context),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 60,

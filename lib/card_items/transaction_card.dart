@@ -63,7 +63,7 @@ class TransactionCard extends StatelessWidget {
               ),
             ),
             trailing: Text(
-              transaction.formattedAmount,
+              transaction.formattedAmount(context),
               softWrap: false,
               overflow: TextOverflow.fade,
               style: const TextStyle(

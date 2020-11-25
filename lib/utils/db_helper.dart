@@ -8,12 +8,7 @@ class DBHelper {
   static const _transactionsTableName = 'transactions_history';
   static const _labelsTableName = 'labels';
   static const _onboardingTableName = 'onboarding';
-
-  // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
-  static const _createOnBoardingTable = '''CREATE TABLE onboarding(
-      id INTEGER PRIMARY KEY,
-      onboarded INTEGER
-    )''';
+  static const _settingsTableName = 'settings';
 
   static Future<sql.Database> get _database async {
     final dbPath = await sql.getDatabasesPath();
@@ -21,7 +16,7 @@ class DBHelper {
       path.join(dbPath, 'bml.db'),
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 2,
+      version: 3,
     );
   }
 
@@ -41,14 +36,41 @@ class DBHelper {
       color INTEGER,
       labelType INTEGER)''');
 
-    await db.execute(_createOnBoardingTable);
+    _versionUpdate2(db);
+
+    _versionUpdate3(db);
   }
 
   static Future<void> _onUpgrade(
       sql.Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      db.execute(_createOnBoardingTable);
+      _versionUpdate2(db);
     }
+    if (oldVersion < 3) {
+      _versionUpdate3(db);
+    }
+  }
+
+  static Future<void> _versionUpdate2(sql.Database db) async {
+    // onboarded wil be 0 if this is the first time the user is opening the app, 1 otherwise.
+    await db.execute('''CREATE TABLE onboarding(
+      id INTEGER PRIMARY KEY,
+      onboarded INTEGER
+    )''');
+  }
+
+  static Future<void> _versionUpdate3(sql.Database db) async {
+    db.execute('''CREATE TABLE settings(
+      id INTEGER PRIMARY KEY,
+      showCurrency INTEGER,
+      currency TEXT
+    )''');
+    // Make the default value a dollar symbol.
+    db.insert(
+      _settingsTableName,
+      {'id': 1, 'currency': '\$', 'showCurrency': 1},
+      conflictAlgorithm: sql.ConflictAlgorithm.replace,
+    );
   }
 
   static Future<void> insertTransaction(Transaction transaction) async {
@@ -121,6 +143,23 @@ class DBHelper {
       (index) {
         return Label.fromMap(labelMaps[index]);
       },
+    );
+  }
+
+  static Future<Map<String, dynamic>> getSettingsMap() async {
+    final settingsMap = await (await _database).query(_settingsTableName);
+    // There's only 1 row, just return that one.
+    return settingsMap[0];
+  }
+
+  // Keeping this vague for now in case there's more settings in the future.
+  static Future<void> updateSettings(
+      Map<String, dynamic> updatedSettings) async {
+    (await _database).update(
+      _settingsTableName,
+      updatedSettings,
+      where: 'id = ?',
+      whereArgs: [1],
     );
   }
 
