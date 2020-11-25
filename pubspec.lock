@@ -64,6 +64,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.0"
+  clean_settings:
+    dependency: "direct main"
+    description:
+      name: clean_settings
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   clock:
     dependency: transitive
     description:
