@@ -48,7 +48,8 @@ class Transaction {
   }
 
   String formattedAmount(BuildContext context) {
-    final currencySymbol = Provider.of<Settings>(context).currencySymbol;
+    final currencySymbol =
+        Provider.of<Settings>(context).displayedCurrencySymbol;
     var formattedAmount = '$currencySymbol${amount.abs().toStringAsFixed(2)}';
     if (amount < 0) {
       formattedAmount = '-' + formattedAmount;

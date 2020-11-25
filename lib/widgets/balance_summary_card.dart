@@ -18,7 +18,8 @@ class BalanceSummaryCard extends StatelessWidget {
   });
 
   String formattedBalance(BuildContext context) {
-    final currencySymbol = Provider.of<Settings>(context).currencySymbol;
+    final currencySymbol =
+        Provider.of<Settings>(context).displayedCurrencySymbol;
     var formattedBalance = '$currencySymbol${balance.abs().toStringAsFixed(2)}';
     if (balance < 0) {
       formattedBalance = '-' + formattedBalance;
