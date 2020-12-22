@@ -16,8 +16,8 @@ class ThemeProvider with ChangeNotifier {
 
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
-    primarySwatch: Colors.indigo,
-    accentColor: Colors.deepPurpleAccent,
+    primarySwatch: Colors.blueGrey,
+    accentColor: Colors.purple.shade200,
     visualDensity: VisualDensity.adaptivePlatformDensity,
     // This page transition looks better than the default.
     pageTransitionsTheme: const PageTransitionsTheme(
