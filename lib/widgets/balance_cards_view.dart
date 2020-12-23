@@ -37,9 +37,12 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
     final filterData = Provider.of<Filter>(context);
     final labelFilter =
         Provider.of<Labels>(context).findById(filterData.labelId);
+    final themeData = Theme.of(context);
 
     return Container(
-      color: Colors.white,
+      color: themeData.brightness == Brightness.light
+          ? themeData.colorScheme.surface
+          : themeData.canvasColor,
       child: Column(
         children: <Widget>[
           SizedBox(
