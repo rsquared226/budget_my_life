@@ -77,8 +77,8 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
             ),
           ),
           ScrollingPageIndicator(
-            dotSelectedColor: Colors.grey,
-            dotColor: Colors.black26,
+            dotSelectedColor: Colors.grey[400],
+            dotColor: Colors.grey[700],
             dotSelectedSize: 8.5,
             dotSpacing: 13,
             controller: _pageController,

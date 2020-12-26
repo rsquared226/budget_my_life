@@ -8,26 +8,26 @@ extension CustomColors on ColorScheme {
   // These are swapped when the theme is dark (for the most part).
   static final _internalIncomeColor = Colors.green.shade800;
   static final _internalSecondaryIncomeColor = Colors.green.shade200;
-  static final _internalDarkIncomeColor = Color.fromARGB(255, 69, 114, 71);
-  static final _internalDarkLargeIncomeColor = Color.fromARGB(255, 39, 73, 38);
+  static final _internalDarkIncomeColor = Color.fromARGB(255, 53, 124, 57);
+  static final _internalDarkLargeIncomeColor = Color.fromARGB(255, 31, 81, 38);
 
   static final _internalExpenseColor = Colors.pink.shade900;
-  static final _internalSecondaryExpenseColor = Colors.red.shade200;
-  static final _internalDarkLargeExpenseColor = Color.fromARGB(255, 84, 31, 32);
+  static final _internalSecondaryExpenseColor = Colors.red.shade400;
+  static final _internalDarkExpenseColor = Color.fromARGB(255, 163, 70, 69);
+  static final _internalDarkLargeExpenseColor = Color.fromARGB(255, 86, 29, 30);
 
   Color get incomeColor =>
       _isLight ? _internalIncomeColor : _internalDarkIncomeColor;
 
-  Color get secondaryIncomeColor =>
-      _isLight ? _internalSecondaryIncomeColor : _internalIncomeColor;
+  Color get secondaryIncomeColor => _internalSecondaryIncomeColor;
 
   Color get expenseColor =>
-      _isLight ? _internalExpenseColor : _internalSecondaryExpenseColor;
+      _isLight ? _internalExpenseColor : _internalDarkExpenseColor;
 
-  Color get secondaryExpenseColor =>
-      _isLight ? _internalSecondaryExpenseColor : _internalExpenseColor;
+  Color get secondaryExpenseColor => _internalSecondaryExpenseColor;
 
-  static final onIncomeExpenseColor = Colors.white;
+  Color get onIncomeExpenseColor =>
+      _isLight ? Colors.white : Colors.grey.shade200;
 
   // Takes in the amount and returns the income or expense color accordingly.
   Color transactionTypeColor(double amount) {

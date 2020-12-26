@@ -55,7 +55,7 @@ class TransactionDetailsAppBar extends StatelessWidget {
           child: Text(
             formattedAmount,
             style: TextStyle(
-              color: CustomColors.onIncomeExpenseColor,
+              color: Theme.of(context).colorScheme.onIncomeExpenseColor,
             ),
           ),
         ),

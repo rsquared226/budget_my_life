@@ -63,7 +63,7 @@ class BalanceSummaryCard extends StatelessWidget {
                     title,
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      color: CustomColors.onIncomeExpenseColor,
+                      color: Theme.of(context).colorScheme.onIncomeExpenseColor,
                     ),
                   ),
                 ),
@@ -82,7 +82,8 @@ class BalanceSummaryCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 60,
                         fontWeight: FontWeight.w300,
-                        color: CustomColors.onIncomeExpenseColor,
+                        color:
+                            Theme.of(context).colorScheme.onIncomeExpenseColor,
                       ),
                     ),
                   ),
