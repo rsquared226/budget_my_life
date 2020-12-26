@@ -206,8 +206,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         child: Column(
           children: <Widget>[
             EditTransactionAppbar(
-              containerColor:
-                  CustomColors.labelTypeColor(_selectedLabel.labelType),
+              containerColor: Theme.of(context)
+                  .colorScheme
+                  .largeTypeColor(labelType: _selectedLabel.labelType),
               closeScreen: widget.closeContainer,
               submitButtonText: submitButtonText,
               onButtonSubmit: _saveForm,

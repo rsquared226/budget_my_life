@@ -42,7 +42,7 @@ class BalanceSummaryCard extends StatelessWidget {
         decoration: BoxDecoration(
           // To match Card's border radius.
           borderRadius: cardRadius,
-          color: CustomColors.transactionTypeColor(balance),
+          color: Theme.of(context).colorScheme.largeTypeColor(amount: balance),
         ),
         child: InkWell(
           highlightColor: Colors.black12,

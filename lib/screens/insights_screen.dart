@@ -19,33 +19,36 @@ class InsightsScreen extends StatefulWidget {
 class _InsightsScreenState extends State<InsightsScreen> {
   PageController _pageController = PageController();
 
+  // TODO: Make background of insights dark grey, have outline around chart be color of thing.
+
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
   }
 
-  final _graphScreens = <Widget>[
-    ChartContainer(
-      title: 'Income',
-      chart: LabelsPieChart(labelType: LabelType.INCOME),
-      backgroundColor: CustomColors.incomeColor,
-    ),
-    ChartContainer(
-      title: 'Expenses',
-      chart: LabelsPieChart(labelType: LabelType.EXPENSE),
-      backgroundColor: CustomColors.expenseColor,
-    ),
-    ChartContainer(
-      title: 'Transaction History',
-      chart: TransactionHistoryChart(),
-      backgroundColor: Colors.blue[800],
-      isTransactionHistoryChart: true,
-    )
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final _graphScreens = <Widget>[
+      ChartContainer(
+        title: 'Income',
+        chart: LabelsPieChart(labelType: LabelType.INCOME),
+        backgroundColor: Theme.of(context).colorScheme.incomeColor,
+      ),
+      ChartContainer(
+        title: 'Expenses',
+        chart: LabelsPieChart(labelType: LabelType.EXPENSE),
+        backgroundColor: Theme.of(context).colorScheme.expenseColor,
+      ),
+      ChartContainer(
+        title: 'Transaction History',
+        chart: TransactionHistoryChart(),
+        // TODO: DARK MODE change this
+        backgroundColor: Colors.blue[800],
+        isTransactionHistoryChart: true,
+      )
+    ];
+
     // Used Stack instead of Row so background can be behind ScrollingPageIndicator.
     return Stack(
       children: <Widget>[

@@ -32,6 +32,7 @@ class TransactionTypeChipFormField extends FormField<LabelType> {
   }
 
   TransactionTypeChipFormField({
+    @required BuildContext context,
     FormFieldSetter<LabelType> onSaved,
     FormFieldValidator<LabelType> validator,
     LabelType initialValue,
@@ -47,13 +48,13 @@ class TransactionTypeChipFormField extends FormField<LabelType> {
                   children: <Widget>[
                     _buildChoiceChip(
                       state,
-                      CustomColors.incomeColor,
+                      Theme.of(context).colorScheme.incomeColor,
                       LabelType.INCOME,
                     ),
                     const SizedBox(width: 6),
                     _buildChoiceChip(
                       state,
-                      CustomColors.expenseColor,
+                      Theme.of(context).colorScheme.expenseColor,
                       LabelType.EXPENSE,
                     ),
                   ],

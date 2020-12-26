@@ -7,12 +7,15 @@ import '../widgets/label_filter_dropdown.dart';
 class DashboardListHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
     return SliverPersistentHeader(
       pinned: true,
       delegate: SectionHeaderDelegate(
         child: Container(
           // Need to specify the color or it'll be transparent.
-          color: Colors.white,
+          color: themeData.brightness == Brightness.light
+              ? themeData.colorScheme.surface
+              : themeData.canvasColor,
           child: Column(
             children: <Widget>[
               const SizedBox(height: 5),
@@ -21,11 +24,13 @@ class DashboardListHeader extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Text(
+                    Text(
                       'History',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black54,
+                        color: themeData.brightness == Brightness.light
+                            ? Colors.black54
+                            : Colors.white54,
                       ),
                     ),
                     LabelFilterDropdown(),

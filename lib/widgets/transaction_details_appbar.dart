@@ -47,7 +47,9 @@ class TransactionDetailsAppBar extends StatelessWidget {
         title: Container(
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: CustomColors.transactionTypeColor(transactionAmount),
+            color: Theme.of(context)
+                .colorScheme
+                .transactionTypeColor(transactionAmount),
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
