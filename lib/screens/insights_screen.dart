@@ -44,7 +44,9 @@ class _InsightsScreenState extends State<InsightsScreen> {
         title: 'Transaction History',
         chart: TransactionHistoryChart(),
         // TODO: DARK MODE change this
-        backgroundColor: Colors.blue[800],
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Colors.blue[800]
+            : Colors.blueGrey[400],
         isTransactionHistoryChart: true,
       )
     ];

@@ -20,10 +20,15 @@ class ChartContainer extends StatelessWidget {
     this.isTransactionHistoryChart = false,
   });
 
+  // In light mode, the background is backgroundColor. In dark mode, the
+  // background is the canvas color and the border is backgroundColor.
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor,
+      color: Theme.of(context).brightness == Brightness.light
+          ? backgroundColor
+          : Theme.of(context).canvasColor,
       child: Column(
         children: <Widget>[
           const Spacer(flex: 4),
@@ -40,8 +45,11 @@ class ChartContainer extends StatelessWidget {
             margin: const EdgeInsets.only(left: 18, right: 25),
             height: 275,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(13),
+              border: Theme.of(context).brightness == Brightness.light
+                  ? null
+                  : Border.all(color: backgroundColor, width: 5),
             ),
             child: chart,
           ),

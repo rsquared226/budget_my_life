@@ -31,6 +31,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<Settings>(context);
 
+    // TODO: switch to this because it supports dark theme: https://pub.dev/packages/settings_ui
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),

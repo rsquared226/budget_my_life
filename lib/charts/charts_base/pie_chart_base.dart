@@ -34,6 +34,8 @@ class PieChartBase extends StatelessWidget {
     ];
   }
 
+  // TODO: Support dark theme.
+
   @override
   Widget build(BuildContext context) {
     return charts.PieChart(

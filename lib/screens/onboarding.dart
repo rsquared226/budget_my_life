@@ -8,6 +8,8 @@ class Onboarding extends StatelessWidget {
 
   final bool openedFromDrawer;
 
+  // TODO: Support dark mode or force light mode.
+
   const Onboarding({
     this.openedFromDrawer = false,
   });
