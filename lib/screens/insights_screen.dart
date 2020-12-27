@@ -19,8 +19,6 @@ class InsightsScreen extends StatefulWidget {
 class _InsightsScreenState extends State<InsightsScreen> {
   PageController _pageController = PageController();
 
-  // TODO: Make background of insights dark grey, have outline around chart be color of thing.
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -43,7 +41,6 @@ class _InsightsScreenState extends State<InsightsScreen> {
       ChartContainer(
         title: 'Transaction History',
         chart: TransactionHistoryChart(),
-        // TODO: DARK MODE change this
         backgroundColor: Theme.of(context).brightness == Brightness.light
             ? Colors.blue[800]
             : Colors.blueGrey[400],

@@ -14,11 +14,11 @@ class GroupedBarChartBase extends StatelessWidget {
     @required this.data,
   });
 
-  charts.Color incomeChartColor(BuildContext context) => convertToChartColor(
-      Theme.of(context).colorScheme.incomeColor.withOpacity(.9));
+  charts.Color incomeChartColor(BuildContext context) =>
+      convertToChartColor(Theme.of(context).colorScheme.incomeColor);
 
-  charts.Color expenseChartColor(BuildContext context) => convertToChartColor(
-      Theme.of(context).colorScheme.expenseColor.withOpacity(.9));
+  charts.Color expenseChartColor(BuildContext context) =>
+      convertToChartColor(Theme.of(context).colorScheme.expenseColor);
 
   charts.Color convertToChartColor(Color color) => charts.Color(
         r: color.red,
@@ -46,10 +46,38 @@ class GroupedBarChartBase extends StatelessWidget {
       ),
     ];
 
+    final lineAndTextColor = Theme.of(context).brightness == Brightness.light
+        ? charts.Color.black
+        : charts.Color.white;
+
     return charts.BarChart(
       chartData,
       animate: false,
       barGroupingType: charts.BarGroupingType.grouped,
+      // Everything below is to make it look good on light and dark themes.
+      domainAxis: charts.OrdinalAxisSpec(
+        renderSpec: charts.SmallTickRendererSpec(
+          labelStyle: charts.TextStyleSpec(
+            fontSize: 12,
+            color: lineAndTextColor,
+          ),
+          lineStyle: charts.LineStyleSpec(
+            color: lineAndTextColor,
+          ),
+        ),
+      ),
+
+      primaryMeasureAxis: charts.NumericAxisSpec(
+        renderSpec: charts.GridlineRendererSpec(
+          labelStyle: charts.TextStyleSpec(
+            fontSize: 12,
+            color: lineAndTextColor,
+          ),
+          lineStyle: charts.LineStyleSpec(
+            color: lineAndTextColor,
+          ),
+        ),
+      ),
     );
   }
 }
