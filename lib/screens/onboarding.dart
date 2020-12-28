@@ -8,7 +8,8 @@ class Onboarding extends StatelessWidget {
 
   final bool openedFromDrawer;
 
-  // TODO: Support dark mode or force light mode.
+  // We force light mode here because the images for the tutorial have white
+  // backgrounds.
 
   const Onboarding({
     this.openedFromDrawer = false,
@@ -24,9 +25,16 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const pageDecoration = const PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 28.0, fontWeight: FontWeight.w700),
-      bodyTextStyle: TextStyle(fontSize: 19.0),
-      descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+      titleTextStyle: const TextStyle(
+        fontSize: 28.0,
+        fontWeight: FontWeight.w700,
+        color: Colors.black,
+      ),
+      bodyTextStyle: const TextStyle(
+        fontSize: 18.0,
+        color: Colors.black,
+      ),
+      descriptionPadding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Colors.white,
       imagePadding: EdgeInsets.zero,
     );
@@ -73,11 +81,20 @@ class Onboarding extends StatelessWidget {
       skipFlex: 0,
       nextFlex: 0,
       showSkipButton: true,
-      skip: const Text('SKIP'),
-      next: const Icon(Icons.arrow_forward),
+      skip: const Text(
+        'SKIP',
+        style: TextStyle(color: Colors.black),
+      ),
+      next: const Icon(
+        Icons.arrow_forward,
+        color: Colors.black,
+      ),
       done: const Text(
         'LET\'S GO',
-        style: TextStyle(fontWeight: FontWeight.w600),
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        ),
       ),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
