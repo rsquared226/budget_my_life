@@ -8,8 +8,6 @@ import '../models/label.dart';
 class TransactionTypeChipFormField extends FormField<LabelType> {
   static const _avatarSizes = 18.0;
 
-  // TODO: Support dark mode.
-
   static Widget _buildChoiceChip(
     FormFieldState<LabelType> state,
     Color color,
