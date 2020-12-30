@@ -37,9 +37,12 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
     final filterData = Provider.of<Filter>(context);
     final labelFilter =
         Provider.of<Labels>(context).findById(filterData.labelId);
+    final themeData = Theme.of(context);
 
     return Container(
-      color: Colors.white,
+      color: themeData.brightness == Brightness.light
+          ? themeData.colorScheme.surface
+          : themeData.canvasColor,
       child: Column(
         children: <Widget>[
           SizedBox(
@@ -74,8 +77,12 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
             ),
           ),
           ScrollingPageIndicator(
-            dotSelectedColor: Colors.grey,
-            dotColor: Colors.black26,
+            dotSelectedColor: Theme.of(context).brightness == Brightness.light
+                ? Colors.black45
+                : Colors.white60,
+            dotColor: Theme.of(context).brightness == Brightness.light
+                ? Colors.black26
+                : Colors.white38,
             dotSelectedSize: 8.5,
             dotSpacing: 13,
             controller: _pageController,

@@ -25,27 +25,29 @@ class _InsightsScreenState extends State<InsightsScreen> {
     super.dispose();
   }
 
-  final _graphScreens = <Widget>[
-    ChartContainer(
-      title: 'Income',
-      chart: LabelsPieChart(labelType: LabelType.INCOME),
-      backgroundColor: CustomColors.incomeColor,
-    ),
-    ChartContainer(
-      title: 'Expenses',
-      chart: LabelsPieChart(labelType: LabelType.EXPENSE),
-      backgroundColor: CustomColors.expenseColor,
-    ),
-    ChartContainer(
-      title: 'Transaction History',
-      chart: TransactionHistoryChart(),
-      backgroundColor: Colors.blue[800],
-      isTransactionHistoryChart: true,
-    )
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final _graphScreens = <Widget>[
+      ChartContainer(
+        title: 'Income',
+        chart: LabelsPieChart(labelType: LabelType.INCOME),
+        backgroundColor: Theme.of(context).colorScheme.incomeColor,
+      ),
+      ChartContainer(
+        title: 'Expenses',
+        chart: LabelsPieChart(labelType: LabelType.EXPENSE),
+        backgroundColor: Theme.of(context).colorScheme.expenseColor,
+      ),
+      ChartContainer(
+        title: 'Transaction History',
+        chart: TransactionHistoryChart(),
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Colors.blue[800]
+            : Colors.blueGrey[400],
+        isTransactionHistoryChart: true,
+      )
+    ];
+
     // Used Stack instead of Row so background can be behind ScrollingPageIndicator.
     return Stack(
       children: <Widget>[

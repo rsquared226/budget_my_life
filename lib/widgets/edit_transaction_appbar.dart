@@ -64,7 +64,9 @@ class EditTransactionAppbar extends StatelessWidget {
         // Just so it can have a neat shadow under the header.
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(.5),
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.black26
+                : Colors.black12,
             spreadRadius: 3,
             blurRadius: 3,
           ),

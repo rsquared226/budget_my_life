@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:clean_settings/clean_settings.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 import '../providers/settings.dart';
 import '../widgets/app_drawer.dart';
@@ -8,23 +8,51 @@ import '../widgets/app_drawer.dart';
 class SettingsScreen extends StatelessWidget {
   static const routeName = '/settings';
 
-  // All this is for simulating a disabled setting when the checkbox is unchecked.
-  Widget _buildSettingDisabled({
+  // Mostly came from here: https://github.com/grouped/clean_settings/blob/master/lib/src/setting_text_item.dart
+  Future<void> textAlertDialog({
     @required BuildContext context,
-    @required bool disabled,
-    @required Widget child,
-  }) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 125),
-      foregroundDecoration: BoxDecoration(
-        color: !disabled ? null : Theme.of(context).canvasColor.withOpacity(.6),
-      ),
-      child: IgnorePointer(
-        ignoring: disabled,
-        // This is the actual setting.
-        child: child,
-      ),
+    @required String title,
+    String initialValue = '',
+    String hintText = '',
+    String confirmText = 'OK',
+    @required ValueChanged<String> onChanged,
+  }) async {
+    final changedCurrencySymbol = await showDialog<String>(
+      context: context,
+      builder: (context) {
+        var controller = TextEditingController(text: initialValue);
+        return AlertDialog(
+          title: Text(title),
+          contentPadding: const EdgeInsets.all(16.0),
+          content: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: controller,
+                  autofocus: true,
+                  decoration: InputDecoration(hintText: hintText),
+                ),
+              )
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('CANCEL'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            FlatButton(
+              child: Text(confirmText),
+              onPressed: () => Navigator.pop(context, controller.text),
+            )
+          ],
+        );
+      },
     );
+
+    if (changedCurrencySymbol != null &&
+        changedCurrencySymbol != initialValue) {
+      onChanged(changedCurrencySymbol);
+    }
   }
 
   @override
@@ -36,40 +64,44 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Settings'),
       ),
       drawer: AppDrawer(),
-      body: SettingContainer(
-        sections: [
-          SettingSection(
-            title: 'Currency Symbol',
-            items: [
-              SettingCheckboxItem(
-                title: 'Show Currency Symbol',
-                description:
-                    'Show the chosen currency symbol when displaying money amounts',
-                value: settingsProvider.showCurrency,
-                onChanged: (changedShowCurrency) =>
-                    settingsProvider.showCurrency = changedShowCurrency,
-              ),
-              _buildSettingDisabled(
-                context: context,
-                disabled: !settingsProvider.showCurrency,
-                child: SettingTextItem(
-                  title: 'Change Currency Symbol',
-                  onChanged: (changedCurrencySymbol) {
-                    if (changedCurrencySymbol == null ||
-                        changedCurrencySymbol.isEmpty ||
-                        changedCurrencySymbol.length > 5) {
-                      // Don't change anything if the users clicks cancel or if they input nothing in the box.
-                      return;
-                    }
-                    settingsProvider.currencySymbol = changedCurrencySymbol;
-                  },
-                  displayValue: settingsProvider.currencySymbol,
-                  initialValue: settingsProvider.currencySymbol,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: SettingsList(
+          backgroundColor: Theme.of(context).canvasColor,
+          sections: [
+            SettingsSection(
+              title: 'Currency Symbol',
+              tiles: [
+                SettingsTile.switchTile(
+                  title: 'Show Currency Symbol',
+                  subtitle: (settingsProvider.showCurrency ? 'S' : 'Not s') +
+                      'howing the chosen currency symbol',
+                  subtitleMaxLines: 2,
+                  switchValue: settingsProvider.showCurrency,
+                  onToggle: (changedShowCurrency) =>
+                      settingsProvider.showCurrency = changedShowCurrency,
                 ),
-              ),
-            ],
-          ),
-        ],
+                SettingsTile(
+                  enabled: settingsProvider.showCurrency,
+                  title: 'Change Currency Symbol',
+                  subtitle: settingsProvider.currencySymbol,
+                  onPressed: (BuildContext context) => textAlertDialog(
+                    context: context,
+                    title: 'Change currency symbol',
+                    confirmText: 'SET',
+                    initialValue: settingsProvider.currencySymbol,
+                    onChanged: (changedCurrencySymbol) {
+                      if (changedCurrencySymbol.isNotEmpty ||
+                          changedCurrencySymbol.length <= 5) {
+                        settingsProvider.currencySymbol = changedCurrencySymbol;
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

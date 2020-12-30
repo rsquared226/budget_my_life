@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import './providers/labels.dart';
 import './providers/transactions.dart';
 import './providers/settings.dart';
+import './providers/theme_provider.dart';
 import './screens/home_tabs_screen.dart';
 import './screens/edit_labels_screen.dart';
 import './screens/settings_screen.dart';
@@ -53,17 +54,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Budget My Life',
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          accentColor: Colors.deepPurpleAccent,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          // This page transition looks better than the default.
-          pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: ZoomPageTransitionsBuilder(),
-            },
-          ),
-        ),
+        theme: ThemeProvider.lightTheme,
+        darkTheme: ThemeProvider.darkTheme,
         initialRoute: isOnboarded ? '/' : Onboarding.routeName,
         home: HomeTabsScreen(),
         routes: {

@@ -74,10 +74,12 @@ class _TransactionDetailsChartsViewState
                     : (transaction.isAfterBeginningOfMonth
                         ? transactionsData.monthExpensesTotal
                         : transactionsData.expensesTotal),
-                mainColor:
-                    CustomColors.transactionTypeColor(transaction.amount),
-                otherColor: CustomColors.secondaryTransactionTypeColor(
-                    transaction.amount),
+                mainColor: Theme.of(context)
+                    .colorScheme
+                    .transactionTypeColor(transaction.amount),
+                otherColor: Theme.of(context)
+                    .colorScheme
+                    .secondaryTransactionTypeColor(transaction.amount),
               ),
             ],
           ),

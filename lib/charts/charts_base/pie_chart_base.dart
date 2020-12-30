@@ -46,6 +46,13 @@ class PieChartBase extends StatelessWidget {
               arcRendererDecorators: [
                 charts.ArcLabelDecorator(
                   labelPosition: arcLabelPosition,
+                  outsideLabelStyleSpec: charts.TextStyleSpec(
+                    fontSize: 12,
+                    // Make sure labels show up on dark mode too.
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? charts.Color.black
+                        : charts.Color.white,
+                  ),
                 ),
               ],
             )

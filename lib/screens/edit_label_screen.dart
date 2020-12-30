@@ -134,6 +134,7 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
             ),
             const SizedBox(height: 8),
             TransactionTypeChipFormField(
+              context: context,
               initialValue: _editableLabel.labelType,
               validator: (value) {
                 // Don't allow changing of label types if the label exists. The label then would have to be unlinked to

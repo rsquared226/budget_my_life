@@ -2,30 +2,74 @@ import 'package:flutter/material.dart';
 
 import '../models/label.dart';
 
-class CustomColors {
+extension CustomColors on ColorScheme {
   // The secondary colors are used in graphs.
 
-  static final incomeColor = Colors.green.shade800;
-  static final secondaryIncomeColor = Colors.green.shade200;
+  // These are swapped when the theme is dark (for the most part).
+  static final _internalIncomeColor = Colors.green.shade800;
+  static final _internalSecondaryIncomeColor = Colors.green.shade200;
+  static final _internalDarkIncomeColor = Color.fromARGB(255, 53, 124, 57);
+  static final _internalDarkLargeIncomeColor = Color.fromARGB(255, 31, 81, 38);
 
-  static final expenseColor = Colors.pink.shade900;
-  static final secondaryExpenseColor = Colors.red.shade200;
+  static final _internalExpenseColor = Colors.pink.shade900;
+  static final _internalSecondaryExpenseColor = Colors.red.shade400;
+  static final _internalDarkExpenseColor = Color.fromARGB(255, 163, 70, 69);
+  static final _internalDarkLargeExpenseColor = Color.fromARGB(255, 86, 29, 30);
 
-  static final onIncomeExpenseColor = Colors.white;
+  Color get incomeColor =>
+      _isLight ? _internalIncomeColor : _internalDarkIncomeColor;
+
+  Color get secondaryIncomeColor => _internalSecondaryIncomeColor;
+
+  Color get expenseColor =>
+      _isLight ? _internalExpenseColor : _internalDarkExpenseColor;
+
+  Color get secondaryExpenseColor => _internalSecondaryExpenseColor;
+
+  Color get onIncomeExpenseColor =>
+      _isLight ? Colors.white : Colors.grey.shade200;
 
   // Takes in the amount and returns the income or expense color accordingly.
-  static Color transactionTypeColor(double amount) {
+  Color transactionTypeColor(double amount) {
     return (amount != null && amount >= 0) ? incomeColor : expenseColor;
   }
 
   // Same method above but for labelTypes.
-  static Color labelTypeColor(LabelType labelType) {
+  Color labelTypeColor(LabelType labelType) {
     return (labelType == LabelType.INCOME) ? incomeColor : expenseColor;
   }
 
-  static Color secondaryTransactionTypeColor(double amount) {
+  // On dark mode, the default income/expense colors look wrong for large objects.
+  // These contain colors that look nice on dark mode.
+  // Used on balance card and edit transaction header.
+  // Only one of the parameters is needed.
+  Color largeTypeColor({double amount, LabelType labelType}) {
+    if (amount != null) {
+      if (_isLight) {
+        return (amount >= 0) ? _internalIncomeColor : _internalExpenseColor;
+      }
+      return (amount >= 0)
+          ? _internalDarkLargeIncomeColor
+          : _internalDarkLargeExpenseColor;
+    }
+
+    if (_isLight) {
+      return (labelType == LabelType.INCOME)
+          ? _internalIncomeColor
+          : _internalExpenseColor;
+    }
+
+    return (labelType == LabelType.INCOME)
+        ? _internalDarkLargeIncomeColor
+        : _internalDarkLargeExpenseColor;
+  }
+
+  Color secondaryTransactionTypeColor(double amount) {
     return (amount != null && amount >= 0)
         ? secondaryIncomeColor
         : secondaryExpenseColor;
   }
+
+  // Small internal helper just to shorten code when checking for light or dark theme.
+  bool get _isLight => brightness == Brightness.light;
 }
