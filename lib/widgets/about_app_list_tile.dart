@@ -35,7 +35,7 @@ class AboutAppListTile extends StatelessWidget {
         width: 75,
       ),
       applicationLegalese: 'Made by Rahul Ramkumar, licensed under GNU GPLv3',
-      applicationVersion: 'v0.6.0',
+      applicationVersion: 'v0.7.0-internal',
       aboutBoxChildren: <Widget>[
         const SizedBox(height: 12),
         const Text('A beautiful and informative budgeting app'),
