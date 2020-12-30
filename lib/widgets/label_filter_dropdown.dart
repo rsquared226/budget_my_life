@@ -33,7 +33,7 @@ class LabelFilterDropdown extends StatelessWidget {
         height: filterData.labelId == null ? 1 : 2,
         color: filterData.labelId == null
             ? Colors.grey[300]
-            : Theme.of(context).primaryColor,
+            : Theme.of(context).accentColor,
       ),
       items: [
         DropdownMenuItem(
