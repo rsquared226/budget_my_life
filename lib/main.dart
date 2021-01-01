@@ -43,6 +43,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => Settings(),
         ),
         ChangeNotifierProvider(
@@ -52,17 +55,18 @@ class MyApp extends StatelessWidget {
           create: (_) => Labels(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Budget My Life',
-        theme: ThemeProvider.lightTheme,
-        darkTheme: ThemeProvider.amoledTheme,
-        initialRoute: isOnboarded ? '/' : Onboarding.routeName,
-        home: HomeTabsScreen(),
-        routes: {
-          EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
-          SettingsScreen.routeName: (_) => SettingsScreen(),
-          Onboarding.routeName: (_) => Onboarding()
-        },
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) => MaterialApp(
+          title: 'Budget My Life',
+          theme: themeProvider.themeData,
+          initialRoute: isOnboarded ? '/' : Onboarding.routeName,
+          home: HomeTabsScreen(),
+          routes: {
+            EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
+            SettingsScreen.routeName: (_) => SettingsScreen(),
+            Onboarding.routeName: (_) => Onboarding()
+          },
+        ),
       ),
     );
   }

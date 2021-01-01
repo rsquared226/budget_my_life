@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+enum ThemeType { Light, Dark, Amoled }
+
 class ThemeProvider with ChangeNotifier {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
@@ -54,4 +56,34 @@ class ThemeProvider with ChangeNotifier {
       },
     ),
   );
+
+  ThemeType _themeType;
+
+  ThemeProvider() {
+    // TODO: db read stuff here.
+    _themeType = ThemeType.Light;
+    notifyListeners();
+  }
+
+  set themeType(ThemeType themeType) {
+    _themeType = themeType;
+    // TODO: db write stuff here.
+    notifyListeners();
+  }
+
+  ThemeType get themeType => _themeType;
+
+  ThemeData get themeData {
+    switch (_themeType) {
+      case ThemeType.Dark:
+        return darkTheme;
+      case ThemeType.Amoled:
+        return amoledTheme;
+      // Fallback onto light theme if something goes wrong
+      default:
+        // TODO: remove this.
+        print('THEME WENT WRONG SOMEWHERE');
+        return lightTheme;
+    }
+  }
 }
