@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../providers/settings.dart';
+import '../providers/theme_provider.dart';
 import '../widgets/app_drawer.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -55,9 +56,54 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  // Did this to make the build method code slightly easier to read.
+  // This displays a set of choices and allows the user to choose between any of
+  // them. An enum type is expected to be passed in as T with the string
+  // representation.
+  Future<void> simpleChoiceDialog<T>({
+    @required BuildContext context,
+    @required String title,
+    T initialValue,
+    @required Map<T, String> choices,
+    @required ValueChanged<T> onChanged,
+  }) async {
+    final selectedChoice = await showDialog<T>(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text(title),
+          children: List<SimpleDialogOption>.generate(
+            choices.length,
+            (index) => SimpleDialogOption(
+              onPressed: () =>
+                  Navigator.pop(context, choices.keys.elementAt(index)),
+              child: Text(choices.values.elementAt(index)),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedChoice != null && selectedChoice != initialValue) {
+      onChanged(selectedChoice);
+    }
+  }
+
+  String themeTypeToString(ThemeType themeType) {
+    switch (themeType) {
+      case ThemeType.Dark:
+        return 'Dark';
+      case ThemeType.Amoled:
+        return 'OLED Black';
+      default:
+        return 'Light';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<Settings>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -98,6 +144,28 @@ class SettingsScreen extends StatelessWidget {
                     },
                   ),
                 ),
+              ],
+            ),
+            SettingsSection(
+              title: 'Theme',
+              tiles: [
+                SettingsTile(
+                  title: 'Change Theme',
+                  subtitle: themeTypeToString(themeProvider.themeType),
+                  onPressed: (BuildContext context) =>
+                      simpleChoiceDialog<ThemeType>(
+                    context: context,
+                    title: 'Change Theme',
+                    initialValue: themeProvider.themeType,
+                    // Go through all theme options and display them.
+                    choices: Map.fromIterable(
+                      ThemeType.values,
+                      key: (element) => element,
+                      value: (element) => themeTypeToString(element),
+                    ),
+                    onChanged: (newTheme) => themeProvider.themeType = newTheme,
+                  ),
+                )
               ],
             ),
           ],
