@@ -14,7 +14,7 @@ class DashboardListHeader extends StatelessWidget {
       delegate: SectionHeaderDelegate(
         child: Container(
           // Need to specify the color or it'll be transparent.
-          color: themeData.colorScheme.dashboardHeader,
+          color: themeData.colorScheme.dashboardHeader(context),
           child: Column(
             children: <Widget>[
               const SizedBox(height: 5),

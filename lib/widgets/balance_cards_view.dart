@@ -41,7 +41,7 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
     final themeData = Theme.of(context);
 
     return Container(
-      color: themeData.colorScheme.dashboardHeader,
+      color: themeData.colorScheme.dashboardHeader(context),
       child: Column(
         children: <Widget>[
           SizedBox(

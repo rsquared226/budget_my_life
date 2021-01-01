@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/label.dart';
+import '../providers/theme_provider.dart';
 
 extension CustomColors on ColorScheme {
   // The secondary colors are used in graphs.
@@ -70,14 +72,25 @@ extension CustomColors on ColorScheme {
         : secondaryExpenseColor;
   }
 
-  Color get dashboardHeader {
-    // TODO: If it's light/dark, themeData.brightness == Brightness.light ? themeData.colorScheme.surface : themeData.canvasColor, If it's amoled
-    return Color.fromARGB(255, 15, 15, 15);
+  Color dashboardHeader(BuildContext context) {
+    final themeType = Provider.of<ThemeProvider>(context).themeType;
+
+    switch (themeType) {
+      case ThemeType.Dark:
+        return Theme.of(context).canvasColor;
+      case ThemeType.Amoled:
+        return Color.fromARGB(255, 15, 15, 15);
+      // Fallback to light theme.
+      default:
+        return surface;
+    }
   }
 
-  Color get transactionCards {
-    // TODO: If it's light/dark, Theme.of(context).cardColor. If it's AMOLED, Colors.black
-    return Colors.black;
+  Color transactionCards(BuildContext context) {
+    final themeType = Provider.of<ThemeProvider>(context).themeType;
+    return themeType == ThemeType.Amoled
+        ? Colors.black
+        : Theme.of(context).cardColor;
   }
 
   // Small internal helper just to shorten code when checking for light or dark theme.

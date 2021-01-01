@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 enum ThemeType { Light, Dark, Amoled }
 
@@ -61,7 +62,10 @@ class ThemeProvider with ChangeNotifier {
 
   ThemeProvider() {
     // TODO: db read stuff here.
-    _themeType = ThemeType.Light;
+    final brightness = SchedulerBinding.instance.window.platformBrightness;
+
+    _themeType =
+        brightness == Brightness.light ? ThemeType.Light : ThemeType.Dark;
     notifyListeners();
   }
 

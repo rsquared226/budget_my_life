@@ -45,7 +45,8 @@ class TransactionsList extends StatelessWidget {
           return Column(
             children: <Widget>[
               OpenContainer(
-                closedColor: Theme.of(context).colorScheme.transactionCards,
+                closedColor:
+                    Theme.of(context).colorScheme.transactionCards(context),
                 openColor: Theme.of(context).colorScheme.surface,
                 closedShape: const BeveledRectangleBorder(),
                 closedElevation: 0,
