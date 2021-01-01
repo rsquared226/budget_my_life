@@ -70,6 +70,16 @@ extension CustomColors on ColorScheme {
         : secondaryExpenseColor;
   }
 
+  Color get dashboardHeader {
+    // TODO: If it's light/dark, themeData.brightness == Brightness.light ? themeData.colorScheme.surface : themeData.canvasColor, If it's amoled
+    return Color.fromARGB(255, 15, 15, 15);
+  }
+
+  Color get transactionCards {
+    // TODO: If it's light/dark, Theme.of(context).cardColor. If it's AMOLED, Colors.black
+    return Colors.black;
+  }
+
   // Small internal helper just to shorten code when checking for light or dark theme.
   bool get _isLight => brightness == Brightness.light;
 }

@@ -32,4 +32,26 @@ class ThemeProvider with ChangeNotifier {
       },
     ),
   );
+
+  static final amoledTheme = ThemeData(
+    brightness: Brightness.dark,
+    canvasColor: Colors.black,
+    primaryColor: Color.fromARGB(255, 25, 25, 25),
+    cardColor: Color.fromARGB(255, 25, 25, 25),
+    dividerColor: Colors.grey[850],
+    dialogBackgroundColor: Colors.grey[850],
+    accentColor: Colors.purple.shade200,
+    chipTheme: ChipThemeData.fromDefaults(
+      secondaryColor: Colors.purpleAccent,
+      brightness: Brightness.dark,
+      labelStyle: ThemeData.dark().textTheme.bodyText1,
+    ),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    // This page transition looks better than the default.
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: <TargetPlatform, PageTransitionsBuilder>{
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+      },
+    ),
+  );
 }

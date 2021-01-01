@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utils/custom_colors.dart';
 import '../widgets/label_filter_dropdown.dart';
 
 // Used in DashboardScreen. Contains History text and dropdown filter.
@@ -13,9 +14,7 @@ class DashboardListHeader extends StatelessWidget {
       delegate: SectionHeaderDelegate(
         child: Container(
           // Need to specify the color or it'll be transparent.
-          color: themeData.brightness == Brightness.light
-              ? themeData.colorScheme.surface
-              : themeData.canvasColor,
+          color: themeData.colorScheme.dashboardHeader,
           child: Column(
             children: <Widget>[
               const SizedBox(height: 5),

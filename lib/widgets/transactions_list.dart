@@ -6,6 +6,7 @@ import '../card_items/transaction_card.dart';
 import '../providers/filter.dart';
 import '../providers/transactions.dart';
 import '../screens/transaction_details_screen.dart';
+import '../utils/custom_colors.dart';
 
 // Used in HistoryScreen.
 
@@ -44,7 +45,7 @@ class TransactionsList extends StatelessWidget {
           return Column(
             children: <Widget>[
               OpenContainer(
-                closedColor: Theme.of(context).cardColor,
+                closedColor: Theme.of(context).colorScheme.transactionCards,
                 openColor: Theme.of(context).colorScheme.surface,
                 closedShape: const BeveledRectangleBorder(),
                 closedElevation: 0,

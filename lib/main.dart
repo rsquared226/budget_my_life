@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Budget My Life',
         theme: ThemeProvider.lightTheme,
-        darkTheme: ThemeProvider.darkTheme,
+        darkTheme: ThemeProvider.amoledTheme,
         initialRoute: isOnboarded ? '/' : Onboarding.routeName,
         home: HomeTabsScreen(),
         routes: {
