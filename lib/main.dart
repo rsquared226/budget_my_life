@@ -73,11 +73,19 @@ class MyApp extends StatelessWidget {
     return FutureBuilder(
       future: fetchAndSetData(context),
       builder: (context, snapshot) {
+        // Temporary loading screen until all data is loaded.
         if (snapshot.connectionState != ConnectionState.done) {
           return MaterialApp(
-            home: Scaffold(),
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           );
         }
+
         return Consumer<ThemeProvider>(
           builder: (context, themeProvider, _) => MaterialApp(
             title: 'Budget My Life',
