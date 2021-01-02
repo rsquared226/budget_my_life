@@ -75,9 +75,13 @@ class SettingsScreen extends StatelessWidget {
           children: List<SimpleDialogOption>.generate(
             choices.length,
             (index) => SimpleDialogOption(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               onPressed: () =>
                   Navigator.pop(context, choices.keys.elementAt(index)),
-              child: Text(choices.values.elementAt(index)),
+              child: Text(
+                choices.values.elementAt(index),
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
           ),
         );

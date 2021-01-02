@@ -85,8 +85,6 @@ class ThemeProvider with ChangeNotifier {
         return amoledTheme;
       // Fallback onto light theme if something goes wrong
       default:
-        // TODO: remove this.
-        print('THEME WENT WRONG SOMEWHERE');
         return lightTheme;
     }
   }
