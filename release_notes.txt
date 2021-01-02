@@ -1,7 +1,7 @@
-v0.7.0-internal
-- Only for my internal testers :)
-- First preview of the dark theme
+v0.7.1 - DARK MODE
+- Budget your life with a comforting dark theme or go all-out with the OLED black theme. Change your theme in the settings screen
+- Fixed bug where transactions wouldn't load on initial app open
 
-What's next:
-- Make AMOLED theme
-- Allow theme to be selected through settings
+v0.7.0-internal
+- For my internal testers :)
+- First preview of the dark theme

@@ -9,10 +9,10 @@
 (F-Droid coming soon!)
 
 ## Some Highlights
-from v0.5.1
-| Transaction Adding | Transaction Filtering | View Insights | Label Editing |
-|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
-| ![](https://i.imgur.com/psvHmMe.gif) | ![](https://i.imgur.com/V1q8zV1.gif) | ![](https://i.imgur.com/sx6CpSI.gif) | ![](https://i.imgur.com/aDNeBDb.gif) |
+from v0.7.1
+| Transaction Adding | Transaction Filtering | View Insights | Label Editing | Dark Mode |
+|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
+| ![](https://i.imgur.com/psvHmMe.gif) | ![](https://i.imgur.com/V1q8zV1.gif) | ![](https://i.imgur.com/sx6CpSI.gif) | ![](https://i.imgur.com/aDNeBDb.gif) | ![](https://i.imgur.com/qBQ228o.gif)
 
 ## Features
 A beautiful and informative budgeting Android app.
@@ -23,6 +23,8 @@ It's light-weight and all data stays on your device. I built this app because I 
 - <b>Insights</b>: There's an entire screen to view insights on your money management. View different ranges from just this week, this month, and lifetime transactions.
 
 - <b>Design</b>: The design has went over many iterations to create something beautiful to look at and intuitive to use. The animations were made to make the app feel like a joy to use while not being over the top. All insights on your spending are shown through clean charts.
+
+- <b>Dark Mode</b>: Budget your life with a comforting dark theme or go all-out with the OLED black theme.
 
 - <b>Speed</b>: The app was coded to be as lightweight and efficient as possible, running on even the lowest end devices.
 
