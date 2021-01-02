@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/filter.dart';
-import '../providers/labels.dart';
-import '../providers/settings.dart';
-import '../providers/transactions.dart';
 import '../widgets/balance_cards_view.dart';
 import '../widgets/dashboard_list_header.dart';
 import '../widgets/dashboard_screen_fab.dart';

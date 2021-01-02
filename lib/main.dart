@@ -50,14 +50,11 @@ Future<void> main() async {
 }
 
 Future<void> fetchAndSetData(BuildContext context) async {
-  // https://alvinalexander.com/dart/how-run-multiple-dart-futures-in-parallel/
-  // TODO: Move this above so it doesn't run multiple times? run when app runs and pass in future as a parameter to home tabs screen?
-  // https://stackoverflow.com/a/59623359/4907741
   await Future.wait<void>([
+    Provider.of<ThemeProvider>(context, listen: false).fetchAndSetTheme(),
     Provider.of<Settings>(context, listen: false).fetchAndSetSettings(),
     Provider.of<Labels>(context, listen: false).fetchAndSetLabels(),
     Provider.of<Transactions>(context, listen: false).fetchAndSetTransactions(),
-    Provider.of<ThemeProvider>(context, listen: false).fetchAndSetTheme(),
   ]);
 }
 

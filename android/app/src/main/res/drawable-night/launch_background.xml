@@ -8,6 +8,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/splash_icon_dark" />
+            android:src="@drawable/splash_icon" />
     </item>
 </layer-list>
