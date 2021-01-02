@@ -6,6 +6,7 @@ import './balance_summary_card.dart';
 import '../providers/filter.dart';
 import '../providers/labels.dart';
 import '../providers/transactions.dart';
+import '../utils/custom_colors.dart';
 
 // Used in DashboardScreen.
 
@@ -40,9 +41,7 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
     final themeData = Theme.of(context);
 
     return Container(
-      color: themeData.brightness == Brightness.light
-          ? themeData.colorScheme.surface
-          : themeData.canvasColor,
+      color: themeData.colorScheme.dashboardHeader(context),
       child: Column(
         children: <Widget>[
           SizedBox(

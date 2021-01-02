@@ -16,7 +16,7 @@ class DBHelper {
       path.join(dbPath, 'bml.db'),
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 3,
+      version: 4,
     );
   }
 
@@ -39,6 +39,8 @@ class DBHelper {
     _versionUpdate2(db);
 
     _versionUpdate3(db);
+
+    _versionUpdate4(db);
   }
 
   static Future<void> _onUpgrade(
@@ -48,6 +50,9 @@ class DBHelper {
     }
     if (oldVersion < 3) {
       _versionUpdate3(db);
+    }
+    if (oldVersion < 4) {
+      _versionUpdate4(db);
     }
   }
 
@@ -71,6 +76,13 @@ class DBHelper {
       {'id': 1, 'currency': '\$', 'showCurrency': 1},
       conflictAlgorithm: sql.ConflictAlgorithm.replace,
     );
+  }
+
+  static Future<void> _versionUpdate4(sql.Database db) async {
+    // 0 light, 1 dark, 2 amoled. Set default value under ThemeProvider
+    db.execute('''ALTER TABLE settings
+      ADD COLUMN theme INTEGER
+    ''');
   }
 
   static Future<void> insertTransaction(Transaction transaction) async {

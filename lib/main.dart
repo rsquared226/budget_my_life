@@ -24,7 +24,38 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final isOnboarded = await DBHelper.isOnboarded();
 
-  runApp(MyApp(isOnboarded: isOnboarded));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Settings(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Transactions(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Labels(),
+        ),
+      ],
+      builder: (context, _) => MyApp(isOnboarded: isOnboarded),
+    ),
+  );
+}
+
+Future<void> fetchAndSetData(BuildContext context) async {
+  await Future.wait<void>([
+    Provider.of<ThemeProvider>(context, listen: false).fetchAndSetTheme(),
+    Provider.of<Settings>(context, listen: false).fetchAndSetSettings(),
+    Provider.of<Labels>(context, listen: false).fetchAndSetLabels(),
+    Provider.of<Transactions>(context, listen: false).fetchAndSetTransactions(),
+  ]);
 }
 
 class MyApp extends StatelessWidget {
@@ -36,34 +67,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => Settings(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => Transactions(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => Labels(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Budget My Life',
-        theme: ThemeProvider.lightTheme,
-        darkTheme: ThemeProvider.darkTheme,
-        initialRoute: isOnboarded ? '/' : Onboarding.routeName,
-        home: HomeTabsScreen(),
-        routes: {
-          EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
-          SettingsScreen.routeName: (_) => SettingsScreen(),
-          Onboarding.routeName: (_) => Onboarding()
-        },
-      ),
+    return FutureBuilder(
+      future: fetchAndSetData(context),
+      builder: (context, snapshot) {
+        // Temporary loading screen until all data is loaded.
+        if (snapshot.connectionState != ConnectionState.done) {
+          return MaterialApp(
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }
+
+        return Consumer<ThemeProvider>(
+          builder: (context, themeProvider, _) => MaterialApp(
+            title: 'Budget My Life',
+            theme: themeProvider.themeData,
+            initialRoute: isOnboarded ? '/' : Onboarding.routeName,
+            home: HomeTabsScreen(),
+            routes: {
+              EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
+              SettingsScreen.routeName: (_) => SettingsScreen(),
+              Onboarding.routeName: (_) => Onboarding()
+            },
+          ),
+        );
+      },
     );
   }
 }
