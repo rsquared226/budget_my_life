@@ -21,7 +21,7 @@ class ColorPickerFormField extends FormField<Color> {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () => Navigator.pop(context),
               child: const Text('SELECT'),
             ),

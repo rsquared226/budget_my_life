@@ -28,6 +28,9 @@ class ThemeProvider with ChangeNotifier {
       brightness: Brightness.dark,
       labelStyle: ThemeData.dark().textTheme.bodyText1,
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(primary: Colors.white),
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     // This page transition looks better than the default.
     pageTransitionsTheme: const PageTransitionsTheme(
@@ -49,6 +52,9 @@ class ThemeProvider with ChangeNotifier {
       secondaryColor: Colors.purpleAccent,
       brightness: Brightness.dark,
       labelStyle: ThemeData.dark().textTheme.bodyText1,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(primary: Colors.white),
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     // This page transition looks better than the default.

@@ -15,7 +15,7 @@ class AboutAppListTile extends StatelessWidget {
             title: const Text('Could not open URL'),
             content: Text(url + ' could not be opened'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Text('GOT IT'),
               ),
