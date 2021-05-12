@@ -10,16 +10,18 @@ class AboutAppListTile extends StatelessWidget {
     } else {
       showDialog(
         context: context,
-        child: AlertDialog(
-          title: const Text('Could not open URL'),
-          content: Text(url + ' could not be opened'),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('GOT IT'),
-            ),
-          ],
-        ),
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Could not open URL'),
+            content: Text(url + ' could not be opened'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('GOT IT'),
+              ),
+            ],
+          );
+        },
       );
     }
   }
