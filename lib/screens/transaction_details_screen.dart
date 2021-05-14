@@ -47,13 +47,13 @@ class TransactionDetailsScreen extends StatelessWidget {
           content:
               const Text('Are you sure you want to delete this transaction?'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
               child: const Text('CANCEL'),
             ),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },

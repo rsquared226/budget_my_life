@@ -7,7 +7,6 @@ import '../widgets/color_picker_form_field.dart';
 import '../widgets/transaction_type_chip_form_field.dart';
 
 // This screen is navigated from the EditLabelsScreen.
-// TODO: Make adding/editing labels inline/in a modal on the same screen.
 
 // Just to make saving the form easier.
 class EditableLabel {
@@ -155,9 +154,10 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
               },
             ),
             const SizedBox(height: 5),
-            RaisedButton.icon(
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).colorScheme.onPrimary,
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).primaryColor,
+              ),
               onPressed: _saveForm,
               icon: const Icon(Icons.save),
               label: const Text('SAVE'),

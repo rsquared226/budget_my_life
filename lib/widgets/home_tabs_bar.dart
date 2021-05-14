@@ -53,11 +53,11 @@ class HomeTabsBar extends StatelessWidget {
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.attach_money),
-          title: Text('Dashboard'),
+          label: 'Dashboard',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.assessment),
-          title: Text('Insights'),
+          label: 'Insights',
         ),
       ],
     );

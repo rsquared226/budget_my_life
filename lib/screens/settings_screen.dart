@@ -37,11 +37,11 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: const Text('CANCEL'),
               onPressed: () => Navigator.pop(context),
             ),
-            FlatButton(
+            TextButton(
               child: Text(confirmText),
               onPressed: () => Navigator.pop(context, controller.text),
             )

@@ -18,9 +18,10 @@ class EditLabelsScreen extends StatelessWidget {
         <Widget>[
           Padding(
             padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-            child: RaisedButton.icon(
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).colorScheme.onPrimary,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).primaryColor,
+              ),
               onPressed: () => addLabel(context),
               icon: const Icon(Icons.add),
               label: const Text('ADD LABEL'),
@@ -106,13 +107,13 @@ class EditLabelsScreen extends StatelessWidget {
           title: const Text('Delete label?'),
           content: const Text('Are you sure you want to delete this label?'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
               child: const Text('CANCEL'),
             ),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context, true);
               },
@@ -138,7 +139,7 @@ class EditLabelsScreen extends StatelessWidget {
           title: const Text('Cannot delete default label'),
           content: const Text('The default labels cannot be deleted.'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () => Navigator.pop(context),
               child: const Text('GOT IT'),
             )

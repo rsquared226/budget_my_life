@@ -11,21 +11,23 @@ class ColorPickerFormField extends FormField<Color> {
   ) {
     showDialog(
       context: context,
-      child: AlertDialog(
-        title: const Text('Pick a label color'),
-        content: SingleChildScrollView(
-          child: BlockPicker(
-            pickerColor: currentColor,
-            onColorChanged: onColorChanged,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Pick a label color'),
+          content: SingleChildScrollView(
+            child: BlockPicker(
+              pickerColor: currentColor,
+              onColorChanged: onColorChanged,
+            ),
           ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('SELECT'),
-          ),
-        ],
-      ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('SELECT'),
+            ),
+          ],
+        );
+      },
     );
   }
 
