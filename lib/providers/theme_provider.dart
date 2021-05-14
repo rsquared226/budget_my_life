@@ -9,6 +9,9 @@ class ThemeProvider with ChangeNotifier {
     brightness: Brightness.light,
     primarySwatch: Colors.indigo,
     accentColor: Colors.deepPurpleAccent,
+    // This makes the user's status bar icons white, which is more readable
+    // against an indigo appbar.
+    appBarTheme: AppBarTheme(brightness: Brightness.dark),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     // This page transition looks better than the default.
     pageTransitionsTheme: const PageTransitionsTheme(

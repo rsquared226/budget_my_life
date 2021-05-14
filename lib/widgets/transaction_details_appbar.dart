@@ -25,6 +25,9 @@ class TransactionDetailsAppBar extends StatelessWidget {
       expandedHeight: 150,
       pinned: true,
       backgroundColor: appTheme.colorScheme.surface,
+      // This makes the status bar icons grey in light mode and white in dark
+      // mode so the user's status bar is readable.
+      brightness: Theme.of(context).brightness,
       iconTheme: IconThemeData(color: appTheme.colorScheme.onSurface),
       actions: <Widget>[
         IconButton(
