@@ -58,7 +58,7 @@ Future<void> fetchAndSetData(BuildContext context) async {
   ]);
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final bool isOnboarded;
 
   const MyApp({
@@ -66,9 +66,23 @@ class MyApp extends StatelessWidget {
   });
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // This determines the progress of data being read from storage.
+  Future<void> dataFetchFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    dataFetchFuture = fetchAndSetData(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fetchAndSetData(context),
+      future: dataFetchFuture,
       builder: (context, snapshot) {
         // Temporary loading screen until all data is loaded.
         if (snapshot.connectionState != ConnectionState.done) {
@@ -87,7 +101,7 @@ class MyApp extends StatelessWidget {
           builder: (context, themeProvider, _) => MaterialApp(
             title: 'Budget My Life',
             theme: themeProvider.themeData,
-            initialRoute: isOnboarded ? '/' : Onboarding.routeName,
+            initialRoute: widget.isOnboarded ? '/' : Onboarding.routeName,
             home: HomeTabsScreen(),
             routes: {
               EditLabelsScreen.routeName: (_) => EditLabelsScreen(),
