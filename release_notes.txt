@@ -1,3 +1,7 @@
+v0.7.2 - Behind-the-scenes updates
+- Slight performance boost with a lot of behind-the-scenes updates
+- Reoccuring transactions and CSV backup should be out by the end of summer!
+
 v0.7.1 - DARK MODE
 - Budget your life with a comforting dark theme or go all-out with the OLED black theme. Change your theme in the settings screen
 - Fixed bug where transactions wouldn't load on initial app open

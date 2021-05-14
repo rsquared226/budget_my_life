@@ -9,7 +9,7 @@
 (F-Droid coming soon!)
 
 ## Some Highlights
-from v0.7.1
+from v0.7.2
 | Transaction Adding | Transaction Filtering | View Insights | Label Editing | Dark Mode |
 |--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|--------------------------------------|
 | ![](https://i.imgur.com/psvHmMe.gif) | ![](https://i.imgur.com/V1q8zV1.gif) | ![](https://i.imgur.com/sx6CpSI.gif) | ![](https://i.imgur.com/aDNeBDb.gif) | ![](https://i.imgur.com/qBQ228o.gif)
