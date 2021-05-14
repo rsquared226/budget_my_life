@@ -30,17 +30,21 @@ class InsightsRangeButtons extends StatelessWidget {
   Widget buildRangeButton(
       bool isSelected, _ChipsData e, InsightsRange insightsRangeData) {
     return Expanded(
-      child: FlatButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-          side: BorderSide(
-            width: 2,
-            color: isSelected ? Colors.white60 : Colors.transparent,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+            side: BorderSide(
+              width: 2,
+              color: isSelected ? Colors.white60 : Colors.transparent,
+            ),
           ),
         ),
-        textColor: isSelected ? Colors.white : Colors.white54,
         child: FittedBox(
-          child: Text(e.text),
+          child: Text(
+            e.text,
+            style: TextStyle(color: isSelected ? Colors.white : Colors.white54),
+          ),
         ),
         onPressed: () {
           // Don't want to have to unnecessarily call notifyListeners.
@@ -55,18 +59,22 @@ class InsightsRangeButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isTransactionHistoryChart) {
-      return FlatButton(
+      return TextButton(
         onPressed: () {},
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-          side: const BorderSide(
-            width: 2,
-            color: Colors.white60,
-          ),
-        ),
-        textColor: Colors.white,
+        style: TextButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: const BorderSide(
+                width: 2,
+                color: Colors.white60,
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16)),
         child: const FittedBox(
-          child: Text('PAST 7 DAYS'),
+          child: Text(
+            'PAST 7 DAYS',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       );
     }
