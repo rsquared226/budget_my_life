@@ -117,24 +117,24 @@ class SettingsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 12),
         child: SettingsList(
-          backgroundColor: Theme.of(context).canvasColor,
+          // backgroundColor: Theme.of(context).canvasColor,
           sections: [
             SettingsSection(
-              title: 'Currency Symbol',
+              title: Text('Currency Symbol'),
               tiles: [
                 SettingsTile.switchTile(
-                  title: 'Show Currency Symbol',
-                  subtitle: (settingsProvider.showCurrency ? 'S' : 'Not s') +
-                      'howing the chosen currency symbol',
-                  subtitleMaxLines: 2,
-                  switchValue: settingsProvider.showCurrency,
+                  initialValue: true,
+                  title: Text('Show Currency Symbol\n' + (settingsProvider.showCurrency ? 'S' : 'Not s') +
+          'howing the chosen currency symbol'),
+                  // subtitleMaxLines: 2,
+
+                  // switchValue: settingsProvider.showCurrency,
                   onToggle: (changedShowCurrency) =>
                       settingsProvider.showCurrency = changedShowCurrency,
                 ),
                 SettingsTile(
-                  enabled: settingsProvider.showCurrency,
-                  title: 'Change Currency Symbol',
-                  subtitle: settingsProvider.currencySymbol,
+                  // initialValue: settingsProvider.showCurrency,
+                  title: Text('Change Currency Symbol + \n' + settingsProvider.currencySymbol),
                   onPressed: (BuildContext context) => textAlertDialog(
                     context: context,
                     title: 'Change currency symbol',
@@ -151,11 +151,10 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
             SettingsSection(
-              title: 'Theme',
+              title: Text('Theme'),
               tiles: [
                 SettingsTile(
-                  title: 'Change Theme',
-                  subtitle: themeTypeToString(themeProvider.themeType),
+                  title: Text('Change Theme\n' + themeTypeToString(themeProvider.themeType)),
                   onPressed: (BuildContext context) =>
                       simpleChoiceDialog<ThemeType>(
                     context: context,
