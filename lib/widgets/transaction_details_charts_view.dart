@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../charts/chart_widgets/transaction_details_pie_chart.dart';
 import '../providers/transactions.dart';
@@ -85,10 +85,10 @@ class _TransactionDetailsChartsViewState
           ),
         ),
         const SizedBox(height: 15),
-        ScrollingPageIndicator(
-          controller: _pageController,
-          itemCount: 2,
-        ),
+        SmoothPageIndicator(
+            controller: _pageController,
+            count: 2
+        )
       ],
     );
   }

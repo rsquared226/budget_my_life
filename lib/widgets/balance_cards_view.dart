@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import './balance_summary_card.dart';
 import '../providers/filter.dart';
@@ -75,17 +75,22 @@ class _BalanceCardsViewState extends State<BalanceCardsView> {
               ],
             ),
           ),
-          ScrollingPageIndicator(
-            dotSelectedColor: Theme.of(context).brightness == Brightness.light
-                ? Colors.black45
-                : Colors.white60,
-            dotColor: Theme.of(context).brightness == Brightness.light
-                ? Colors.black26
-                : Colors.white38,
-            dotSelectedSize: 8.5,
-            dotSpacing: 13,
+          SmoothPageIndicator(
             controller: _pageController,
-            itemCount: 2,
+            count: 2,
+            axisDirection: Axis.vertical,
+            effect: SlideEffect(
+                spacing: 13,
+                dotWidth:  8.5,
+                dotHeight:  8.5,
+                radius: 2.0,
+                dotColor: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black26
+                    : Colors.white38,
+                activeDotColor: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black45
+                    : Colors.white60,
+            ),
           ),
         ],
       ),
