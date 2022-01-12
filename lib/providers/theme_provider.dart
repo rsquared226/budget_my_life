@@ -29,7 +29,7 @@ class ThemeProvider with ChangeNotifier {
     chipTheme: ChipThemeData.fromDefaults(
       secondaryColor: Colors.purpleAccent,
       brightness: Brightness.dark,
-      labelStyle: ThemeData.dark().textTheme.bodyText1,
+      labelStyle: ThemeData.dark().textTheme.bodyText1!,
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(primary: Colors.white),
@@ -54,7 +54,7 @@ class ThemeProvider with ChangeNotifier {
     chipTheme: ChipThemeData.fromDefaults(
       secondaryColor: Colors.purpleAccent,
       brightness: Brightness.dark,
-      labelStyle: ThemeData.dark().textTheme.bodyText1,
+      labelStyle: ThemeData.dark().textTheme.bodyText1!,
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(primary: Colors.white),
@@ -68,7 +68,7 @@ class ThemeProvider with ChangeNotifier {
     ),
   );
 
-  ThemeType _themeType;
+  late ThemeType _themeType;
 
   Future<void> fetchAndSetTheme() async {
     final settingsMap = await DBHelper.getSettingsMap();
@@ -86,7 +86,7 @@ class ThemeProvider with ChangeNotifier {
       // If there's no value, default to light or dark theme depending on
       // system theme.
       default:
-        final brightness = SchedulerBinding.instance.window.platformBrightness;
+        final brightness = SchedulerBinding.instance!.window.platformBrightness;
         _themeType =
             brightness == Brightness.light ? ThemeType.Light : ThemeType.Dark;
         DBHelper.updateSettings(

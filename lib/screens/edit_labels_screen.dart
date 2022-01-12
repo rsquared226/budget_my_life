@@ -88,7 +88,7 @@ class EditLabelsScreen extends StatelessWidget {
     );
   }
 
-  void editLabel(BuildContext context, String labelId) {
+  void editLabel(BuildContext context, String? labelId) {
     Navigator.push(
       context,
       MaterialPageRoute(

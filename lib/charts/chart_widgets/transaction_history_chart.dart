@@ -19,7 +19,7 @@ class TransactionHistoryChart extends StatelessWidget {
     // Add up all the transactions in a format that's easier to read for the bar chart.
     transactions.forEach((transaction) {
       final amount = transaction.amount;
-      if (data.length > 0 && transaction.date.compareTo(data.last.date) == 0) {
+      if (data.length > 0 && transaction.date.compareTo(data.last.date!) == 0) {
         if (amount > 0) {
           data.last.incomeAmount += amount;
         } else {
@@ -50,7 +50,7 @@ class TransactionHistoryChart extends StatelessWidget {
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
     // Add earliest and latest days if they're not already in the data set so the graph is consistent (for weekly so far).
-    if (data.first.date.compareTo(today.subtract(Duration(days: 6))) != 0) {
+    if (data.first.date!.compareTo(today.subtract(Duration(days: 6))) != 0) {
       data.insert(
         0,
         TransactionHistoryModel(
@@ -60,7 +60,7 @@ class TransactionHistoryChart extends StatelessWidget {
         ),
       );
     }
-    if (data.last.date.compareTo(today) < 0) {
+    if (data.last.date!.compareTo(today) < 0) {
       data.add(
         TransactionHistoryModel(
           date: today,

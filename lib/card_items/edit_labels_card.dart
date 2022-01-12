@@ -10,9 +10,9 @@ class EditLabelsCard extends StatelessWidget {
   final Function deleteTransaction;
 
   const EditLabelsCard({
-    @required this.label,
-    @required this.editTransaction,
-    @required this.deleteTransaction,
+    required this.label,
+    required this.editTransaction,
+    required this.deleteTransaction,
   });
 
   @override
@@ -38,14 +38,14 @@ class EditLabelsCard extends StatelessWidget {
                 Icons.edit,
                 color: Colors.blue,
               ),
-              onPressed: editTransaction,
+              onPressed: editTransaction as void Function()?,
             ),
             IconButton(
               icon: const Icon(
                 Icons.delete,
                 color: Colors.red,
               ),
-              onPressed: deleteTransaction,
+              onPressed: deleteTransaction as void Function()?,
             ),
           ],
         ),

@@ -10,13 +10,13 @@ import '../widgets/insights_range_buttons.dart';
 class ChartContainer extends StatelessWidget {
   final String title;
   final Widget chart;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final bool isTransactionHistoryChart;
 
   const ChartContainer({
-    @required this.title,
-    @required this.chart,
-    @required this.backgroundColor,
+    required this.title,
+    required this.chart,
+    required this.backgroundColor,
     this.isTransactionHistoryChart = false,
   });
 
@@ -49,7 +49,7 @@ class ChartContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(13),
               border: Theme.of(context).brightness == Brightness.light
                   ? null
-                  : Border.all(color: backgroundColor, width: 5),
+                  : Border.all(color: backgroundColor!, width: 5),
             ),
             child: chart,
           ),

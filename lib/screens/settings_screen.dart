@@ -11,12 +11,12 @@ class SettingsScreen extends StatelessWidget {
 
   // Mostly came from here: https://github.com/grouped/clean_settings/blob/master/lib/src/setting_text_item.dart
   Future<void> textAlertDialog({
-    @required BuildContext context,
-    @required String title,
-    String initialValue = '',
+    required BuildContext context,
+    required String title,
+    String? initialValue = '',
     String hintText = '',
     String confirmText = 'OK',
-    @required ValueChanged<String> onChanged,
+    required ValueChanged<String> onChanged,
   }) async {
     final changedCurrencySymbol = await showDialog<String>(
       context: context,
@@ -61,11 +61,11 @@ class SettingsScreen extends StatelessWidget {
   // them. An enum type is expected to be passed in as T with the string
   // representation.
   Future<void> simpleChoiceDialog<T>({
-    @required BuildContext context,
-    @required String title,
-    T initialValue,
-    @required Map<T, String> choices,
-    @required ValueChanged<T> onChanged,
+    required BuildContext context,
+    required String title,
+    T? initialValue,
+    required Map<T, String> choices,
+    required ValueChanged<T> onChanged,
   }) async {
     final selectedChoice = await showDialog<T>(
       context: context,
@@ -93,7 +93,7 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  String themeTypeToString(ThemeType themeType) {
+  String themeTypeToString(ThemeType? themeType) {
     switch (themeType) {
       case ThemeType.Dark:
         return 'Dark';
@@ -134,7 +134,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 SettingsTile(
                   // initialValue: settingsProvider.showCurrency,
-                  title: Text('Change Currency Symbol + \n' + settingsProvider.currencySymbol),
+                  title: Text('Change Currency Symbol + \n' + settingsProvider.currencySymbol!),
                   onPressed: (BuildContext context) => textAlertDialog(
                     context: context,
                     title: 'Change currency symbol',
@@ -156,7 +156,7 @@ class SettingsScreen extends StatelessWidget {
                 SettingsTile(
                   title: Text('Change Theme\n' + themeTypeToString(themeProvider.themeType)),
                   onPressed: (BuildContext context) =>
-                      simpleChoiceDialog<ThemeType>(
+                      simpleChoiceDialog<ThemeType?>(
                     context: context,
                     title: 'Change Theme',
                     initialValue: themeProvider.themeType,
@@ -166,7 +166,7 @@ class SettingsScreen extends StatelessWidget {
                       key: (element) => element,
                       value: (element) => themeTypeToString(element),
                     ),
-                    onChanged: (newTheme) => themeProvider.themeType = newTheme,
+                    onChanged: (newTheme) => themeProvider.themeType = newTheme!,
                   ),
                 )
               ],

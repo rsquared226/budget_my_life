@@ -32,10 +32,10 @@ class TransactionTypeChipFormField extends FormField<LabelType> {
   }
 
   TransactionTypeChipFormField({
-    @required BuildContext context,
-    FormFieldSetter<LabelType> onSaved,
-    FormFieldValidator<LabelType> validator,
-    LabelType initialValue,
+    required BuildContext context,
+    FormFieldSetter<LabelType>? onSaved,
+    FormFieldValidator<LabelType>? validator,
+    LabelType? initialValue,
   }) : super(
           onSaved: onSaved,
           validator: validator,
@@ -61,7 +61,7 @@ class TransactionTypeChipFormField extends FormField<LabelType> {
                 ),
                 if (state.hasError)
                   Text(
-                    state.errorText,
+                    state.errorText!,
                     style: TextStyle(
                       color: Theme.of(state.context).errorColor,
                     ),

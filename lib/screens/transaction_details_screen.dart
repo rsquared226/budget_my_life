@@ -10,9 +10,9 @@ import '../widgets/transaction_details_charts_view.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
   // Use a provider rather than actual data so that when the transaction is edited the changes are reflected.
-  final String transactionId;
+  final String? transactionId;
 
-  const TransactionDetailsScreen({@required this.transactionId});
+  const TransactionDetailsScreen({required this.transactionId});
 
   void onEditTransaction(BuildContext context) {
     Navigator.push(
@@ -101,7 +101,7 @@ class TransactionDetailsScreen extends StatelessWidget {
               <Widget>[
                 Text(
                   transaction.title,
-                  style: appTheme.textTheme.headline6.copyWith(
+                  style: appTheme.textTheme.headline6!.copyWith(
                     fontSize: 40,
                   ),
                 ),
@@ -112,13 +112,13 @@ class TransactionDetailsScreen extends StatelessWidget {
                     Chip(
                       backgroundColor: appTheme.colorScheme.surface,
                       avatar: CircleAvatar(
-                        backgroundColor: transaction.getLabel(context).color,
+                        backgroundColor: transaction.getLabel(context)!.color,
                       ),
-                      label: Text(transaction.getLabel(context).title),
+                      label: Text(transaction.getLabel(context)!.title),
                     ),
                     Text(
                       transaction.formattedDate,
-                      style: appTheme.textTheme.caption.copyWith(
+                      style: appTheme.textTheme.caption!.copyWith(
                         fontSize: 17,
                       ),
                     ),
@@ -130,7 +130,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  transaction.description,
+                  transaction.description!,
                   style: appTheme.textTheme.subtitle1,
                 ),
               ],

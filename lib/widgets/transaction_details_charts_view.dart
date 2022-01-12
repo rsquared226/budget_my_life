@@ -9,10 +9,10 @@ import '../utils/custom_colors.dart';
 // Used in TransactionDetailsScreen.
 
 class TransactionDetailsChartsView extends StatefulWidget {
-  final String transactionId;
+  final String? transactionId;
 
   const TransactionDetailsChartsView({
-    @required this.transactionId,
+    required this.transactionId,
   });
 
   @override
@@ -33,8 +33,8 @@ class _TransactionDetailsChartsViewState
   @override
   Widget build(BuildContext context) {
     final transactionsData = Provider.of<Transactions>(context);
-    final transaction = transactionsData.findById(widget.transactionId);
-    final label = transaction.getLabel(context);
+    final transaction = transactionsData.findById(widget.transactionId)!;
+    final label = transaction.getLabel(context)!;
 
     return Column(
       children: <Widget>[

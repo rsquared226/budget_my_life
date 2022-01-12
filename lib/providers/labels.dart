@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 
 import '../utils/db_helper.dart';
@@ -26,8 +27,8 @@ class Labels with ChangeNotifier {
         .toList();
   }
 
-  Label findById(String id) {
-    return _items.firstWhere((label) => id == label.id, orElse: () => null);
+  Label? findById(String? id) {
+    return _items.firstWhereOrNull((label) => id == label.id);
   }
 
   void addLabel(Label label) {
@@ -48,7 +49,7 @@ class Labels with ChangeNotifier {
     DBHelper.updateLabel(editedLabel);
   }
 
-  void deleteLabel(String id) {
+  void deleteLabel(String? id) {
     if (id == otherExpenseId || id == otherIncomeId) {
       return;
     }

@@ -5,16 +5,16 @@ import '../utils/custom_colors.dart';
 // This is used in TransactionDetailsScreen.
 
 class TransactionDetailsAppBar extends StatelessWidget {
-  final double transactionAmount;
+  final double? transactionAmount;
   final String formattedAmount;
   final Function editTransaction;
   final Function deleteTransaction;
 
   const TransactionDetailsAppBar({
-    @required this.transactionAmount,
-    @required this.formattedAmount,
-    @required this.editTransaction,
-    @required this.deleteTransaction,
+    required this.transactionAmount,
+    required this.formattedAmount,
+    required this.editTransaction,
+    required this.deleteTransaction,
   });
 
   @override
@@ -35,14 +35,14 @@ class TransactionDetailsAppBar extends StatelessWidget {
             Icons.edit,
             color: Colors.blue.shade800,
           ),
-          onPressed: editTransaction,
+          onPressed: editTransaction as void Function()?,
         ),
         IconButton(
           icon: Icon(
             Icons.delete,
             color: Colors.red.shade900,
           ),
-          onPressed: deleteTransaction,
+          onPressed: deleteTransaction as void Function()?,
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(

@@ -63,7 +63,7 @@ class MyApp extends StatefulWidget {
   final bool isOnboarded;
 
   const MyApp({
-    @required this.isOnboarded,
+    required this.isOnboarded,
   });
 
   @override
@@ -72,7 +72,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This determines the progress of data being read from storage.
-  Future<void> dataFetchFuture;
+  Future<void>? dataFetchFuture;
 
   @override
   void initState() {

@@ -16,12 +16,12 @@ import '../widgets/edit_transaction_appbar.dart';
 class EditableTransaction {
   // If a transaction is being edited, the id should never change.
   // If a transaction is being added, the id will be null until it is converted to a Label.
-  final String id;
-  String title;
-  String description;
-  double amount;
-  DateTime date;
-  String labelId;
+  final String? id;
+  String? title;
+  String? description;
+  double? amount;
+  DateTime? date;
+  String? labelId;
 
   EditableTransaction({
     this.id,
@@ -35,11 +35,11 @@ class EditableTransaction {
   Transaction toTransaction() {
     return Transaction(
       id: id ?? DateTime.now().toString(),
-      title: title,
+      title: title ?? "",
       description: description,
-      amount: amount,
-      date: date,
-      labelId: labelId,
+      amount: amount ?? 0,
+      date: date ?? DateTime.now(),
+      labelId: labelId ?? "",
     );
   }
 }
@@ -48,10 +48,10 @@ class EditTransactionScreen extends StatefulWidget {
   // Function that closes this screen.
   final Function closeContainer;
   // Optional parameter, can be filled with a product id if we want to edit that product.
-  final String editTransactionId;
+  final String? editTransactionId;
 
   const EditTransactionScreen({
-    @required this.closeContainer,
+    required this.closeContainer,
     this.editTransactionId,
   });
 
@@ -63,20 +63,20 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // The provider data is initialized later because it requires context.
-  Transactions _transactionsData;
-  Labels _labelsData;
+  late Transactions _transactionsData;
+  late Labels _labelsData;
 
   // This is initialized in initState so we can see if we're editing or adding a transaction.
-  EditableTransaction _editableTransaction;
+  late EditableTransaction _editableTransaction;
 
   // Used for determining what color the form header should be based on the LabelType.
   final _labelController = TextEditingController();
   // Initialized later and determines what is shown in the Label FormField.
   // Mostly needed for the color of the label text field.
-  Label _selectedLabel;
+  Label? _selectedLabel;
   // Default date should be now. Also remove time on the date. If the time is there, it messes up the balance history
   // graph.
-  var _selectedDate =
+  DateTime? _selectedDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   // To set the text inside the date text field.
   final _dateController = TextEditingController();
@@ -84,10 +84,10 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   final _amountFocusNode = FocusNode();
 
   void _saveForm() {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
     if (_editableTransaction.id != null) {
       _transactionsData.editTransaction(_editableTransaction.toTransaction());
     } else {
@@ -96,7 +96,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     widget.closeContainer();
   }
 
-  Future<Label> _showLabelPicker() {
+  Future<Label?> _showLabelPicker() {
     return showDialog<Label>(
       context: context,
       builder: (context) {
@@ -119,7 +119,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       padding: const EdgeInsets.only(left: 25),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+        style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 18),
       ),
     );
   }
@@ -140,7 +140,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     ).toList(growable: false);
   }
 
-  String _checkLabelExistance(String labelId, bool isAmountNegative) {
+  String? _checkLabelExistance(String? labelId, bool isAmountNegative) {
     if (_labelsData.findById(labelId) == null) {
       return isAmountNegative ? Labels.otherExpenseId : Labels.otherIncomeId;
     }
@@ -153,7 +153,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     _labelsData = Provider.of<Labels>(context, listen: false);
 
     if (widget.editTransactionId != null) {
-      final initTx = _transactionsData.findById(widget.editTransactionId);
+      final initTx = _transactionsData.findById(widget.editTransactionId)!;
 
       _editableTransaction = EditableTransaction(
         id: initTx.id,
@@ -170,8 +170,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     }
 
     _selectedLabel = _labelsData.findById(_editableTransaction.labelId);
-    _labelController.text = _selectedLabel.title;
-    _dateController.text = DateFormat.yMMMMd().format(_selectedDate);
+    _labelController.text = _selectedLabel!.title;
+    _dateController.text = DateFormat.yMMMMd().format(_selectedDate!);
 
     super.initState();
   }
@@ -187,7 +187,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   String get submitButtonText {
     final addOrEdit = widget.editTransactionId != null ? 'SAVE ' : 'ADD ';
     final incomeOrExpense =
-        (_selectedLabel.labelType == LabelType.INCOME) ? 'INCOME' : 'EXPENSE';
+        (_selectedLabel!.labelType == LabelType.INCOME) ? 'INCOME' : 'EXPENSE';
     return addOrEdit + incomeOrExpense;
   }
 
@@ -208,7 +208,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
             EditTransactionAppbar(
               containerColor: Theme.of(context)
                   .colorScheme
-                  .largeTypeColor(labelType: _selectedLabel.labelType),
+                  .largeTypeColor(labelType: _selectedLabel!.labelType),
               closeScreen: widget.closeContainer,
               submitButtonText: submitButtonText,
               onButtonSubmit: _saveForm,
@@ -234,7 +234,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                   FocusScope.of(context).requestFocus(_amountFocusNode);
                 },
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'Please enter a title.';
                   }
                   if (value.length > 50) {
@@ -259,7 +259,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       helperText: 'Click to change the label',
                       icon: CircleAvatar(
                         maxRadius: 12,
-                        backgroundColor: _selectedLabel.color,
+                        backgroundColor: _selectedLabel!.color,
                       ),
                     ),
                     readOnly: true,
@@ -276,7 +276,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     },
                     controller: _labelController,
                     onSaved: (_) {
-                      _editableTransaction.labelId = _selectedLabel.id;
+                      _editableTransaction.labelId = _selectedLabel!.id;
                     },
                   ),
                   TextFormField(
@@ -287,7 +287,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     focusNode: _amountFocusNode,
                     keyboardType: TextInputType.number,
                     validator: (value) {
-                      final amountVal = double.tryParse(value);
+                      final amountVal = double.tryParse(value!);
                       if (value.isEmpty || amountVal == null) {
                         return 'Please enter a number';
                       }
@@ -297,7 +297,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       // If it is an income transaction, make sure the number is positive. Don't check for sign when it
                       // is an expense transaction because some users would prefer to do either positive or negative
                       // amount inputs.
-                      if (_selectedLabel.labelType == LabelType.INCOME &&
+                      if (_selectedLabel!.labelType == LabelType.INCOME &&
                           amountVal < 0) {
                         return 'Please enter a positive number';
                       }
@@ -310,12 +310,12 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     onSaved: (newValue) {
                       // The difference between income and expense transactions are still kept by the sign of the
                       // amount. Ensure the sign is correct according to the label type.
-                      if (_selectedLabel.labelType == LabelType.INCOME) {
+                      if (_selectedLabel!.labelType == LabelType.INCOME) {
                         _editableTransaction.amount =
-                            double.parse(newValue).abs();
+                            double.parse(newValue!).abs();
                       } else {
                         _editableTransaction.amount =
-                            -double.parse(newValue).abs();
+                            -double.parse(newValue!).abs();
                       }
                     },
                   ),
@@ -327,9 +327,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     ),
                     readOnly: true,
                     onTap: () async {
-                      final DateTime pickedDate = await showDatePicker(
+                      final DateTime? pickedDate = await showDatePicker(
                         context: context,
-                        initialDate: _selectedDate,
+                        initialDate: _selectedDate!,
                         firstDate: DateTime.utc(1970),
                         lastDate: DateTime.now().add(Duration(days: 1)),
                         helpText: 'When did your transaction take place?',

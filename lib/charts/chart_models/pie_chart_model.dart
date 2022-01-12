@@ -7,9 +7,9 @@ class PieChartModel {
   final charts.Color color;
 
   PieChartModel({
-    @required this.label,
-    @required this.amount,
-    @required Color color,
+    required this.label,
+    required this.amount,
+    required Color color,
   }) : // Convert material color to chart color.
         this.color = charts.Color(
             r: color.red, g: color.green, b: color.blue, a: color.alpha);

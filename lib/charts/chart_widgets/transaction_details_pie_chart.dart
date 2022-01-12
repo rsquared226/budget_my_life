@@ -17,13 +17,13 @@ class TransactionDetailsPieChart extends StatelessWidget {
   final double height;
 
   const TransactionDetailsPieChart({
-    @required this.chartTitle,
-    @required this.transactionTitle,
-    @required this.otherTitle,
-    @required this.transactionAmount,
-    @required this.totalAmount,
-    @required this.mainColor,
-    @required this.otherColor,
+    required this.chartTitle,
+    required this.transactionTitle,
+    required this.otherTitle,
+    required this.transactionAmount,
+    required this.totalAmount,
+    required this.mainColor,
+    required this.otherColor,
     this.height = 250,
   });
 
@@ -36,7 +36,7 @@ class TransactionDetailsPieChart extends StatelessWidget {
         FittedBox(
           child: Text(
             chartTitle,
-            style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 22),
+            style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 22),
           ),
         ),
         SizedBox(

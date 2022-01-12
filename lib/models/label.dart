@@ -13,10 +13,10 @@ class Label {
   final LabelType labelType;
 
   const Label({
-    @required this.id,
-    @required this.title,
-    @required this.color,
-    @required this.labelType,
+    required this.id,
+    required this.title,
+    required this.color,
+    required this.labelType,
   });
 
   Map<String, dynamic> toMap() {
