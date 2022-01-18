@@ -9,11 +9,11 @@ import '../utils/custom_colors.dart';
 class BalanceSummaryCard extends StatelessWidget {
   final String title;
   final double balance;
-  final void Function() onTap;
+  final void Function()? onTap;
 
   const BalanceSummaryCard({
-    @required this.title,
-    @required this.balance,
+    required this.title,
+    required this.balance,
     this.onTap,
   });
 

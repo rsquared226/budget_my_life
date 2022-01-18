@@ -7,8 +7,8 @@ class HomeTabsBar extends StatelessWidget {
   final void Function(int newPageIndex) onPressed;
 
   const HomeTabsBar({
-    @required this.pageIndex,
-    @required this.onPressed,
+    required this.pageIndex,
+    required this.onPressed,
   });
 
   Color getSelectedItemColor(ThemeData themeData, int pageIndex) {
@@ -23,13 +23,13 @@ class HomeTabsBar extends StatelessWidget {
     return themeData.colorScheme.onPrimary;
   }
 
-  Color getUnselectedItemColor(ThemeData themeData, int pageIndex) {
+  Color? getUnselectedItemColor(ThemeData themeData, int pageIndex) {
     if (themeData.brightness == Brightness.light) {
       return pageIndex == 0
-          ? themeData.textTheme.caption.color
+          ? themeData.textTheme.caption!.color
           : Colors.white70;
     }
-    return themeData.textTheme.caption.color;
+    return themeData.textTheme.caption!.color;
   }
 
   Color getBackgroundColor(ThemeData themeData, int pageIndex) {

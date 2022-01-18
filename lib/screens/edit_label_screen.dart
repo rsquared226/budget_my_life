@@ -12,10 +12,10 @@ import '../widgets/transaction_type_chip_form_field.dart';
 class EditableLabel {
   // If a label is being edited, the id should never change.
   // If a label is being added, the id will be null until it is converted to a Label.
-  final String id;
-  String title;
-  Color color;
-  LabelType labelType;
+  final String? id;
+  String? title;
+  Color? color;
+  LabelType? labelType;
 
   EditableLabel({
     this.id,
@@ -27,16 +27,16 @@ class EditableLabel {
   Label toLabel() {
     return Label(
       id: id ?? DateTime.now().toString(),
-      title: title,
-      color: color,
-      labelType: labelType,
+      title: title ?? "",
+      color: color ?? Colors.deepPurpleAccent,
+      labelType: labelType!,
     );
   }
 }
 
 class EditLabelScreen extends StatefulWidget {
   // If this is null, we are adding a label. If not, we are editing a label.
-  final String editLabelId;
+  final String? editLabelId;
 
   const EditLabelScreen({
     this.editLabelId,
@@ -50,14 +50,14 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // Initialized in initState.
-  Labels _labelsData;
-  EditableLabel _editableLabel;
+  late Labels _labelsData;
+  late EditableLabel _editableLabel;
 
   void _saveForm() {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
 
     if (widget.editLabelId == null) {
       _labelsData.addLabel(_editableLabel.toLabel());
@@ -72,7 +72,7 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
     _labelsData = Provider.of<Labels>(context, listen: false);
 
     if (widget.editLabelId != null) {
-      final initLabel = _labelsData.findById(widget.editLabelId);
+      final initLabel = _labelsData.findById(widget.editLabelId)!;
 
       _editableLabel = EditableLabel(
         id: initLabel.id,
@@ -116,7 +116,7 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                     textCapitalization: TextCapitalization.words,
                     initialValue: _editableLabel.title,
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value!.isEmpty) {
                         return 'Please enter a title.';
                       }
                       if (value.length > 20) {
@@ -141,7 +141,7 @@ class _EditLabelScreenState extends State<EditLabelScreen> {
                 // easier to delete this label and create a new one.
                 if (widget.editLabelId != null &&
                     value !=
-                        _labelsData.findById(widget.editLabelId).labelType) {
+                        _labelsData.findById(widget.editLabelId)!.labelType) {
                   return 'Cannot change the type of existing label.';
                 }
                 if (value == null) {

@@ -8,8 +8,8 @@ class _ChipsData {
   final String text;
 
   const _ChipsData({
-    @required this.rangeValue,
-    @required this.text,
+    required this.rangeValue,
+    required this.text,
   });
 }
 

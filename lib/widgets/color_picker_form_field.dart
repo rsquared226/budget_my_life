@@ -6,7 +6,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 class ColorPickerFormField extends FormField<Color> {
   static void _showColorPickerDialog(
     BuildContext context,
-    Color currentColor,
+    Color? currentColor,
     Function onColorChanged,
   ) {
     showDialog(
@@ -16,8 +16,8 @@ class ColorPickerFormField extends FormField<Color> {
           title: const Text('Pick a label color'),
           content: SingleChildScrollView(
             child: BlockPicker(
-              pickerColor: currentColor,
-              onColorChanged: onColorChanged,
+              pickerColor: currentColor!,
+              onColorChanged: onColorChanged as void Function(Color),
             ),
           ),
           actions: <Widget>[
@@ -32,8 +32,8 @@ class ColorPickerFormField extends FormField<Color> {
   }
 
   ColorPickerFormField({
-    FormFieldSetter<Color> onSaved,
-    Color initalValue = Colors.indigo,
+    FormFieldSetter<Color>? onSaved,
+    Color? initalValue = Colors.indigo,
     double maxRadius = 14,
   }) : super(
           onSaved: onSaved,

@@ -12,7 +12,7 @@ class LabelsPieChart extends StatelessWidget {
   final LabelType labelType;
 
   const LabelsPieChart({
-    @required this.labelType,
+    required this.labelType,
   });
 
   @override
@@ -70,7 +70,7 @@ class LabelsPieChart extends StatelessWidget {
           showMeasures: true,
           legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
           measureFormatter: (labelTotal) {
-            return '${(labelTotal / total * 100).abs().toStringAsFixed(0)}%';
+            return '${(labelTotal! / total * 100).abs().toStringAsFixed(0)}%';
           },
         ),
       ],

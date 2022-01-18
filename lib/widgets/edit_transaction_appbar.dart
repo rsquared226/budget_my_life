@@ -11,11 +11,11 @@ class EditTransactionAppbar extends StatelessWidget {
   final Widget titleFormField;
 
   const EditTransactionAppbar({
-    @required this.containerColor,
-    @required this.closeScreen,
-    @required this.submitButtonText,
-    @required this.onButtonSubmit,
-    @required this.titleFormField,
+    required this.containerColor,
+    required this.closeScreen,
+    required this.submitButtonText,
+    required this.onButtonSubmit,
+    required this.titleFormField,
   });
 
   Widget buildCloseButton(BuildContext context) {
@@ -27,7 +27,7 @@ class EditTransactionAppbar extends StatelessWidget {
         Icons.close,
         color: Theme.of(context).colorScheme.onPrimary,
       ),
-      onPressed: closeScreen,
+      onPressed: closeScreen as void Function()?,
     );
   }
 
@@ -37,7 +37,7 @@ class EditTransactionAppbar extends StatelessWidget {
       child: TextButton(
         // Had to do this hacky ButtonTheme stuff to get it aligned to the close button.
         style: ButtonStyle(
-          overlayColor: MaterialStateProperty.resolveWith<Color>(
+          overlayColor: MaterialStateProperty.resolveWith<Color?>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.hovered))
                 return Colors.black.withOpacity(0.04);
@@ -53,11 +53,11 @@ class EditTransactionAppbar extends StatelessWidget {
         ),
         child: Text(
           submitButtonText,
-          style: themeData.textTheme.headline6.copyWith(
+          style: themeData.textTheme.headline6!.copyWith(
             color: themeData.colorScheme.onPrimary,
           ),
         ),
-        onPressed: onButtonSubmit,
+        onPressed: onButtonSubmit as void Function()?,
       ),
     );
   }

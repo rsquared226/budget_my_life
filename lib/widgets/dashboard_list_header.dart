@@ -55,7 +55,7 @@ class SectionHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double height;
 
   const SectionHeaderDelegate({
-    @required this.child,
+    required this.child,
     // This is the height of the child.
     this.height = 58,
   });

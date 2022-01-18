@@ -139,7 +139,7 @@ class DBHelper {
     );
   }
 
-  static Future<void> deleteLabel(String id) async {
+  static Future<void> deleteLabel(String? id) async {
     (await _database).delete(
       _labelsTableName,
       where: 'id = ?',

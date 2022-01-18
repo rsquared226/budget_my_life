@@ -9,11 +9,11 @@ import '../models/transaction.dart';
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
 
-  const TransactionCard({@required this.transaction});
+  const TransactionCard({required this.transaction});
 
   // This looks better than a chip.
   Widget buildCategoryLabel(
-      ThemeData theme, String title, Color categoryColor) {
+      ThemeData theme, String title, Color? categoryColor) {
     return Row(
       children: <Widget>[
         Text(
@@ -92,8 +92,8 @@ class TransactionCard extends StatelessWidget {
               // Category label.
               buildCategoryLabel(
                 theme,
-                transaction.getLabel(context).title,
-                transaction.getLabel(context).color,
+                transaction.getLabel(context)!.title,
+                transaction.getLabel(context)!.color,
               ),
             ],
           ),

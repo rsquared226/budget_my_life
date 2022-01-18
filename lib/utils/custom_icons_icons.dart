@@ -23,7 +23,7 @@ class CustomIcons {
   CustomIcons._();
 
   static const _kFontFam = 'CustomIcons';
-  static const _kFontPkg = null;
+  static const dynamic _kFontPkg = null;
 
   static const IconData linkedin = IconData(0xf08c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData github = IconData(0xf09b, fontFamily: _kFontFam, fontPackage: _kFontPkg);

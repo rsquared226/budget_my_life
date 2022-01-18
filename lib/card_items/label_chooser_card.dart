@@ -7,8 +7,8 @@ class LabelChooserCard extends StatelessWidget {
   final String title;
 
   const LabelChooserCard({
-    @required this.color,
-    @required this.title,
+    required this.color,
+    required this.title,
   });
 
   @override

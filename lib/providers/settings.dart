@@ -6,7 +6,7 @@ import '../utils/db_helper.dart';
 
 class Settings with ChangeNotifier {
   // Have default values for now so null errors aren't thrown.
-  String _currencySymbol = '\$';
+  String? _currencySymbol = '\$';
   bool _showCurrency = true;
 
   Future<void> fetchAndSetSettings() async {
@@ -17,7 +17,7 @@ class Settings with ChangeNotifier {
   }
 
   // This is what the app actually displays.
-  String get displayedCurrencySymbol {
+  String? get displayedCurrencySymbol {
     // If we're showing the currency symbol, return a currency symbol.
     // Otherwise, just return an empty string. It's easier to deal with that way.
     if (_showCurrency) {
@@ -27,11 +27,11 @@ class Settings with ChangeNotifier {
   }
 
   // These methods are what the settings screen actually displays/changes.
-  String get currencySymbol => _currencySymbol;
+  String? get currencySymbol => _currencySymbol;
 
   bool get showCurrency => _showCurrency;
 
-  set currencySymbol(String currencySymbol) {
+  set currencySymbol(String? currencySymbol) {
     _currencySymbol = currencySymbol;
     notifyListeners();
     DBHelper.updateSettings({'currency': currencySymbol});

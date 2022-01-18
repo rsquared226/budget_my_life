@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scrolling_page_indicator/scrolling_page_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../models/label.dart';
 import '../charts/chart_widgets/labels_pie_chart.dart';
@@ -66,14 +66,17 @@ class _InsightsScreenState extends State<InsightsScreen> {
         Container(
           alignment: Alignment.centerRight,
           margin: const EdgeInsets.only(right: 7),
-          child: ScrollingPageIndicator(
-            orientation: Axis.vertical,
-            dotColor: Colors.white30,
-            dotSelectedColor: Colors.white,
-            dotSpacing: 16,
+          child: SmoothPageIndicator(
             controller: _pageController,
-            itemCount: _graphScreens.length,
+            count: _graphScreens.length,
+            axisDirection: Axis.vertical,
+            effect: SlideEffect(
+              spacing: 16,
+              dotColor: Colors.white30,
+              activeDotColor: Colors.white
+            ),
           ),
+
         ),
       ],
     );

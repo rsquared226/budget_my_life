@@ -11,18 +11,18 @@ enum TransactionType { Income, Expense }
 class Transaction {
   final String id;
   final String title;
-  final String description;
+  final String? description;
   final double amount;
   final DateTime date;
   final String labelId;
 
   const Transaction({
-    @required this.id,
-    @required this.title,
+    required this.id,
+    required this.title,
     this.description = '',
-    @required this.amount,
-    @required this.date,
-    @required this.labelId,
+    required this.amount,
+    required this.date,
+    required this.labelId,
   });
 
   Map<String, dynamic> toMap() {
@@ -60,7 +60,7 @@ class Transaction {
   String get formattedDate => DateFormat.yMMMMd().format(date);
 
   // Have this here so that when outputting a transaction, 2 providers aren't needed.
-  Label getLabel(BuildContext context) {
+  Label? getLabel(BuildContext context) {
     final labelsData = Provider.of<Labels>(context, listen: false);
     final label = labelsData.findById(labelId);
     // In case the label gets deleted/can't be found.

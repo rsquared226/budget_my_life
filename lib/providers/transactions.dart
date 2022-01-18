@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -67,15 +68,14 @@ class Transactions with ChangeNotifier {
     );
   }
 
-  Transaction findById(String id) {
-    return _items.firstWhere(
+  Transaction? findById(String? id) {
+    return _items.firstWhereOrNull(
       (transaction) => transaction.id == id,
-      orElse: () => null,
     );
   }
 
   List<Transaction> filterTransactionsByLabelAndRange(
-      BuildContext context, String labelId, Range range) {
+      BuildContext context, String? labelId, Range range) {
     return _internalFilterTransactionsByRange(
       range,
       filterTransactionsByLabel(context, labelId),
@@ -83,7 +83,7 @@ class Transactions with ChangeNotifier {
   }
 
   List<Transaction> filterTransactionsByLabel(
-      BuildContext context, String labelId) {
+      BuildContext context, String? labelId) {
     if (labelId == null) {
       return items;
     }
@@ -100,7 +100,7 @@ class Transactions with ChangeNotifier {
 
   // optionalItems so filterTransactionByLabelAndRange is easy.
   List<Transaction> _internalFilterTransactionsByRange(Range range,
-      [List<Transaction> optionalItems]) {
+      [List<Transaction>? optionalItems]) {
     var transactions = optionalItems ?? items;
 
     switch (range) {

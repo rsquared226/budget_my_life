@@ -7,7 +7,7 @@ import '../providers/labels.dart';
 // Used in DashboardListHeader.
 
 class LabelFilterDropdown extends StatelessWidget {
-  Widget buildFilterLabelCard(Color color, String title) {
+  Widget buildFilterLabelCard(Color? color, String title) {
     return Row(
       children: <Widget>[
         CircleAvatar(

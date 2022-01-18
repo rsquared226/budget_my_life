@@ -11,18 +11,18 @@ class PieChartBase extends StatelessWidget {
   final List<PieChartModel> pieData;
   final bool showArcLabels;
   final charts.ArcLabelPosition arcLabelPosition;
-  final List<charts.ChartBehavior> behaviors;
+  final List<charts.ChartBehavior>? behaviors;
 
   const PieChartBase({
-    @required this.id,
-    @required this.animated,
-    @required this.pieData,
-    @required this.showArcLabels,
+    required this.id,
+    required this.animated,
+    required this.pieData,
+    required this.showArcLabels,
     this.arcLabelPosition = charts.ArcLabelPosition.auto,
     this.behaviors,
   });
 
-  List<charts.Series<PieChartModel, String>> get chartData {
+  List<charts.Series<PieChartModel, String?>> get chartData {
     return [
       charts.Series(
         id: id,

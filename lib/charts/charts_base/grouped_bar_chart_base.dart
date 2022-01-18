@@ -9,9 +9,9 @@ class GroupedBarChartBase extends StatelessWidget {
   final List<TransactionHistoryModel> data;
 
   GroupedBarChartBase({
-    @required this.id,
-    @required Color color,
-    @required this.data,
+    required this.id,
+    required Color color,
+    required this.data,
   });
 
   charts.Color incomeChartColor(BuildContext context) =>

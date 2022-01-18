@@ -32,7 +32,7 @@ extension CustomColors on ColorScheme {
       _isLight ? Colors.white : Colors.grey.shade200;
 
   // Takes in the amount and returns the income or expense color accordingly.
-  Color transactionTypeColor(double amount) {
+  Color transactionTypeColor(double? amount) {
     return (amount != null && amount >= 0) ? incomeColor : expenseColor;
   }
 
@@ -45,7 +45,7 @@ extension CustomColors on ColorScheme {
   // These contain colors that look nice on dark mode.
   // Used on balance card and edit transaction header.
   // Only one of the parameters is needed.
-  Color largeTypeColor({double amount, LabelType labelType}) {
+  Color largeTypeColor({double? amount, LabelType? labelType}) {
     if (amount != null) {
       if (_isLight) {
         return (amount >= 0) ? _internalIncomeColor : _internalExpenseColor;
@@ -66,7 +66,7 @@ extension CustomColors on ColorScheme {
         : _internalDarkLargeExpenseColor;
   }
 
-  Color secondaryTransactionTypeColor(double amount) {
+  Color secondaryTransactionTypeColor(double? amount) {
     return (amount != null && amount >= 0)
         ? secondaryIncomeColor
         : secondaryExpenseColor;
